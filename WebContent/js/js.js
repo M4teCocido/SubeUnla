@@ -85,4 +85,5 @@ $(document).ready(function(){
 		showClearBtn: true
 	});
 	
+	$('input, #input_text, textarea#textarea2').characterCounter();
 });	
