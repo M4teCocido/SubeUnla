@@ -1,6 +1,38 @@
 $(document).ready(function(){
+	//INICIALIZACIONES
+	
+	$('.carousel').carousel({
+		fullWidth: true,
+    	indicators: true,
+	});
+	
 	var carousel = $('.carousel');
-	var date = new Date();
+	setInterval(function(){ $('.carousel').carousel('next'); }, 3500);
+
+	var date = new Date();	
+	
+	$('select').formSelect();
+	
+	$('.datepicker').datepicker({
+		format: "d-m-yyyy",
+		maxDate: date,
+		yearRange: 2,
+		showClearBtn: true,
+		i18n: {
+			months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+			monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+			weekdays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+			weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
+		}
+	});
+	
+	$('.timepicker').timepicker({
+		showClearBtn: true
+	});
+	
+	setFormFichada();
+	
+	//FUNCIONES
 	
 	function setFormFichada(){
 		$('#divlinea').hide();
@@ -11,7 +43,7 @@ $(document).ready(function(){
 		$('#divestaciondestino').hide();
 	}
 	
-	setFormFichada();
+	//COMPORTAMIENTO
 	
 	$('#tipotrasaccion').on('change', function() {
 		v = this.value;
@@ -60,29 +92,18 @@ $(document).ready(function(){
 		}
 	})
 
-	$('.carousel').carousel({
-		fullWidth: true,
-    	indicators: true,
-	});
+	//AJAX
 	
-	setInterval(function(){ $('.carousel').carousel('next'); }, 3500);
-	
-	$('select').formSelect();
-	$('.datepicker').datepicker({
-		format: "d-m-yyyy",
-		maxDate: date,
-		yearRange: 2,
-		showClearBtn: true,
-		i18n: {
-			months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-			monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-			weekdays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-			weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
-		}
-	});
-	
-	$('.timepicker').timepicker({
-		showClearBtn: true
-	});
+	/*$('#consultar').click(function() {
+		var dni = $('#dni').val();
+		$.ajax({
+			method: "POST",
+			url: "MostrarClienteJSP",
+			data: { dni: dni },
+			async: false
+		}).done(function(data){
+			$("#responsecliente").html(data);
+		})
+	});*/
 	
 });	
