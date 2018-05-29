@@ -1,0 +1,22 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping >
+	<class name="modelo.TarjetaSube" table="tarjetasube">
+		<id column="idTarjetaSube" name="idTarjeta">
+			<generator class = "identity" />
+		</id>
+		<property column="codigo" name="codigo" type="string" />
+		<property column="activa" name="activa" type="boolean" />
+		<property column="saldo" name="saldo" type="java.math.BigDecimal" precision="2" />
+		
+		<many-to-one name="propietario" class="modelo.Persona" fetch="select" lazy="false" column="idPropietario" not-null="true" />
+		
+		<one-to-one name="descuentoRedSube" class="modelo.Descuentos.DescuentoRedSube" lazy="false" property-ref="tarjeta" cascade="all"></one-to-one>
+		
+		<set name="transacciones" table="trasaccionsube" order-by="idTransaccion asc" inverse="true" lazy="false" fetch="select">
+			<key column="idTarjetaSube" not-null="true" />
+			<one-to-many class="modelo.fichadas.TransaccionSUBE" />
+		</set>
+	</class>
+</hibernate-mapping>

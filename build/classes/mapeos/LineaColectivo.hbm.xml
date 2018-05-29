@@ -1,0 +1,15 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping >
+	<class name="modelo.fichadas.colectivo.LineaColectivo" table="lineacolectivo">
+		<id column="idlinea" name="idLinea">
+			<generator class = "identity" />
+		</id>
+		<property column="nombre" name="nombre" type="string" />
+		<set name="tramosColectivo" table="tramoColectivo" order-by="idTramo asc" inverse="true" lazy="true" fetch="select">
+			<key column="idLinea" not-null="true" />
+			<one-to-many class="modelo.fichadas.colectivo.TramoColectivo" />
+		</set>
+	</class>
+</hibernate-mapping>

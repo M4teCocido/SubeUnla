@@ -11,6 +11,3 @@ for (LineaTren linea:lineas){ %>
 	</option > 
 	
 <% } %>
-<option class="black-text text-lighten-3" value="1">A</option>
-<option class="black-text text-lighten-3" value="2">B</option>
-<option class="black-text text-lighten-3" value="3">C</option>

@@ -1,10 +1,16 @@
 package negocio;
 
+import java.util.List;
+
+import dao.fichadas.colectivo.InternoColectivoDao;
 import dao.fichadas.colectivo.LineaColectivoDao;
+import modelo.fichadas.colectivo.InternoColectivo;
 import modelo.fichadas.colectivo.LineaColectivo;
 
 public class LineaColectivoABM {
+	
 	LineaColectivoDao dao = new LineaColectivoDao();
+	InternoColectivoDao daoInterno = new InternoColectivoDao();
 	
 	public LineaColectivo traerLineaPorId(int idLinea)throws Exception {
 		LineaColectivo l = dao.traerLineaPorId(idLinea);
@@ -32,5 +38,13 @@ public class LineaColectivoABM {
 		 * tambien habria que chequear que esta linea no tenga ninguna dependencia 
 		 * si la tienen tiramos exception o eliminamos las dependencias?*/
 		dao.eliminarLinea(l);
+	}
+	
+	public List<LineaColectivo> traerLineas(){
+		return dao.traerLineas();
+	}
+	
+	public List<InternoColectivo> traerInternosPorIdLinea(int idLinea){
+		return daoInterno.traerInternosPorIdLinea(idLinea);
 	}
 }

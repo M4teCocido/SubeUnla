@@ -1,11 +1,20 @@
 $(document).ready(function(){
-	//INICIALIZACIONES
+
+	//FUNCIONES
 	
-	$('input, #input_text, textarea#textarea2').characterCounter();
+	function setFormFichada(){
+		$('#divlinea').hide();
+		$('#divestacioninterno').hide();
+		$('#divlectora').hide();
+		$('#divtramo').hide();
+		$('#divmonto').hide();
+	}
+	
+	//INICIALIZACIONES
 	
 	$('.carousel').carousel({
 		fullWidth: true,
-    	indicators: true,
+    	indicators: true
 	});
 	
 	var carousel = $('.carousel');
@@ -14,6 +23,7 @@ $(document).ready(function(){
 	var date = new Date();	
 	
 	$('select').formSelect();
+
 	
 	$('.datepicker').datepicker({
 		format: "d-m-yyyy",
@@ -28,25 +38,15 @@ $(document).ready(function(){
 		}
 	});
 	
+	$('input, #input_text, textarea#textarea2').characterCounter();
+
 	$('.timepicker').timepicker({
 		showClearBtn: true
 	});
 	
 	setFormFichada();
 	
-	//FUNCIONES
-	
-	function setFormFichada(){
-		$('#divlinea').hide();
-		$('#divestacioninterno').hide();
-		$('#divlectora').hide();
-		$('#divtramo').hide();
-		$('#divmonto').hide();
-	}
-	
-	//COMPORTAMIENTO
-	
-	$('#tipotrasaccion').on('change', function() {
+	$('#tipotransaccion').change(function() {
 		v = this.value;
 		//Carga
 		if(v == 1){
@@ -62,10 +62,6 @@ $(document).ready(function(){
 			$('#divlinea').show();
 			$('#divestacioninterno').hide();
 			$('#divtramo').hide();
-			/*$('#estacioninterno').html('Interno');
-			$('#estacioninterno').placeholder('Seleccione un interno');*/
-			//ajax para cargar los interno del bondi
-			//ajax para traer la lectora del interno seleccionado si es que no lo traemos directamente con el interno
 			$('#divmonto').hide();
 			$('#divlectora').hide();
 		}
@@ -88,6 +84,10 @@ $(document).ready(function(){
 			$('#divtramo').hide();
 		}
 	});
+	
+	//COMPORTAMIENTO
+	
+	
 
 	//AJAX
 	
@@ -106,7 +106,7 @@ $(document).ready(function(){
 		})
 	});*/
 	
-	$('#tipotrasaccion').on('change', function() {
+	/*$('#tipotrasaccion').on('change', function() {
 		v = this.value;
 		if(v == 1){
 			var data = {
@@ -268,5 +268,6 @@ $(document).ready(function(){
 			})
 		}
 	})
+	*/
 	
 });	

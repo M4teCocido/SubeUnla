@@ -1,0 +1,16 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping >
+	<class name="modelo.fichadas.subte.EstacionSubte" table="estacionsubte">
+		<id column="idEstacion" name="idEstacion">
+			<generator class = "identity" />
+		</id>
+		<property column="nombre" name="nombre" type="string" />
+		<many-to-one name="lineaSubte" class="modelo.fichadas.subte.LineaSubte" lazy="false" column="idLinea" not-null="true" />
+		<set name="lectoras" table="lectorasubte" inverse="true" lazy="true" fetch="select"><!-- order-by="idLectora asc"  -->
+			<key column="idEstacion" not-null="true" />
+			<one-to-many class="modelo.lectoras.LectoraSubte" />
+		</set>
+ 	</class>
+</hibernate-mapping>

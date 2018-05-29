@@ -1,0 +1,14 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping >
+	<class name="modelo.fichadas.tren.ViajeTren" table="viajetren">
+		<id column="idViaje" name="idViaje">
+			<generator class = "identity" />
+		</id>
+		<many-to-one name="linea" class="modelo.fichadas.tren.LineaTren" fetch="select" column="idLinea" not-null="true" />		
+		<many-to-one name="estacionOrigen" class="modelo.fichadas.tren.EstacionTren" fetch="select" column="idEstacionOrigen" not-null="true" />
+		<many-to-one name="estacionDestino" class="modelo.fichadas.tren.EstacionTren" fetch="select" column="idEstacionDestino" not-null="true" />
+		<many-to-one name="seccionTren" class="modelo.fichadas.tren.SeccionTren" fetch="select" column="idSeccion" not-null="true" />
+	</class>
+</hibernate-mapping>

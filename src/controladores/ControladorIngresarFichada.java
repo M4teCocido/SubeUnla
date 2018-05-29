@@ -13,7 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.HibernateException;
 
 import dao.fichadas.colectivo.LineaColectivoDao;
+import modelo.fichadas.colectivo.InternoColectivo;
 import modelo.fichadas.colectivo.LineaColectivo;
+import modelo.fichadas.subte.EstacionSubte;
+import modelo.fichadas.subte.LineaSubte;
+import modelo.fichadas.tren.EstacionTren;
+import modelo.fichadas.tren.LineaTren;
+import modelo.lectoras.LectoraExterna;
+import modelo.lectoras.LectoraSubte;
+import modelo.lectoras.LectoraTren;
+import negocio.LectoraExternaABM;
+import negocio.LineaColectivoABM;
+import negocio.LineaSubteABM;
+import negocio.LineaTrenABM;
 
 public class ControladorIngresarFichada extends HttpServlet {
 	
@@ -36,59 +48,64 @@ public class ControladorIngresarFichada extends HttpServlet {
 		response.setContentType("text/html;	charset=UTF-8");
 		try {
 			int nroValidacion = Integer.parseInt(request.getParameter("nroValidacion"));
+			LectoraExternaABM abmLectoraExterna = new LectoraExternaABM();
+			LineaColectivoABM abmLineaColectivo = new LineaColectivoABM();
+			LineaSubteABM abmLineaSubte = new LineaSubteABM();
+			LineaTrenABM abmLineaTren = new LineaTrenABM();
 
 			switch(nroValidacion) {
 			case 1: //Devolver tramos de colectivo
 				break;
 			case 2: //Devolver lectoras de carga
-				LectoraExternaABM abm = new LectoraExternaABM();
-				List<LectoraExterna> lstLectora = abm.traerLectoras();
-				request.setAttribute('lstLectora', lstLectora);
+				List<LectoraExterna> lstLectora = abmLectoraExterna.traerLectoras();
+				request.setAttribute("lstLectora", lstLectora);
 				request.getRequestDispatcher("/lstLectoras.jsp").forward(request, response);
 				break;
 			case 3: //Devolver lineas de colectivo
 				this.procesarPeticionLineasColectivo(request, response);
-				LineaColectivoABM abm = new LineaColectivoABM();
-				List<LineaColectivo> lstLinea = abm.traerLineas();
-				request.setAttribute('lstLineas', lstLineas);
-				request.getRequestDispatcher('/lstLineasColectivo.jsp').forward(request, response);
+				List<LineaColectivo> lstLinea = abmLineaColectivo.traerLineas();
+				request.setAttribute("lstLineas", lstLinea);
+				request.getRequestDispatcher("/lstLineasColectivo.jsp").forward(request, response);
 				break;
 			case 4: //Devolver lineas de subte
-			LineaSubteABM abm = new LineaSubteABM();
-				List<LineaSubte> lstSubte = abm.traerLineas();
-				request.setAttribute('lstLineas', lstLineas);
-				request.getRequestDispatcher('/lstLineasSubte.jsp').forward(request, response);
+				List<LineaSubte> lstSubte = abmLineaSubte.traerLineas();
+				request.setAttribute("lstLineas", lstSubte);
+				request.getRequestDispatcher("/lstLineasSubte.jsp").forward(request, response);
 				break;
 			case 5: //Devolver lineas de tren
-				LineaTrenABM abm = new LineaTrenABM();
-				List<LineaTren> lstTren = abm.traerLineas();
-				request.setAttribute('lstTren', lstTren);
-				request.getRequestDispatcher('/lstLineaTren.jsp').forward(request, response);
+				List<LineaTren> lstTren = abmLineaTren.traerLineas();
+				request.setAttribute("lstTren", lstTren);
+				request.getRequestDispatcher("/lstLineaTren.jsp").forward(request, response);
 				break;
 			case 6: //Recibe linea de colectivo, devuelve internos de esa linea y tramos
-				int idLinea = Integer.parseInt(request.getParameter('idLinea'));
-				LineaColectivoABM abm = new LineaColectivoABM();
-				List<InternoColectivo> lstInterno = abm.traerInternosPorIdLinea(idLinea);
-				request.setAttribute('lstInterno', lstInterno);
-				request.getRequestDispatcher('/lstInternoColectivo.jsp').forward(request, response);
+				int idLineaColectivo = Integer.parseInt(request.getParameter("idLinea"));
+				List<InternoColectivo> lstInterno = abmLineaColectivo.traerLineaPorId(idLineaColectivo).getInternosColectivo();
+				request.setAttribute("lstInterno", lstInterno);
+				request.getRequestDispatcher("/lstInternoColectivo.jsp").forward(request, response);
 				break;
 			case 7: //Recibe linea de subte, devuelve estaciones de esa linea
-				int idLinea = Integer.parseInt(request.getParameter('idLinea'))
-				LineaSubteABM abm = new LineaSubteABM();
-				List<EstacionSubte> lstEstacion = abm.traerEstacionesPorIdLinea(idLinea);
-				request.setAttribute('lstEstacion', lstEstacion);
-				request.getRequestDispatcher('/lstEstacionSubte.jsp').forward(request, response);
+				int idLineaSubte = Integer.parseInt(request.getParameter("idLinea"));
+				List<EstacionSubte> lstEstacionSubte = abmLineaSubte.traerLineaPorId(idLineaSubte).getRecorridoSubte();
+				request.setAttribute("lstEstacionSubte", lstEstacionSubte);
+				request.getRequestDispatcher("/lstEstacionSubte.jsp").forward(request, response);
 				break;
 			case 8: //Recibe linea de tren, devuelve estaciones de esa linea
-				int idLinea = Integer.parseInt(request.getParameter('idLinea'))
-				LineaTrenABM abm = new LineaTrenABM();
-				List<EstacionTren> lstEstacion = abm.traerEstacionesPorIdLinea(idLinea);
-				request.setAttribute('lstEstacion', lstEstacion);
-				request.getRequestDispatcher('/lstEstacionTren.jsp').forward(request, response); 
+				int idLineaTren = Integer.parseInt(request.getParameter("idLinea"));
+				List<EstacionTren> lstEstacionTren = abmLineaTren.traerLineaPorId(idLineaTren).getEstaciones();
+				request.setAttribute("lstEstacionTren", lstEstacionTren);
+				request.getRequestDispatcher("/lstEstacionTren.jsp").forward(request, response); 
 				break;
 			case 9: //Recibe idEstacionSubte, devuelve lectoras de esa estacion
+				int idEstacionSubte = Integer.parseInt(request.getParameter("idEstacion"));
+				List<LectoraSubte> lstLectoraSubte = abmLineaSubte.traerLectorasPorIdEstacion(idEstacionSubte);
+				request.setAttribute("lstEstacion", lstEstacionTren);
+				request.getRequestDispatcher("/lstEstacionTren.jsp").forward(request, response); 
 				break;
 			case 10: //Recibe idEstacionTren, devuelve lectoras de esa estacion
+				int idEstacionTren = Integer.parseInt(request.getParameter("idEstacion"));
+				List<LectoraTren> lstLectoraTren = abmLineaTren.traerLectorasPorIdEstacion(idEstacionTren);
+				request.setAttribute("lstEstacion", lstEstacionTren);
+				request.getRequestDispatcher("/lstEstacionTren.jsp").forward(request, response); 
 				break;
 			default:
 				break;
