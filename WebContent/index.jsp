@@ -45,15 +45,6 @@
 		    </select>
 	    	<label for="estacioninterno">Estacion o Interno</label>
   		</div>
-  		<div class="input-field col s12 m6 l4" id="divestaciondestino">
-		    <select name="estaciondestino" id="estaciondestino">
-				<option class="black-text text-lighten-3" value="" disabled selected>Elija la estacion destino</option>
-				<option class="black-text text-lighten-3" value="1">Constitucion</option>
-				<option class="black-text text-lighten-3" value="2">Avellaneda</option>
-				<option class="black-text text-lighten-3" value="3">Lanus</option>
-		    </select>
-	    	<label for="estaciondestino">Estacion destino</label>
-  		</div>
   		<div class="input-field col s12 m6 l4" id="divlectora">
 		    <select name="lectora" id="lectora">
 				<option class="black-text text-lighten-3" value="" disabled selected>Elija una lectora</option>

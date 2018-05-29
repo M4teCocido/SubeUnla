@@ -1,6 +1,8 @@
 $(document).ready(function(){
 	//INICIALIZACIONES
 	
+	$('input, #input_text, textarea#textarea2').characterCounter();
+	
 	$('.carousel').carousel({
 		fullWidth: true,
     	indicators: true,
@@ -40,7 +42,6 @@ $(document).ready(function(){
 		$('#divlectora').hide();
 		$('#divtramo').hide();
 		$('#divmonto').hide();
-		$('#divestaciondestino').hide();
 	}
 	
 	//COMPORTAMIENTO
@@ -52,7 +53,6 @@ $(document).ready(function(){
 			$('#divlectora').show();
 			//traer por ajax las lectoras disponibles
 			$('#divmonto').show();
-			$('#divestaciondestino').hide();
 			$('#divestacioninterno').hide();
 			$('#divlinea').hide();
 			$('#divtramo').hide();
@@ -60,51 +60,213 @@ $(document).ready(function(){
 		//Colectivo
 		if(v == 2){
 			$('#divlinea').show();
-			$('#divestacioninterno').show();
-			$('#divtramo').show();
+			$('#divestacioninterno').hide();
+			$('#divtramo').hide();
 			/*$('#estacioninterno').html('Interno');
 			$('#estacioninterno').placeholder('Seleccione un interno');*/
 			//ajax para cargar los interno del bondi
 			//ajax para traer la lectora del interno seleccionado si es que no lo traemos directamente con el interno
 			$('#divmonto').hide();
 			$('#divlectora').hide();
-			$('#divestaciondestino').hide();
 		}
 		//Subte 
 		if(v == 3){
 			$('#divlinea').show();
-			$('#divestacioninterno').show();
+			$('#divestacioninterno').hide();
 			//ajax para traer las estaciones de subte de la linea
-			$('#divlectora').show();
+			$('#divlectora').hide();
 			//ajax para traer las lectoras de la estacion seleccionada
 			$('#divmonto').hide();
 			$('#divtramo').hide();
-			$('#divestaciondestino').hide();
 		}
 		//Tren
 		if(v == 4){
 			$('#divlinea').show();
-			$('#divestacioninterno').show();
-			$('#divestaciondestino').show();
-			$('#divlectora').show();
+			$('#divestacioninterno').hide();
+			$('#divlectora').hide();
 			$('#divmonto').hide();
 			$('#divtramo').hide();
 		}
-	})
+	});
 
 	//AJAX
 	
-	/*$('#consultar').click(function() {
-		var dni = $('#dni').val();
+	/*$('#numerotarjeta').focusout(function(){
+		var data = {
+			nroValidacion: 1,
+			nroTarjeta : this.value
+		}
 		$.ajax({
 			method: "POST",
-			url: "MostrarClienteJSP",
-			data: { dni: dni },
+			url: "ControladorIngresarFichada",
+			data: { data: data },
 			async: false
 		}).done(function(data){
-			$("#responsecliente").html(data);
+			
 		})
 	});*/
 	
-	$('input, #input_text, textarea#textarea2').characterCounter();
+	$('#tipotrasaccion').on('change', function() {
+		v = this.value;
+		if(v == 1){
+			var data = {
+				nroValidacion = 2
+			}
+			$.ajax({
+				method: "POST",
+				url: "ControladorIngresarFichada",
+				data: { data: data },
+				async: false
+			}).done(function(data){
+				$('#lectora').html(data);
+				$('#lectora').show();
+				$('#monto').show();
+			})
+		}
+		if(v == 2){
+			var data = {
+				nroValidacion = 3
+			}
+			$.ajax({
+				method: "POST",
+				url: "ControladorIngresarFichada",
+				data: { data: data },
+				async: false
+			}).done(function(data){
+				$('#linea').html(data);
+				$('#linea').show();
+			})
+		}
+		if(v == 3){
+			var data = {
+				nroValidacion = 4
+			}
+			$.ajax({
+				method: "POST",
+				url: "ControladorIngresarFichada",
+				data: { data: data },
+				async: false
+			}).done(function(data){
+				$('#linea').html(data);
+				$('#linea').show();
+			})
+		}
+		if(v == 4){
+			var data = {
+				nroValidacion : 5
+			}
+			$.ajax({
+				method: "POST",
+				url: "ControladorIngresarFichada",
+				data: { data: data },
+				async: false
+			}).done(function(data){
+				$('#linea').html(data);
+				$('#linea').show();
+			})
+		}
+	})
+	
+	$('#linea').on('change', function(){
+		var transaccion = $('#tipotrasaccion').value();
+		
+		//PREPARA LA INFO PARA SOLICITAR LOS INTERNOS DE LA LINEA DE COLECTIVO SELECCIONADA Y HACE LA PETICION
+		if(transaccion == 2){
+			var data = {
+				nroValidacion : 6,
+				idLinea : this.value
+			}
+			$.ajax({
+				method: "POST",
+				url: "ControladorIngresarFichada",
+				data: { data: data },
+				async: false
+			}).done(function(data){
+				$('#estacioninterno').html(data);
+				$('#estacioninterno').show();
+			})
+			var data = {
+				nroValidacion : 1,
+				idLinea : this.value
+			}
+			$.ajax({
+				method: "POST",
+				url: "ControladorIngresarFichada",
+				data: { data: data },
+				async: false
+			}).done(function(data){
+				$('#tramo').html(data);
+				$('#tramo').show();
+			})
+		}
+		//PREPARA LA INFO PARA SOLICITAR LAS ESTACIONES DE LA LINEA DE SUBTE SELECCIONADA Y HACE LA PETICION
+		if(transaccion == 3){
+			var data = {
+				nroValidacion : 7,
+				idLinea : this.value
+			}
+			$.ajax({
+				method: "POST",
+				url: "ControladorIngresarFichada",
+				data: { data: data },
+				async: false
+			}).done(function(data){
+				$('#estacioninterno').html(data);
+				$('#estacioninterno').show();
+			})
+		}
+		//PREPARA LA INFO PARA SOLICITAR LAS ESTACIONES DE LA LINEA DE TREN SELECCIONADA Y HACE LA PETICION
+		if(transaccion == 4){
+			var data = {
+				nroValidacion : 8,
+				idLinea : this.value
+			}
+			$.ajax({
+				method: "POST",
+				url: "ControladorIngresarFichada",
+				data: { data: data },
+				async: false
+			}).done(function(data){
+				$('#estacioninterno').html(data);
+				$('#estacioninterno').show();
+			})
+		}
+	})
+	
+	$('#estacioninterno').on('change', function(){
+		var transaccion = $('#tipotrasaccion').value();
+		if(transaccion == 3){
+			var data = {
+				nroValidacion : 9,
+				idLinea : $('#linea').value(),
+				idEstacion : this.value
+			}
+			$.ajax({
+				method: "POST",
+				url: "ControladorIngresarFichada",
+				data: { data: data },
+				async: false
+			}).done(function(data){
+				$('#lectora').html(data);
+				$('#lectora').show();
+			})
+		}
+		if(transaccion == 4){
+			var data = {
+				nroValidacion : 10,
+				idLinea : $('#linea').value(),
+				idEstacion : this.value
+			}
+			$.ajax({
+				method: "POST",
+				url: "ControladorIngresarFichada",
+				data: { data: data },
+				async: false
+			}).done(function(data){
+				$('#lectora').html(data);
+				$('#lectora').show();
+			})
+		}
+	})
+	
 });	
