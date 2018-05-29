@@ -1,12 +1,20 @@
 package negocio;
 
+import modelo.fichadas.subte.EstacionSubte;
 import modelo.fichadas.subte.LineaSubte;
+import modelo.lectoras.LectoraSubte;
+import dao.fichadas.subte.EstacionSubteDao;
 import dao.fichadas.subte.LineaSubteDao;
+import dao.lectoras.LectoraSubteDao;
+
 import java.math.BigDecimal;
+import java.util.List;
 
 public class LineaSubteABM {
 	
 	LineaSubteDao dao = new LineaSubteDao();
+	EstacionSubteDao daoEstacion = new EstacionSubteDao();
+	LectoraSubteDao daoLectora = new LectoraSubteDao();
 	
 	public LineaSubte traerLineaPorId(int idLinea)throws Exception {
 		LineaSubte l = dao.traerLinea(idLinea);
@@ -33,4 +41,17 @@ public class LineaSubteABM {
 		 * si la tienen tiramos exception o eliminamos las dependencias?*/
 		dao.eliminarLinea(l);
 	}
+	
+	public List<LineaSubte> traerLineas(){
+		return dao.traerLineas();
+	}
+	
+	public List<EstacionSubte> traerEstacionesPorIdLinea(int idLinea){
+		return daoEstacion.traerEstacionesPorIdLinea(idLinea);
+	}
+	
+	public List<LectoraSubte> traerLectorasPorIdEstacion(int idEstacion){
+		return daoLectora.traerLectorasPorIdEstacion(idEstacion);
+	}
+	
 }
