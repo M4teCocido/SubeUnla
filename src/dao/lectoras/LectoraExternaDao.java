@@ -83,7 +83,7 @@ public class LectoraExternaDao {
 		List<LectoraExterna> lista = null;
 		try {
 			iniciaOperacion();
-			lista = session.createQuery("from Lectora l order by l.idLectora asc").list();
+			lista = session.createQuery("from LectoraExterna l order by l.idLectora asc").list();
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
 			throw he;

@@ -36,19 +36,19 @@ public class TestCreacionMaestrosColectivo {
 		List<LectoraColectivo> lectorasLinea74 = new ArrayList<LectoraColectivo>();
 		List<TramoColectivo> tramosLinea74 = new ArrayList<TramoColectivo>();
 		
-		tramosLinea74.add(new TramoColectivo("2 km", new BigDecimal(9), linea74));
-		tramosLinea74.add(new TramoColectivo("4 km", new BigDecimal(12), linea74));
-		tramosLinea74.add(new TramoColectivo("6 km", new BigDecimal(15), linea74));
+		tramosLinea74.add(new TramoColectivo("0 a 3 km", new BigDecimal(9), linea74));
+		tramosLinea74.add(new TramoColectivo("3 a 6 km", new BigDecimal(9.25), linea74));
+		tramosLinea74.add(new TramoColectivo("6  a 12 km", new BigDecimal(9.50), linea74));
 		
-		agregarInternoColectivo("Constitucion", linea74, internosLinea74, lectorasLinea74);
-		agregarInternoColectivo("San Juan", linea74, internosLinea74, lectorasLinea74);
-		agregarInternoColectivo("Independencia", linea74, internosLinea74, lectorasLinea74);
-		agregarInternoColectivo("Mariano Moreno", linea74, internosLinea74, lectorasLinea74);
-		agregarInternoColectivo("Avenida de Mayo", linea74, internosLinea74, lectorasLinea74);
-		agregarInternoColectivo("Diagonal Norte", linea74, internosLinea74, lectorasLinea74);
-		agregarInternoColectivo("Lavalle", linea74, internosLinea74, lectorasLinea74);
-		agregarInternoColectivo("General San Martin", linea74, internosLinea74, lectorasLinea74);
-		agregarInternoColectivo("Retiro", linea74, internosLinea74, lectorasLinea74);
+		agregarInternoColectivo("1", linea74, internosLinea74, lectorasLinea74);
+		agregarInternoColectivo("2", linea74, internosLinea74, lectorasLinea74);
+		agregarInternoColectivo("3", linea74, internosLinea74, lectorasLinea74);
+		agregarInternoColectivo("4", linea74, internosLinea74, lectorasLinea74);
+		agregarInternoColectivo("5", linea74, internosLinea74, lectorasLinea74);
+		agregarInternoColectivo("6", linea74, internosLinea74, lectorasLinea74);
+		agregarInternoColectivo("7", linea74, internosLinea74, lectorasLinea74);
+		agregarInternoColectivo("8", linea74, internosLinea74, lectorasLinea74);
+		agregarInternoColectivo("9", linea74, internosLinea74, lectorasLinea74);
 
 		//Persistimos.
 		try {

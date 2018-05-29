@@ -94,7 +94,7 @@ public class EstacionSubteDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<EstacionSubte> traerEstacionPorIdLinea (int idLinea) throws HibernateException {
+	public List<EstacionSubte> traerEstacionesPorIdLinea (int idLinea) throws HibernateException {
 		List<EstacionSubte> lista = null;
 		try {
 			iniciaOperacion();

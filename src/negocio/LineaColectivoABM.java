@@ -1,5 +1,6 @@
 package negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.fichadas.colectivo.InternoColectivoDao;
@@ -11,6 +12,13 @@ public class LineaColectivoABM {
 	
 	LineaColectivoDao dao = new LineaColectivoDao();
 	InternoColectivoDao daoInterno = new InternoColectivoDao();
+	InternoColectivoDao daoInterno;
+	LineaColectivoDao dao;
+	
+	public LineaColectivoABM() {
+		daoInterno = new InternoColectivoDao();
+		dao = new LineaColectivoDao();
+	}
 	
 	public LineaColectivo traerLineaPorId(int idLinea)throws Exception {
 		LineaColectivo l = dao.traerLineaPorId(idLinea);
@@ -46,5 +54,10 @@ public class LineaColectivoABM {
 	
 	public List<InternoColectivo> traerInternosPorIdLinea(int idLinea){
 		return daoInterno.traerInternosPorIdLinea(idLinea);
+	public List<InternoColectivo> traerInternosPorIdLinea(int idLinea) throws Exception{
+		
+		List <InternoColectivo> internos = new ArrayList<InternoColectivo>();
+		internos.addAll(traerLineaPorId(idLinea).getInternosColectivo());
+		return internos;
 	}
 }

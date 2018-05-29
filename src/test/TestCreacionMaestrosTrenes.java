@@ -34,15 +34,15 @@ public class TestCreacionMaestrosTrenes {
 		ViajeTrenDao daoViaje = new ViajeTrenDao();
 		LectoraTrenDao daoLectora = new LectoraTrenDao();
 		
-		LineaTren lineaRoca = new LineaTren("74");
+		LineaTren lineaRoca = new LineaTren("Roca");
 		List<EstacionTren> estacionesRoca = new ArrayList<EstacionTren>();
 		List<SeccionTren> seccionesRoca = new ArrayList<SeccionTren>();
 		List<LectoraTren> lectorasRoca = new ArrayList<LectoraTren>();
 		List<ViajeTren> viajesRoca = new ArrayList<ViajeTren>();
 		
-		seccionesRoca.add(new SeccionTren("5 km", new BigDecimal(6), lineaRoca));
-		seccionesRoca.add(new SeccionTren("10 km", new BigDecimal(12), lineaRoca));
-		seccionesRoca.add(new SeccionTren("15 km", new BigDecimal(18), lineaRoca));
+		seccionesRoca.add(new SeccionTren("1era Seccion", new BigDecimal(3).setScale(2), lineaRoca));
+		seccionesRoca.add(new SeccionTren("2da Seccion", new BigDecimal(4.50).setScale(2), lineaRoca));
+		seccionesRoca.add(new SeccionTren("3ra Seccion", new BigDecimal(6.25).setScale(2), lineaRoca));
 		
 		agregarEstacionTren("Alejandro Korn", lineaRoca, estacionesRoca, lectorasRoca);
 		agregarEstacionTren("Guernica", lineaRoca, estacionesRoca, lectorasRoca);

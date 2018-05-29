@@ -56,7 +56,7 @@
           	<label for="monto">Ingrese monto de carga</label>
         </div>
   		<div class="row">
-	  		<button class="btn waves-effect waves-light blue lighten-2 black-text col s12 l12 m12" type="submit" id="enviarfichada" name="action">Enviar
+	  		<button class="btn waves-effect waves-light blue lighten-2 black-text col s12 l12 m12" type="submit" id="enviarfichada" name="action" action="ControladorIngresarFichada" >Enviar
 	    		<i class="material-icons right">send</i>
 	  		</button>
   		</div>

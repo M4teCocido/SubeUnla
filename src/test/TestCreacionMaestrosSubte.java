@@ -26,7 +26,7 @@ private static int numeroSerieLectora = 1000;
 		EstacionSubteDao daoEstacionSubte = new EstacionSubteDao();
 		LectoraSubteDao daoLectoraSubte = new LectoraSubteDao();
 		
-		LineaSubte lineaC = new LineaSubte("C", new BigDecimal (10));
+		LineaSubte lineaC = new LineaSubte("C", new BigDecimal (12.50).setScale(2));
 		List<EstacionSubte> estacionesLineaC = new ArrayList<EstacionSubte>();
 		List<LectoraSubte> lectorasLineaC = new ArrayList<LectoraSubte>();
 		

@@ -3,10 +3,9 @@ package modelo.lectoras;
 public class LectoraExterna extends Lectora {
 
 	private String ubicacion;
-
+	
 	public LectoraExterna() {
-		super();
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public LectoraExterna(int nroSerie, String ubicacion) {

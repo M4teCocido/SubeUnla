@@ -12,6 +12,7 @@
 		<property name="show_sql" >true</property > <!-- en true muestra hql en consola -->
 		<!-- Mapeo Entidades -->
 		<mapping resource="mapeos/DescuentoSube.hbm.xml" />
+		<mapping resource="mapeos/DescuentoSUBE.hbm.xml" />
 		<mapping resource="mapeos/Documento.hbm.xml" />
 		<mapping resource="mapeos/LineaSubte.hbm.xml" />
 		<mapping resource="mapeos/EstacionSubte.hbm.xml" />

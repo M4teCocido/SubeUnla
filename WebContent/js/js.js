@@ -1,3 +1,5 @@
+var URL_INGRESAR_FICHADA = "/SubeUnla/IngresarFichada";
+
 $(document).ready(function(){
 
 	//FUNCIONES
@@ -47,7 +49,26 @@ $(document).ready(function(){
 	setFormFichada();
 	
 	$('#tipotransaccion').change(function() {
+	//FUNCIONES
+	
+	function actualizarSelect(select, data){
+		select.html(data);
+		select.formSelect();
+	}
+	
+	function setFormFichada(){
+		$('#divlinea').hide();
+		$('#divestacioninterno').hide();
+		$('#divlectora').hide();
+		$('#divtramo').hide();
+		$('#divmonto').hide();
+	}
+	
+	//COMPORTAMIENTO
+	
+	$('#tipotransaccion').on('change', function() {
 		v = this.value;
+		//console.log('Change SIN ajax - v = ' + v);
 		//Carga
 		if(v == 1){
 			$('#divlectora').show();
@@ -87,8 +108,19 @@ $(document).ready(function(){
 	
 	//COMPORTAMIENTO
 	
+	$('#linea').on('change', function(){
+		var transaccion = $('#tipotransaccion').val();
+		console.log("Linea.Change() : Transaccion = " + transaccion);
+		if (transaccion == 2){ //Colectivo
+			$('#divtramo').show();
+			$("#divestacioninterno").show();
+		} else if (transaccion == 3) { //Subte 
+			$("#divestacioninterno").show();
+		} else if (transaccion == 4){ //Tren
+			$("#divestacioninterno").show();
+		}
+	})
 	
-
 	//AJAX
 	
 	/*$('#numerotarjeta').focusout(function(){
@@ -98,8 +130,8 @@ $(document).ready(function(){
 		}
 		$.ajax({
 			method: "POST",
-			url: "ControladorIngresarFichada",
-			data: { data: data },
+			url: URL_INGRESAR_FICHADA,
+			data: data,
 			async: false
 		}).done(function(data){
 			
@@ -107,70 +139,80 @@ $(document).ready(function(){
 	});*/
 	
 	/*$('#tipotrasaccion').on('change', function() {
+=======
+	$('#tipotransaccion').on('change', function() {
+>>>>>>> 66f782baca441aa5bbf464f14e2031a8001e79c6
 		v = this.value;
+		//console.log('Change CON ajax - v = ' + v);
 		if(v == 1){
 			var data = {
-				nroValidacion = 2
+				nroValidacion : 2
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
-				$('#lectora').html(data);
-				$('#lectora').show();
+				actualizarSelect($('#lectora'), data);
 				$('#monto').show();
-			})
-		}
-		if(v == 2){
+			}).fail( function(xhr, textStatus, errorThrown) {
+				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+		    })
+		} else if (v == 2){
 			var data = {
-				nroValidacion = 3
+				nroValidacion : 3
+			}
+			
+			$.ajax({
+				method: "POST",
+				url: URL_INGRESAR_FICHADA,
+				data: data,
+				async: false
+			}).done(function(data){
+				actualizarSelect($('#linea'), data);
+			}).fail( function(xhr, textStatus, errorThrown) {
+				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+		    })
+
+		} else if(v == 3){
+			var data = {
+				nroValidacion : 4
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
-				async: false
+				url: URL_INGRESAR_FICHADA,
+				data: data,
+				async: true
 			}).done(function(data){
-				$('#linea').html(data);
-				$('#linea').show();
-			})
-		}
-		if(v == 3){
-			var data = {
-				nroValidacion = 4
-			}
-			$.ajax({
-				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
-				async: false
-			}).done(function(data){
-				$('#linea').html(data);
-				$('#linea').show();
-			})
-		}
-		if(v == 4){
+				actualizarSelect($('#linea'), data);
+				//$('#linea').show();
+			}).fail( function(xhr, textStatus, errorThrown) {
+				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+		    })
+			
+		} else if(v == 4){
 			var data = {
 				nroValidacion : 5
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
-				$('#linea').html(data);
-				$('#linea').show();
-			})
+				actualizarSelect($('#linea'), data);
+			}).fail( function(xhr, textStatus, errorThrown) {
+				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+		    })
 		}
 	})
 	
 	$('#linea').on('change', function(){
-		var transaccion = $('#tipotrasaccion').value();
+		var transaccion = $('#tipotransaccion').val();
 		
-		//PREPARA LA INFO PARA SOLICITAR LOS INTERNOS DE LA LINEA DE COLECTIVO SELECCIONADA Y HACE LA PETICION
+		//PREPARA LA INFO PARA SOLICITAR LOS INTERNOS DE LA LINEA DE COLECTIVO SELECCIONADA 
+		//Y HACE LA PETICION
 		if(transaccion == 2){
 			var data = {
 				nroValidacion : 6,
@@ -178,26 +220,29 @@ $(document).ready(function(){
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
-				$('#estacioninterno').html(data);
-				$('#estacioninterno').show();
-			})
+				actualizarSelect($('#estacioninterno'), data);
+			}).fail( function(xhr, textStatus, errorThrown) {
+				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+		    })
+			
 			var data = {
 				nroValidacion : 1,
 				idLinea : this.value
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
-				$('#tramo').html(data);
-				$('#tramo').show();
-			})
+				actualizarSelect($('#tramo'), data);
+			}).fail( function(xhr, textStatus, errorThrown) {
+				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+		    })
 		}
 		//PREPARA LA INFO PARA SOLICITAR LAS ESTACIONES DE LA LINEA DE SUBTE SELECCIONADA Y HACE LA PETICION
 		if(transaccion == 3){
@@ -207,13 +252,14 @@ $(document).ready(function(){
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
-				$('#estacioninterno').html(data);
-				$('#estacioninterno').show();
-			})
+				actualizarSelect($('#estacioninterno'), data);
+			}).fail( function(xhr, textStatus, errorThrown) {
+				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+		    })
 		}
 		//PREPARA LA INFO PARA SOLICITAR LAS ESTACIONES DE LA LINEA DE TREN SELECCIONADA Y HACE LA PETICION
 		if(transaccion == 4){
@@ -223,18 +269,19 @@ $(document).ready(function(){
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
-				$('#estacioninterno').html(data);
-				$('#estacioninterno').show();
-			})
+				actualizarSelect($('#estacioninterno'), data);
+			}).fail( function(xhr, textStatus, errorThrown) {
+				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+		    })
 		}
 	})
 	
 	$('#estacioninterno').on('change', function(){
-		var transaccion = $('#tipotrasaccion').value();
+		var transaccion = $('#tipotransaccion').val();
 		if(transaccion == 3){
 			var data = {
 				nroValidacion : 9,
@@ -243,13 +290,14 @@ $(document).ready(function(){
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
-				$('#lectora').html(data);
-				$('#lectora').show();
-			})
+				actualizarSelect($('#lectora'), data);
+			}).fail( function(xhr, textStatus, errorThrown) {
+				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+		    })
 		}
 		if(transaccion == 4){
 			var data = {
@@ -259,13 +307,14 @@ $(document).ready(function(){
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
-				$('#lectora').html(data);
-				$('#lectora').show();
-			})
+				actualizarSelect($('#lectora'), data);
+			}).fail( function(xhr, textStatus, errorThrown) {
+				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+		    })
 		}
 	})
 	*/

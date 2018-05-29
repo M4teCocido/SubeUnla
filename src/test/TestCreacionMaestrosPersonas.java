@@ -11,6 +11,7 @@ import dao.TarjetaSubeDao;
 import dao.descuentos.DescuentoBoletoEstudiantilDao;
 import dao.descuentos.DescuentoTarifaSocialDao;
 import dao.fichadas.subte.EstacionSubteDao;
+import dao.lectoras.LectoraExternaDao;
 import dao.lectoras.LectoraSubteDao;
 import modelo.Documento;
 import modelo.eTipoDocumento;
@@ -20,6 +21,7 @@ import modelo.Descuentos.eTipoBoletoEstudiantil;
 import modelo.fichadas.FichadaRecarga;
 import modelo.fichadas.subte.EstacionSubte;
 import modelo.fichadas.subte.FichadaSubte;
+import modelo.lectoras.LectoraExterna;
 import modelo.lectoras.LectoraSubte;
 import util.RNG;
 import modelo.Persona;
@@ -42,9 +44,9 @@ public class TestCreacionMaestrosPersonas {
 		TarjetaSubeDao daoTarjeta = new TarjetaSubeDao();
 		EstacionSubteDao daoEstacionSubte = new EstacionSubteDao();
 		LectoraSubteDao daoLectoraSubte = new LectoraSubteDao();
+		LectoraExternaDao daoLectoraExterna = new LectoraExternaDao (); 
 		
-		
-		
+		List<LectoraExterna> lectorasExternas = new ArrayList<LectoraExterna>();
 		Persona persona;
 		Documento doc;
 		DescuentoTarifaSocial descuentoTarifaSocial;
@@ -73,6 +75,11 @@ public class TestCreacionMaestrosPersonas {
 			agregarPersona("Ignacio", "Oliveto", eGenero.M, fecha, "dsadsa@gmail.com", "1558912066", "42991823", "49383938");
 			agregarPersona("Cristian", "Juarez", eGenero.M, fecha, "haha@gmail.com", "1558912066", "42991823", "59383938");
 			
+			lectorasExternas.add(new LectoraExterna(4000, "Kiosko 9 De Julio"));
+			lectorasExternas.add(new LectoraExterna(4001, "Terminal Palomar"));
+			lectorasExternas.add(new LectoraExterna(4002, "Kiosko UNLa"));
+			lectorasExternas.add(new LectoraExterna(4003, "Multiservicio Ricardo"));
+			
 			//tarjeta1.setPropietario(persona);
 			//tarjeta2.setPropietario(persona);
 			/*
@@ -89,6 +96,10 @@ public class TestCreacionMaestrosPersonas {
 				for (TarjetaSube t : p.getTarjetasAsociadas()) {
 					daoTarjeta.agregarTarjetaSube(t);
 				}
+			}
+
+			for (LectoraExterna l : lectorasExternas) {
+				daoLectoraExterna.agregarLectora(l);
 			}
 			
 			for (Persona p : daoPersona.traerPersonas()) {
