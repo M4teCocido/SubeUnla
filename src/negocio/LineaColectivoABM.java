@@ -10,6 +10,8 @@ import modelo.fichadas.colectivo.LineaColectivo;
 
 public class LineaColectivoABM {
 	
+	LineaColectivoDao dao = new LineaColectivoDao();
+	InternoColectivoDao daoInterno = new InternoColectivoDao();
 	InternoColectivoDao daoInterno;
 	LineaColectivoDao dao;
 	
@@ -50,6 +52,8 @@ public class LineaColectivoABM {
 		return dao.traerLineas();
 	}
 	
+	public List<InternoColectivo> traerInternosPorIdLinea(int idLinea){
+		return daoInterno.traerInternosPorIdLinea(idLinea);
 	public List<InternoColectivo> traerInternosPorIdLinea(int idLinea) throws Exception{
 		
 		List <InternoColectivo> internos = new ArrayList<InternoColectivo>();

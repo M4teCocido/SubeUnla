@@ -53,5 +53,4 @@ public class LineaSubteABM {
 	public List<LectoraSubte> traerLectorasPorIdEstacion(int idEstacion){
 		return daoLectora.traerLectorasPorIdEstacion(idEstacion);
 	}
-	
 }

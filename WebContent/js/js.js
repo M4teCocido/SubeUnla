@@ -1,13 +1,22 @@
 var URL_INGRESAR_FICHADA = "/SubeUnla/IngresarFichada";
 
 $(document).ready(function(){
-	//INICIALIZACIONES
+
+	//FUNCIONES
 	
-	$('input, #input_text, textarea#textarea2').characterCounter();
+	function setFormFichada(){
+		$('#divlinea').hide();
+		$('#divestacioninterno').hide();
+		$('#divlectora').hide();
+		$('#divtramo').hide();
+		$('#divmonto').hide();
+	}
+	
+	//INICIALIZACIONES
 	
 	$('.carousel').carousel({
 		fullWidth: true,
-    	indicators: true,
+    	indicators: true
 	});
 	
 	var carousel = $('.carousel');
@@ -16,6 +25,7 @@ $(document).ready(function(){
 	var date = new Date();	
 	
 	$('select').formSelect();
+
 	
 	$('.datepicker').datepicker({
 		format: "d-m-yyyy",
@@ -30,12 +40,15 @@ $(document).ready(function(){
 		}
 	});
 	
+	$('input, #input_text, textarea#textarea2').characterCounter();
+
 	$('.timepicker').timepicker({
 		showClearBtn: true
 	});
 	
 	setFormFichada();
 	
+	$('#tipotransaccion').change(function() {
 	//FUNCIONES
 	
 	function actualizarSelect(select, data){
@@ -70,10 +83,6 @@ $(document).ready(function(){
 			$('#divlinea').show();
 			$('#divestacioninterno').hide();
 			$('#divtramo').hide();
-			/*$('#estacioninterno').html('Interno');
-			$('#estacioninterno').placeholder('Seleccione un interno');*/
-			//ajax para cargar los interno del bondi
-			//ajax para traer la lectora del interno seleccionado si es que no lo traemos directamente con el interno
 			$('#divmonto').hide();
 			$('#divlectora').hide();
 		}
@@ -96,7 +105,9 @@ $(document).ready(function(){
 			$('#divtramo').hide();
 		}
 	});
-
+	
+	//COMPORTAMIENTO
+	
 	$('#linea').on('change', function(){
 		var transaccion = $('#tipotransaccion').val();
 		console.log("Linea.Change() : Transaccion = " + transaccion);
@@ -127,7 +138,10 @@ $(document).ready(function(){
 		})
 	});*/
 	
+	/*$('#tipotrasaccion').on('change', function() {
+=======
 	$('#tipotransaccion').on('change', function() {
+>>>>>>> 66f782baca441aa5bbf464f14e2031a8001e79c6
 		v = this.value;
 		//console.log('Change CON ajax - v = ' + v);
 		if(v == 1){
@@ -303,5 +317,6 @@ $(document).ready(function(){
 		    })
 		}
 	})
+	*/
 	
 });	

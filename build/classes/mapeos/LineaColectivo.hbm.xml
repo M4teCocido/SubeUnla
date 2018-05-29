@@ -7,6 +7,10 @@
 			<generator class = "identity" />
 		</id>
 		<property column="nombre" name="nombre" type="string" />
+		<set name="tramosColectivo" table="tramoColectivo" order-by="idTramo asc" inverse="true" lazy="true" fetch="select">
+			<key column="idLinea" not-null="true" />
+			<one-to-many class="modelo.fichadas.colectivo.TramoColectivo" />
+		</set>
 		<set name="tramosColectivo" table="tramoColectivo" order-by="idTramo asc" inverse="true" lazy="false" fetch="select">
 			<key column="idLinea" not-null="true" />
 			<one-to-many class="modelo.fichadas.colectivo.TramoColectivo" />

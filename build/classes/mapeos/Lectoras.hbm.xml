@@ -12,12 +12,10 @@
 			<one-to-many class="modelo.lectoras.Lectora" />
 		</set>
 	</class>
-	
 	<joined-subclass name = "modelo.lectoras.LectoraExterna" table="lectoraexterna" extends="modelo.lectoras.Lectora">
 		<key column="idLectora" />
 		<property column="ubicacion" name="ubicacion" type="string" />
 	</joined-subclass>
-	
 	<joined-subclass name = "modelo.lectoras.LectoraColectivo" table="lectoracolectivo" extends="modelo.lectoras.Lectora">
 		<key column="idLectora" />
 		<many-to-one name="interno" class="modelo.fichadas.colectivo.InternoColectivo" fetch="select" column="idInterno" not-null="true" /> 

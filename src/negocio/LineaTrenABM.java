@@ -11,6 +11,7 @@ import dao.fichadas.tren.LineaTrenDao;
 import dao.lectoras.LectoraTrenDao;
 
 public class LineaTrenABM {
+	
 	LineaTrenDao dao = new LineaTrenDao();
 	EstacionTrenDao daoEstacion = new EstacionTrenDao();
 	LectoraTrenDao daoLectora = new LectoraTrenDao();
