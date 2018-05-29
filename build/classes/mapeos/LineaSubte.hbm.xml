@@ -8,7 +8,7 @@
 		</id>
 		<property column="nombre" name="nombre" type="string" />
 		<property column="precioViaje" name="precioViaje" type="java.math.BigDecimal"  precision="2"/>
-		<set name="recorridoSubte" table="estacionsubte" inverse="true" lazy="true" fetch="select"><!-- order-by="idEstacion asc"  -->
+		<set name="recorridoSubte" table="estacionsubte" inverse="true" lazy="false" fetch="select"><!-- order-by="idEstacion asc"  -->
 			<key column="idLinea" not-null="true" />
 			<one-to-many class="modelo.fichadas.subte.EstacionSubte" />
 		</set>

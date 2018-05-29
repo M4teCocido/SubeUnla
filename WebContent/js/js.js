@@ -271,7 +271,7 @@ $(document).ready(function(){
 		if(transaccion == 3){
 			var data = {
 				nroValidacion : 9,
-				idLinea : $('#linea').value(),
+				idLinea : $('#linea').val(),
 				idEstacion : this.value
 			}
 			$.ajax({
@@ -288,7 +288,7 @@ $(document).ready(function(){
 		if(transaccion == 4){
 			var data = {
 				nroValidacion : 10,
-				idLinea : $('#linea').value(),
+				idLinea : $('#linea').val(),
 				idEstacion : this.value
 			}
 			$.ajax({

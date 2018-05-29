@@ -83,18 +83,22 @@ public class ControladorIngresarFichada extends HttpServlet {
 		request.getRequestDispatcher("views/listaInternosColectivo.jsp").forward(request, response);
 	}
 	
-	private void procesarPeticionEstacionesSubte(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void procesarPeticionEstacionesSubte(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		int idLinea = Integer.parseInt(request.getParameter("idLinea"));
 		LineaSubteABM abm = new LineaSubteABM();
-		List<EstacionSubte> lstEstacion = abm.traerEstacionesPorIdLinea(idLinea);
+		LineaSubte linea = abm.traerLineaPorId(idLinea);
+		List<EstacionSubte> lstEstacion = new ArrayList<EstacionSubte>();
+		lstEstacion.addAll(linea.getRecorridoSubte());
 		request.setAttribute("lstEstaciones", lstEstacion);
 		request.getRequestDispatcher("views/listaEstacionesSubte.jsp").forward(request, response);
 	}
 	
-	private void procesarPeticionEstacionesTren(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void procesarPeticionEstacionesTren(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		int idLinea = Integer.parseInt(request.getParameter("idLinea"));
 		LineaTrenABM abm = new LineaTrenABM();
-		List<EstacionTren> lstEstacion = abm.traerEstacionesPorIdLinea(idLinea);
+		LineaTren linea = abm.traerLineaPorId(idLinea);
+		List<EstacionTren> lstEstacion = new ArrayList<EstacionTren>();
+		lstEstacion.addAll(linea.getEstaciones());
 		request.setAttribute("lstEstaciones", lstEstacion);
 		request.getRequestDispatcher("views/listaEstacionesTren.jsp").forward(request, response);
 	}
