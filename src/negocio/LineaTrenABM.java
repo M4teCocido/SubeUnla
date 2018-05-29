@@ -51,8 +51,7 @@ public class LineaTrenABM {
 		return daoEstacion.traerEstacionPorIdLinea(idLinea);
 	}
 	
-	public List<LectoraTren> traerLectorasPorIdEstacion(int idEstacion){
-		
+	public List<LectoraTren> traerLectorasPorIdEstacion(int idEstacion){	
 		return daoLectora.traerLectorasPorIdEstacion(idEstacion);
 	}
 }

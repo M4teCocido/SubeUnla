@@ -10,7 +10,6 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.hibernate.HibernateException;
 
 import dao.fichadas.colectivo.LineaColectivoDao;
 import modelo.fichadas.colectivo.InternoColectivo;

@@ -8,8 +8,14 @@ import modelo.fichadas.colectivo.InternoColectivo;
 import modelo.fichadas.colectivo.LineaColectivo;
 
 public class LineaColectivoABM {
-	LineaColectivoDao dao = new LineaColectivoDao();
-	InternoColectivoDao daoInterno = new InternoColectivoDao();
+	
+	InternoColectivoDao daoInterno;
+	LineaColectivoDao dao;
+	
+	public LineaColectivoABM() {
+		daoInterno = new InternoColectivoDao();
+		dao = new LineaColectivoDao();
+	}
 	
 	public LineaColectivo traerLineaPorId(int idLinea)throws Exception {
 		LineaColectivo l = dao.traerLineaPorId(idLinea);

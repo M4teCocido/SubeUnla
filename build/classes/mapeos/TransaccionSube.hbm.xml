@@ -1,0 +1,15 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping >
+	<class name="modelo.fichadas.TransaccionSUBE" table="transaccionsube">
+		<id column="idTransaccion" name="idTransaccion">
+			<generator class="foreign">
+	            <param name="property">Fichada</param>
+	        </generator>
+		</id>
+		<property column="importe" name="importe" type="java.math.BigDecimal"  precision="2"/>
+		<many-to-one name="tarjeta" class="modelo.TarjetaSube" fetch="select" column="idTarjetaSube" not-null="true" />
+		<one-to-one name = "Fichada" class = "modelo.fichadas.Fichada" ></one-to-one >
+	</class>
+</hibernate-mapping>

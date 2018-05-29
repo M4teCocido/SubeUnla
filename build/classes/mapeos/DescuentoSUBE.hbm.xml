@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping >
+
+	<class name="modelo.Descuentos.DescuentoSube" table="descuentosube">
+		<id column="idDescuento" name="idDescuento">
+			<generator class = "identity" />
+		</id>
+		<property column="nombre" name="nombre" type="string" />
+	</class>
+	 
+	<joined-subclass name = "modelo.Descuentos.DescuentoRedSube" table="descuentoredsube" extends="modelo.Descuentos.DescuentoSube">
+		<key column="idDescuento" />
+		<one-to-one name="lapsoDescuentoRedSube" class="modelo.Descuentos.LapsoDescuentoRedSube" property-ref="descuento" cascade="all"></one-to-one>
+		<many-to-one name="tarjeta" class="modelo.TarjetaSube" fetch="select" lazy="false" column="idTarjetaSube" cascade="all" not-null="true" />
+	</joined-subclass>
+	
+	<joined-subclass name = "modelo.Descuentos.DescuentoTarifaSocial" table="descuentotarifasocial" extends="modelo.Descuentos.DescuentoSube">
+		<key column="idDescuento" />
+		<property name="porcentajeDescuento" column="descuento" type="java.math.BigDecimal" precision="2" />
+		<many-to-one name="persona" class="modelo.Persona" fetch="select" column="idPersona" not-null="true" />
+	</joined-subclass>
+	 
+	<joined-subclass name="modelo.Descuentos.DescuentoBoletoEstudiantil" table="descuentoboletoestudiantil" extends="modelo.Descuentos.DescuentoSube">
+		<key column="idDescuento" />
+
+		<property name="porcentajeDescuento" column="descuento" type="java.math.BigDecimal" precision="2" />
+		<property name="viajesRestantes" column="viajesRestantes" type="int" />
+		
+		<property column="tipoBoleto" name="tipoBoletoEstudiantil">
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">modelo.Descuentos.eTipoBoletoEstudiantil</param>
+	    	</type>
+	    </property>
+		
+		<many-to-one name="persona" class="modelo.Persona" fetch="select" column="idPersona" not-null="true" />
+		
+	</joined-subclass>
+</hibernate-mapping>

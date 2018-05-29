@@ -92,4 +92,19 @@ public class LectoraTrenDao {
 		}
 		return lista;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<LectoraTren> traerLectorasPorIdEstacion(int idEstacion) throws HibernateException {
+		List<LectoraTren> lista = null;
+		try {
+			iniciaOperacion();
+			lista = session.createQuery("from LectoraTren l where l.idEstacion =" + idEstacion +  " order by l.idLectora asc").list();
+		} catch (HibernateException he) {
+			manejaExcepcion(he);
+			throw he;
+		} finally {
+			session.close();
+		}
+		return lista;
+	}
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping >
+	<class name="modelo.lectoras.Lectora" table="lectora">
+		<id column="idLectora" name="idLectora">
+			<generator class = "identity" />
+		</id>
+		<property column="nroSerie" name="nroSerie" type="int" />
+		<set name="fichadas" table="fichadas" inverse="true" lazy="true" fetch="select"><!-- order-by="idEstacion asc"  -->
+			<key column="idLectora" not-null="true" />
+			<one-to-many class="modelo.lectoras.Lectora" />
+		</set>
+	</class>
+	
+	<joined-subclass name = "modelo.lectoras.LectoraColectivo" table="lectoracolectivo" extends="modelo.lectoras.Lectora">
+		<key column="idLectora" />
+		<many-to-one name="interno" class="modelo.fichadas.colectivo.InternoColectivo" fetch="select" column="idInterno" not-null="true" /> 
+	</joined-subclass>
+	
+	<joined-subclass name = "modelo.lectoras.LectoraSubte" table="lectorasubte" extends="modelo.lectoras.Lectora">
+		<key column="idLectora" />
+		<many-to-one name="estacion" class="modelo.fichadas.subte.EstacionSubte" fetch="select" column="idEstacion" not-null="true" />
+	</joined-subclass>
+	
+	<joined-subclass name="modelo.lectoras.LectoraTren" table="lectoratren" extends="modelo.lectoras.Lectora">
+		<key column="idLectora" />
+		<property column="esEntrada" name="esEntrada" type="boolean" /> 
+		<many-to-one name="estacion" class="modelo.fichadas.tren.EstacionTren" fetch="select" column="idEstacion" not-null="true" />
+	</joined-subclass>
+	
+</hibernate-mapping>
