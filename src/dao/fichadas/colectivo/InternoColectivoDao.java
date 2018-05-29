@@ -99,7 +99,7 @@ public class InternoColectivoDao {
 		List<InternoColectivo> lista = null;
 		try {
 			iniciaOperacion();
-			lista = session.createQuery("from InternoColectivo i where i.idLinea = " + idLinea + "order by i.idInterno").list();
+			lista = session.createQuery("from InternoColectivo i where i.idLinea = " + idLinea + " order by i.idInterno").list();
 		}catch(HibernateException he) {
 			manejaExcepcion(he);
 			throw he;

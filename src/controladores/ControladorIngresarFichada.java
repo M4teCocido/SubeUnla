@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.fichadas.colectivo.LineaColectivoDao;
 import modelo.fichadas.colectivo.InternoColectivo;
 import modelo.fichadas.colectivo.LineaColectivo;
+import modelo.fichadas.colectivo.TramoColectivo;
 import modelo.fichadas.subte.EstacionSubte;
 import modelo.fichadas.subte.LineaSubte;
 import modelo.fichadas.tren.EstacionTren;
@@ -34,15 +36,21 @@ public class ControladorIngresarFichada extends HttpServlet {
 		procesarPeticion(request, response);
 	}
 	
-	private void procesarPeticionTramosColectivo(HttpServletRequest request, HttpServletResponse response) {
-		
+	private void procesarPeticionTramosColectivo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		int idLinea = Integer.parseInt(request.getParameter("idLinea"));
+		LineaColectivoABM abm = new LineaColectivoABM();
+		LineaColectivo linea = abm.traerLineaPorId(idLinea);
+		List<TramoColectivo> tramos = new ArrayList<TramoColectivo>();
+		tramos.addAll(linea.getTramosColectivo());
+		request.setAttribute("lstTramos", tramos);
+		request.getRequestDispatcher("views/listaTramosColectivo.jsp").forward(request, response);
 	}
 	
 	private void procesarPeticionLectorasCarga(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		LectorasExternasABM abm = new LectorasExternasABM();
 		List<LectoraExterna> lstLectora = abm.traerLectoras();
 		request.setAttribute("lstLectoras", lstLectora);
-		request.getRequestDispatcher("/lstLectoras.jsp").forward(request, response);
+		request.getRequestDispatcher("views/listaLectorasExternas.jsp").forward(request, response);
 	}
 	
 	private void procesarPeticionLineasColectivo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -67,7 +75,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 		request.getRequestDispatcher("views/listaLineasSubte.jsp").forward(request, response);
 	}
 	
-	private void procesarPeticionInternosColectivo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void procesarPeticionInternosColectivo(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		int idLinea = Integer.parseInt(request.getParameter("idLinea"));
 		LineaColectivoABM abm = new LineaColectivoABM();
 		List<InternoColectivo> lstInterno = abm.traerInternosPorIdLinea(idLinea);
@@ -102,6 +110,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 				System.out.println("Numero : " + nroValidacion);
 				switch(nroValidacion) {
 				case 1: //Devolver tramos de colectivo
+					this.procesarPeticionTramosColectivo(request, response);
 					break;
 				case 2: //Devolver lectoras de carga
 					this.procesarPeticionLectorasCarga(request, response);
@@ -134,6 +143,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 			}
 		} catch(Exception e) {
 			System.out.println("Excepction agarrada : " + e.getMessage());
+			e.printStackTrace();
 			if (!response.isCommitted())
 				response.sendError(500, e.getMessage());
 		}

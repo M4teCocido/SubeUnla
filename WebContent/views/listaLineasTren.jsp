@@ -7,7 +7,7 @@ pageEncoding="ISO-8859-1"%>
 for (LineaTren linea:lineas){ %>
 	<option class="black-text text-lighten-3" 
 		value = "<%= linea.getIdLinea() %>"> 
-		<%= linea.getNombre() %> 
+		Linea - <%= linea.getNombre() %> 
 	</option > 
 	
 <% } %>

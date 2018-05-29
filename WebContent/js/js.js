@@ -97,6 +97,19 @@ $(document).ready(function(){
 		}
 	});
 
+	$('#linea').on('change', function(){
+		var transaccion = $('#tipotransaccion').val();
+		console.log("Linea.Change() : Transaccion = " + transaccion);
+		if (transaccion == 2){ //Colectivo
+			$('#divtramo').show();
+			$("#divestacioninterno").show();
+		} else if (transaccion == 3) { //Subte 
+			$("#divestacioninterno").show();
+		} else if (transaccion == 4){ //Tren
+			$("#divestacioninterno").show();
+		}
+	})
+	
 	//AJAX
 	
 	/*$('#numerotarjeta').focusout(function(){
@@ -127,8 +140,7 @@ $(document).ready(function(){
 				data: data,
 				async: false
 			}).done(function(data){
-				$('#lectora').html(data);
-				$('#lectora').show();
+				actualizarSelect($('#lectora'), data);
 				$('#monto').show();
 			}).fail( function(xhr, textStatus, errorThrown) {
 				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
@@ -144,7 +156,6 @@ $(document).ready(function(){
 				data: data,
 				async: false
 			}).done(function(data){
-				console.log("Info recibida (DONE): " + data);
 				actualizarSelect($('#linea'), data);
 			}).fail( function(xhr, textStatus, errorThrown) {
 				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
@@ -184,9 +195,10 @@ $(document).ready(function(){
 	})
 	
 	$('#linea').on('change', function(){
-		var transaccion = $('#tipotransaccion').value;
+		var transaccion = $('#tipotransaccion').val();
 		
-		//PREPARA LA INFO PARA SOLICITAR LOS INTERNOS DE LA LINEA DE COLECTIVO SELECCIONADA Y HACE LA PETICION
+		//PREPARA LA INFO PARA SOLICITAR LOS INTERNOS DE LA LINEA DE COLECTIVO SELECCIONADA 
+		//Y HACE LA PETICION
 		if(transaccion == 2){
 			var data = {
 				nroValidacion : 6,
@@ -213,8 +225,7 @@ $(document).ready(function(){
 				data: data,
 				async: false
 			}).done(function(data){
-				$('#tramo').html(data);
-				$('#tramo').show();
+				actualizarSelect($('#tramo'), data);
 			}).fail( function(xhr, textStatus, errorThrown) {
 				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
 		    })
@@ -256,7 +267,7 @@ $(document).ready(function(){
 	})
 	
 	$('#estacioninterno').on('change', function(){
-		var transaccion = $('#tipotransaccion').value();
+		var transaccion = $('#tipotransaccion').val();
 		if(transaccion == 3){
 			var data = {
 				nroValidacion : 9,
