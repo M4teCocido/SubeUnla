@@ -6,7 +6,7 @@ pageEncoding="ISO-8859-1"%>
 <% List<LineaSubte> lineas = (List)request.getAttribute("lstLineas") ;
 for (LineaSubte linea:lineas){ %>
 	<option class="black-text text-lighten-3" 
-		value = " <%= linea.getIdLinea() %> "> 
+		value = "<%= linea.getIdLinea() %>"> 
 		<%= linea.getNombre() %> 
 	</option > 
 	

@@ -47,24 +47,24 @@ public class ControladorIngresarFichada extends HttpServlet {
 	
 	private void procesarPeticionLineasColectivo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		LineaColectivoABM abm = new LineaColectivoABM();
-		List<LineaColectivo> lstLinea = abm.traerLineas();
-		//List<LineaColectivo> lineas = daoLineaColectivo.traerLineas(); 
+		List<LineaColectivo> lstLinea = abm.traerLineas(); 
 		request.setAttribute( "lstLineas" , lstLinea );
-		request.getRequestDispatcher( "/listaLineasColectivo.jsp" ).forward( request , response );
+		request.getRequestDispatcher( "views/listaLineasColectivo.jsp" ).forward( request , response );
+		System.out.println("Cantidad Lineas Colectivo : " + lstLinea.size());
 	}
 	
 	private void procesarPeticionLineasTren(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		LineaTrenABM abm = new LineaTrenABM();
 		List<LineaTren> lstLineas = abm.traerLineas();
 		request.setAttribute("lstLineas", lstLineas);
-		request.getRequestDispatcher("/listaLineasTren.jsp").forward(request, response);
+		request.getRequestDispatcher("views/listaLineasTren.jsp").forward(request, response);
 	}
 	
 	private void procesarPeticionLineasSubte(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		LineaSubteABM abm = new LineaSubteABM();
 		List<LineaSubte> lstLineas = abm.traerLineas();
 		request.setAttribute("lstLineas", lstLineas);
-		request.getRequestDispatcher("/listaLineasSubte.jsp").forward(request, response);
+		request.getRequestDispatcher("views/listaLineasSubte.jsp").forward(request, response);
 	}
 	
 	private void procesarPeticionInternosColectivo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -72,7 +72,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 		LineaColectivoABM abm = new LineaColectivoABM();
 		List<InternoColectivo> lstInterno = abm.traerInternosPorIdLinea(idLinea);
 		request.setAttribute("lstInternos", lstInterno);
-		request.getRequestDispatcher("/listaInternosColectivo.jsp").forward(request, response);
+		request.getRequestDispatcher("views/listaInternosColectivo.jsp").forward(request, response);
 	}
 	
 	private void procesarPeticionEstacionesSubte(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -80,7 +80,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 		LineaSubteABM abm = new LineaSubteABM();
 		List<EstacionSubte> lstEstacion = abm.traerEstacionesPorIdLinea(idLinea);
 		request.setAttribute("lstEstaciones", lstEstacion);
-		request.getRequestDispatcher("/listaEstacionesSubte.jsp").forward(request, response);
+		request.getRequestDispatcher("views/listaEstacionesSubte.jsp").forward(request, response);
 	}
 	
 	private void procesarPeticionEstacionesTren(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -88,17 +88,13 @@ public class ControladorIngresarFichada extends HttpServlet {
 		LineaTrenABM abm = new LineaTrenABM();
 		List<EstacionTren> lstEstacion = abm.traerEstacionesPorIdLinea(idLinea);
 		request.setAttribute("lstEstaciones", lstEstacion);
-		request.getRequestDispatcher("/listaEstacionesTren.jsp").forward(request, response);
+		request.getRequestDispatcher("views/listaEstacionesTren.jsp").forward(request, response);
 	}
 	
 	private void procesarPeticion(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		response.setContentType("text/html;	charset=UTF-8");
-		System.out.println("In Controlador");
 		try {
 			String strNroValidacion= request.getParameter("nroValidacion");
-			//String dataString = request.getParameter("data");
-			//System.out.println("Data (as String) : " + dataString);
-			System.out.println("Numero (as String) : " + strNroValidacion);
 			if (strNroValidacion == null)
 				request.getRequestDispatcher("/index.jsp").forward(request, response);
 			else {
@@ -137,7 +133,9 @@ public class ControladorIngresarFichada extends HttpServlet {
 				}
 			}
 		} catch(Exception e) {
-			response.sendError(500, e.getMessage());
+			System.out.println("Excepction agarrada : " + e.getMessage());
+			if (!response.isCommitted())
+				response.sendError(500, e.getMessage());
 		}
 	}
 }

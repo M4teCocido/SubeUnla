@@ -34,7 +34,7 @@ public class TestCreacionMaestrosTrenes {
 		ViajeTrenDao daoViaje = new ViajeTrenDao();
 		LectoraTrenDao daoLectora = new LectoraTrenDao();
 		
-		LineaTren lineaRoca = new LineaTren("74");
+		LineaTren lineaRoca = new LineaTren("Roca");
 		List<EstacionTren> estacionesRoca = new ArrayList<EstacionTren>();
 		List<SeccionTren> seccionesRoca = new ArrayList<SeccionTren>();
 		List<LectoraTren> lectorasRoca = new ArrayList<LectoraTren>();
