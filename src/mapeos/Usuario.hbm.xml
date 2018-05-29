@@ -1,0 +1,20 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping >
+	<class name="modelo.Usuario" table="usuario">
+		<id column="idUsuario" name="idUsuario">
+			<generator class = "identity" />
+		</id>
+		<property column="nombreUsuario" name="nombreUsuario" type="string" />
+		<property column="contraseña" name="password" type="string" />
+		
+		<one-to-one name="Persona" class="modelo.Persona"></one-to-one>
+		
+		<set name="permisos" table="permisopersona" outer-join="true">
+			<key column="Usuario_idUsuario" />
+			<many-to-many column="Permiso_idPermiso" class="modelo.Permiso" />
+		</set>
+		
+	</class>
+</hibernate-mapping>

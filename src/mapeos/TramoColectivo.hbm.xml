@@ -1,0 +1,16 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping >
+	<class name="modelo.fichadas.colectivo.TramoColectivo" table="tramoColectivo">
+		
+		<id column="idTramo" name="idTramo">
+			<generator class = "identity" />
+		</id>
+		
+		<property column="nombre" name="nombre" type="string" />
+		<property column="precio" name="precio" type="java.math.BigDecimal"  precision="2"/>
+
+		<many-to-one name="lineaColectivo" class="modelo.fichadas.colectivo.LineaColectivo" fetch="select" column="idLinea" not-null="true" />
+	</class>
+</hibernate-mapping>

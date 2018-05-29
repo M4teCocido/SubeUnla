@@ -1,0 +1,35 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD
+3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd" >
+<hibernate-configuration >
+	<session-factory >
+		<property name="connection.driver_class" > com.mysql.jdbc.Driver </property >
+		<property name="connection.url" > jdbc:mysql://localhost/subedb</property >
+		<property name="connection.username" >root</property >
+		<property name="connection.password" ></property >
+		<property name="connection.pool_size" >1</property >
+		<property name="dialect" >org.hibernate.dialect.MySQLDialect</property >
+		<property name="show_sql" >true</property > <!-- en true muestra hql en consola -->
+		<!-- Mapeo Entidades -->
+		<mapping resource="mapeos/DescuentoSube.hbm.xml" />
+		<mapping resource="mapeos/Documento.hbm.xml" />
+		<mapping resource="mapeos/LineaSubte.hbm.xml" />
+		<mapping resource="mapeos/EstacionSubte.hbm.xml" />
+		<mapping resource="mapeos/EstacionTren.hbm.xml" />
+		<mapping resource="mapeos/Fichada.hbm.xml" />
+		<mapping resource="mapeos/InternoColectivo.hbm.xml" />
+		<mapping resource="mapeos/LapsoDescuentoRedSube.hbm.xml" />
+		<mapping resource="mapeos/Lectoras.hbm.xml" />
+		<mapping resource="mapeos/LineaColectivo.hbm.xml" />
+		<mapping resource="mapeos/LineaTren.hbm.xml" />
+		<mapping resource="mapeos/Permiso.hbm.xml" />
+		<mapping resource="mapeos/Persona.hbm.xml" />
+		<mapping resource="mapeos/SeccionTren.hbm.xml" />
+		<mapping resource="mapeos/TarjetaSube.hbm.xml" />
+		<mapping resource="mapeos/TramoColectivo.hbm.xml" />
+		<mapping resource="mapeos/TransaccionSube.hbm.xml" />
+		<mapping resource="mapeos/Usuario.hbm.xml" />
+		<mapping resource="mapeos/ViajeTren.hbm.xml" />
+		
+	</session-factory >
+</hibernate-configuration>

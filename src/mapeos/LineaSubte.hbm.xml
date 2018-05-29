@@ -1,0 +1,16 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping >
+	<class name="modelo.fichadas.subte.LineaSubte" table="lineasubte">
+		<id column="idlinea" name="idLinea">
+			<generator class = "identity" />
+		</id>
+		<property column="nombre" name="nombre" type="string" />
+		<property column="precioViaje" name="precioViaje" type="java.math.BigDecimal"  precision="2"/>
+		<set name="recorridoSubte" table="estacionsubte" inverse="true" lazy="true" fetch="select"><!-- order-by="idEstacion asc"  -->
+			<key column="idLinea" not-null="true" />
+			<one-to-many class="modelo.fichadas.subte.EstacionSubte" />
+		</set>
+	</class>
+</hibernate-mapping>

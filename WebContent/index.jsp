@@ -18,7 +18,7 @@
           	<label for="hora">Hora de la fichada</label>
         </div>
         <div class="input-field col s12 m6 l4">
-		    <select name="tipotransaccion" id="tipotrasaccion">
+		    <select name="tipotransaccion" id="tipotransaccion">
 				<option class="black-text text-lighten-3" value="" disabled selected>Elija tipo de transaccion</option>
 				<option class="black-text text-lighten-3" value="1">Carga</option>
 				<option class="black-text text-lighten-3" value="2">Colectivo</option>

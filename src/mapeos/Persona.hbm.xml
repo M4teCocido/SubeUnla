@@ -1,0 +1,33 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping >
+	<class name="modelo.Persona" table="persona">
+		<id column="idPersona" name="idPersona">
+			<generator class = "identity" />
+		</id>
+		<property column="nombre" name="nombre" type="string" />
+		<property column="apellido" name="apellido" type="string" />
+		
+		<property column="genero" name="genero">
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">modelo.eGenero</param>
+	    	</type>
+	    </property>
+	    
+		<property column="fechaNacimiento" name="fechaNacimiento" type="calendar" />
+		<property column="email" name="email" type="string" />
+		<property column="celular" name="celular" type="string" />
+		<property column="telefono" name="telefono" type="string" />
+		<one-to-one name="documento" class="modelo.Documento" cascade="all" />
+		
+		<one-to-one name="descuentoBoletoEstudiantil" class="modelo.Descuentos.DescuentoBoletoEstudiantil" property-ref="persona" lazy="false" cascade="all" />
+		<one-to-one name="descuentoTarifaSocial" class="modelo.Descuentos.DescuentoTarifaSocial" lazy="false" property-ref="persona" cascade="all"></one-to-one>
+		
+		<set name="tarjetasAsociadas" table="tarjetasube" order-by="idTarjetaSube asc" inverse="true" lazy="false" fetch="select">
+			<key column="idPropietario" not-null="true" />
+			<one-to-many class="modelo.TarjetaSube" />
+		</set>
+		
+	</class>
+</hibernate-mapping>
