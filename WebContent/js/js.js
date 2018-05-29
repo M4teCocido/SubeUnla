@@ -1,3 +1,5 @@
+var URL_INGRESAR_FICHADA = "/SubeUnla/IngresarFichada";
+
 $(document).ready(function(){
 	//INICIALIZACIONES
 	
@@ -46,8 +48,9 @@ $(document).ready(function(){
 	
 	//COMPORTAMIENTO
 	
-	$('#tipotrasaccion').on('change', function() {
+	$('#tipotransaccion').on('change', function() {
 		v = this.value;
+		console.log('Change SIN ajax - v = ' + v);
 		//Carga
 		if(v == 1){
 			$('#divlectora').show();
@@ -98,67 +101,68 @@ $(document).ready(function(){
 		}
 		$.ajax({
 			method: "POST",
-			url: "ControladorIngresarFichada",
-			data: { data: data },
+			url: URL_INGRESAR_FICHADA,
+			data: data,
 			async: false
 		}).done(function(data){
 			
 		})
 	});*/
 	
-	$('#tipotrasaccion').on('change', function() {
+	$('#tipotransaccion').on('change', function() {
 		v = this.value;
+		console.log('Change CON ajax - v = ' + v);
 		if(v == 1){
 			var data = {
-				nroValidacion = 2
+				nroValidacion : 2
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
 				$('#lectora').html(data);
 				$('#lectora').show();
 				$('#monto').show();
 			})
-		}
-		if(v == 2){
+		} else if (v == 2){
 			var data = {
-				nroValidacion = 3
+				nroValidacion : 3
 			}
+			
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
 				$('#linea').html(data);
 				$('#linea').show();
 			})
-		}
-		if(v == 3){
+
+		} else if(v == 3){
 			var data = {
-				nroValidacion = 4
+				nroValidacion : 4
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
 				$('#linea').html(data);
 				$('#linea').show();
 			})
-		}
-		if(v == 4){
+			
+		} else if(v == 4){
 			var data = {
 				nroValidacion : 5
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
 				$('#linea').html(data);
@@ -168,7 +172,7 @@ $(document).ready(function(){
 	})
 	
 	$('#linea').on('change', function(){
-		var transaccion = $('#tipotrasaccion').value();
+		var transaccion = $('#tipotransaccion').value;
 		
 		//PREPARA LA INFO PARA SOLICITAR LOS INTERNOS DE LA LINEA DE COLECTIVO SELECCIONADA Y HACE LA PETICION
 		if(transaccion == 2){
@@ -178,21 +182,22 @@ $(document).ready(function(){
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
 				$('#estacioninterno').html(data);
 				$('#estacioninterno').show();
 			})
+			
 			var data = {
 				nroValidacion : 1,
 				idLinea : this.value
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
 				$('#tramo').html(data);
@@ -207,8 +212,8 @@ $(document).ready(function(){
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
 				$('#estacioninterno').html(data);
@@ -223,8 +228,8 @@ $(document).ready(function(){
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
 				$('#estacioninterno').html(data);
@@ -234,7 +239,7 @@ $(document).ready(function(){
 	})
 	
 	$('#estacioninterno').on('change', function(){
-		var transaccion = $('#tipotrasaccion').value();
+		var transaccion = $('#tipotransaccion').value();
 		if(transaccion == 3){
 			var data = {
 				nroValidacion : 9,
@@ -243,8 +248,8 @@ $(document).ready(function(){
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
 				$('#lectora').html(data);
@@ -259,8 +264,8 @@ $(document).ready(function(){
 			}
 			$.ajax({
 				method: "POST",
-				url: "ControladorIngresarFichada",
-				data: { data: data },
+				url: URL_INGRESAR_FICHADA,
+				data: data,
 				async: false
 			}).done(function(data){
 				$('#lectora').html(data);

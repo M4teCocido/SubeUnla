@@ -42,7 +42,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 	private void procesarPeticionLectorasCarga(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		LectorasExternasABM abm = new LectorasExternasABM();
 		List<LectoraExterna> lstLectora = abm.traerLectoras();
-		request.setAttribute("lstLectora", lstLectora);
+		request.setAttribute("lstLectoras", lstLectora);
 		request.getRequestDispatcher("/lstLectoras.jsp").forward(request, response);
 	}
 	
@@ -50,7 +50,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 		LineaColectivoABM abm = new LineaColectivoABM();
 		List<LineaColectivo> lstLinea = abm.traerLineas();
 		//List<LineaColectivo> lineas = daoLineaColectivo.traerLineas(); 
-		request.setAttribute( "lstLinea" , lstLinea );
+		request.setAttribute( "lstLineas" , lstLinea );
 		request.getRequestDispatcher( "/listaLineasColectivo.jsp" ).forward( request , response );
 	}
 	
@@ -94,43 +94,51 @@ public class ControladorIngresarFichada extends HttpServlet {
 	
 	private void procesarPeticion(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		response.setContentType("text/html;	charset=UTF-8");
+		System.out.println("In Controlador");
 		try {
-			int nroValidacion = Integer.parseInt(request.getParameter("nroValidacion"));
-
-			switch(nroValidacion) {
-			case 1: //Devolver tramos de colectivo
-				break;
-			case 2: //Devolver lectoras de carga
-				this.procesarPeticionLectorasCarga(request, response);
-				break;
-			case 3: //Devolver lineas de colectivo
-				this.procesarPeticionLineasColectivo(request, response);
-				
-				break;
-			case 4: //Devolver lineas de subte
-				this.procesarPeticionLineasSubte(request, response);
-				break;
-			case 5: //Devolver lineas de tren
-				this.procesarPeticionLineasTren(request, response);
-				break;
-			case 6: //Recibe linea de colectivo, devuelve internos de esa linea y tramos
-				this.procesarPeticionInternosColectivo(request, response);
-				break;
-			case 7: //Recibe linea de subte, devuelve estaciones de esa linea
-				this.procesarPeticionEstacionesSubte(request, response);
-				break;
-			case 8: //Recibe linea de tren, devuelve estaciones de esa linea
-				this.procesarPeticionEstacionesTren(request, response);
-				break;
-			case 9: //Recibe idEstacionSubte, devuelve lectoras de esa estacion
-				break;
-			case 10: //Recibe idEstacionTren, devuelve lectoras de esa estacion
-				break;
-			default:
-				break;
+			String strNroValidacion= request.getParameter("nroValidacion");
+			//String dataString = request.getParameter("data");
+			//System.out.println("Data (as String) : " + dataString);
+			System.out.println("Numero (as String) : " + strNroValidacion);
+			if (strNroValidacion == null)
+				request.getRequestDispatcher("/index.jsp").forward(request, response);
+			else {
+				int nroValidacion = Integer.parseInt(strNroValidacion);
+				System.out.println("Numero : " + nroValidacion);
+				switch(nroValidacion) {
+				case 1: //Devolver tramos de colectivo
+					break;
+				case 2: //Devolver lectoras de carga
+					this.procesarPeticionLectorasCarga(request, response);
+					break;
+				case 3: //Devolver lineas de colectivo
+					this.procesarPeticionLineasColectivo(request, response);
+					break;
+				case 4: //Devolver lineas de subte
+					this.procesarPeticionLineasSubte(request, response);
+					break;
+				case 5: //Devolver lineas de tren
+					this.procesarPeticionLineasTren(request, response);
+					break;
+				case 6: //Recibe linea de colectivo, devuelve internos de esa linea y tramos
+					this.procesarPeticionInternosColectivo(request, response);
+					break;
+				case 7: //Recibe linea de subte, devuelve estaciones de esa linea
+					this.procesarPeticionEstacionesSubte(request, response);
+					break;
+				case 8: //Recibe linea de tren, devuelve estaciones de esa linea
+					this.procesarPeticionEstacionesTren(request, response);
+					break;
+				case 9: //Recibe idEstacionSubte, devuelve lectoras de esa estacion
+					break;
+				case 10: //Recibe idEstacionTren, devuelve lectoras de esa estacion
+					break;
+				default:
+					break;
+				}
 			}
 		} catch(Exception e) {
-			response.sendError(500, "El numero de tarjeta no existe en la base de datos");
+			response.sendError(500, e.getMessage());
 		}
 	}
 }
