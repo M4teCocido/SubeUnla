@@ -231,18 +231,12 @@ public class ControladorIngresarFichada extends HttpServlet {
         if (tarjeta != null) {
             int idLectora = Integer.parseInt(request.getParameter("idLectora"));
             int idEstacion =  Integer.parseInt(request.getParameter("idEstacion"));
-
             int dia = Integer.parseInt(request.getParameter("dia"));
             int mes = Integer.parseInt(request.getParameter("mes"));
             int anio = Integer.parseInt(request.getParameter("anio"));
             int hora = Integer.parseInt(request.getParameter("hora"));
             int min = Integer.parseInt(request.getParameter("min"));
-
-
             GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min);
-            BigDecimal monto = new BigDecimal(request.getParameter("monto"));
-
-            
             FichadaSubte fichada = new FichadaSubte(fecha, this.obtenerLectoraSubte(idLectora), this.obtenerEstacionSubte (idEstacion) );
             resultado = tarjeta.procesarFichada(fichada);
         } else {
@@ -349,10 +343,13 @@ public class ControladorIngresarFichada extends HttpServlet {
 					this.procesarPeticionCarga(request, response);
 					break;
 				case 12:
+					this.procesarPeticionProcesarFichadaColectivo(request, response);
 					break;
 				case 13:
+					this.procesarPeticionProcesarFichadaSubte(request, response);
 					break;
 				case 14:
+					this.procesarPeticionProcesarFichadaTren(request, response);
 					break;
 				default:
 					break;
