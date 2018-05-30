@@ -7,7 +7,7 @@
 			<generator class = "identity" />
 		</id>
 		<property column="nombre" name="nombre" type="string" />
-		<many-to-one name="linea" class="modelo.fichadas.tren.LineaTren" fetch="select" column="idLinea" not-null="true" />
+		<many-to-one name="linea" class="modelo.fichadas.tren.LineaTren"  lazy="false" fetch="select" column="idLinea" not-null="true" />
 		<set name="lectoras" table="lectoratren" inverse="true" lazy="false" fetch="select"><!-- order-by="idLectora asc" -->
 			<key column="idEstacion" not-null="true" />
 			<one-to-many class="modelo.lectoras.LectoraTren" />

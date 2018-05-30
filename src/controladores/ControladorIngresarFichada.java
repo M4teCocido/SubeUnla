@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.PersonaDao;
 import dao.TarjetaSubeDao;
+import dao.descuentos.DescuentoRedSubeDao;
+import dao.descuentos.LapsoDescuentoRedSubeDao;
 import dao.fichadas.colectivo.InternoColectivoDao;
 import dao.fichadas.colectivo.LineaColectivoDao;
 import dao.fichadas.colectivo.TramoColectivoDao;
@@ -25,6 +27,7 @@ import dao.lectoras.LectoraSubteDao;
 import dao.lectoras.LectoraTrenDao;
 import dao.fichadas.subte.EstacionSubteDao;
 import modelo.TarjetaSube;
+import modelo.Descuentos.DescuentoRedSube;
 import modelo.fichadas.FichadaRecarga;
 import modelo.fichadas.colectivo.FichadaColectivo;
 import modelo.fichadas.colectivo.InternoColectivo;
@@ -203,6 +206,8 @@ public class ControladorIngresarFichada extends HttpServlet {
 		TarjetaSube.Resultado resultado;
 		if (tarjeta != null) {
 			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
+
+			int idLinea = Integer.parseInt(request.getParameter("idLinea"));
 			int idEstacion = Integer.parseInt(request.getParameter("idEstacion"));
 			
 			GregorianCalendar fecha = parsearFecha(request);
@@ -232,10 +237,8 @@ public class ControladorIngresarFichada extends HttpServlet {
         if (tarjeta != null) {
             int idLectora = Integer.parseInt(request.getParameter("idLectora"));
             int idEstacion =  Integer.parseInt(request.getParameter("idEstacion"));
-
+            int idLinea = Integer.parseInt(request.getParameter("idLinea"));
             GregorianCalendar fecha = parsearFecha(request);
-
-            
          
             FichadaSubte fichada = new FichadaSubte(fecha, this.obtenerLectoraSubte(idLectora), this.obtenerEstacionSubte (idEstacion) );
             resultado = tarjeta.procesarFichada(fichada);
@@ -258,7 +261,7 @@ public class ControladorIngresarFichada extends HttpServlet {
             PersonaDao daoPersona = new PersonaDao ();
             daoPersona.modificarPersona(tarjeta.getPropietario());
         }
- 
+
     }
 	
 	private InternoColectivo obtenerInternoColectivo(int idInterno) {
@@ -311,15 +314,21 @@ public class ControladorIngresarFichada extends HttpServlet {
 	private TarjetaSube obtenerTarjetaPorCodigo(String codigo) {
 		if (codigo != "") {
 			TarjetaSubeDao dao = new TarjetaSubeDao();
+			LapsoDescuentoRedSubeDao daoLapso = new LapsoDescuentoRedSubeDao(); 
 			TarjetaSube tarjeta = dao.traerTarjeta(codigo);
+			DescuentoRedSubeDao daoDesc = new DescuentoRedSubeDao ();
+			DescuentoRedSube desc = tarjeta.getDescuentoRedSube();
+			desc = daoDesc.traerDescuento(desc.getIdDescuento());
+			System.out.println("Descuento : " + desc);
+			tarjeta.setDescuentoRedSube(desc);
+			desc.setTarjeta(tarjeta);
+			//tarjeta.getDescuentoRedSube().setLapsoDescuentoRedSube(daoLapso.traerLapsoPorDescuento(tarjeta.getDescuentoRedSube().getIdDescuento()));
 			return tarjeta;
 		} else {
 			return null;
 		}
 	}
 	
-	
-
 	GregorianCalendar parsearFecha(HttpServletRequest request) {
 		
 		

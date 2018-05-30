@@ -28,6 +28,14 @@ public class LapsoDescuentoRedSube {
 		this.descuento = descuento;
 	}
 
+	public void reiniciar(GregorianCalendar fechaHoraVencimiento) {
+		this.fechaHoraVencimiento = fechaHoraVencimiento;
+		for (Fichada f : this.viajesRealizados) {
+			f.setLapso(null);
+		}
+		this.viajesRealizados.clear();
+	}
+	
 	public int getIdLapso() {
 		return idLapso;
 	}
@@ -73,8 +81,6 @@ public class LapsoDescuentoRedSube {
 	}
 	
 	public BigDecimal aplicarDescuento(BigDecimal importe, Fichada fichada) {
-		
-		
 		
 		BigDecimal importeFinal = new BigDecimal(importe.doubleValue());
 		if (this.esFichadaDescontable(fichada))

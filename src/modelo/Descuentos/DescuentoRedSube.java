@@ -63,8 +63,11 @@ public class DescuentoRedSube extends DescuentoSube {
 
 	public BigDecimal aplicarDescuento (BigDecimal importe, Fichada fichada) {
 		//Falta chequear el caso de fichada tren.
-		if (this.lapsoDescuentoRedSube == null || this.lapsoDescuentoRedSube.yaTermino(fichada.getFechaHora())) {
+		if (this.lapsoDescuentoRedSube == null) {
+			System.out.println("Lapso es nulo. Creando!");
 			this.lapsoDescuentoRedSube = this.crearNuevoLapso(fichada.getFechaHora());
+		} else if (this.lapsoDescuentoRedSube.yaTermino(fichada.getFechaHora())) {
+			this.lapsoDescuentoRedSube.reiniciar(fichada.getFechaHora());
 		}
 		return this.lapsoDescuentoRedSube.aplicarDescuento(importe, fichada);
 	}
