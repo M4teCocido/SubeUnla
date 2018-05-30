@@ -12,6 +12,11 @@ $(document).ready(function(){
 		$('#divmonto').hide();
 	}
 	
+	function actualizarSelect(select, data){
+		select.html(data);
+		select.formSelect();
+	}
+	
 	//INICIALIZACIONES
 	
 	$('.carousel').carousel({
@@ -47,22 +52,6 @@ $(document).ready(function(){
 	});
 	
 	setFormFichada();
-	
-	$('#tipotransaccion').change(function() {
-	//FUNCIONES
-	
-	function actualizarSelect(select, data){
-		select.html(data);
-		select.formSelect();
-	}
-	
-	function setFormFichada(){
-		$('#divlinea').hide();
-		$('#divestacioninterno').hide();
-		$('#divlectora').hide();
-		$('#divtramo').hide();
-		$('#divmonto').hide();
-	}
 	
 	//COMPORTAMIENTO
 	
@@ -122,8 +111,8 @@ $(document).ready(function(){
 	})
 	
 	//AJAX
-	
-	/*$('#numerotarjeta').focusout(function(){
+	/*
+	$('#numerotarjeta').focusout(function(){
 		var data = {
 			nroValidacion: 1,
 			nroTarjeta : this.value
@@ -137,11 +126,9 @@ $(document).ready(function(){
 			
 		})
 	});*/
-	
-	/*$('#tipotrasaccion').on('change', function() {
-=======
+
 	$('#tipotransaccion').on('change', function() {
->>>>>>> 66f782baca441aa5bbf464f14e2031a8001e79c6
+
 		v = this.value;
 		//console.log('Change CON ajax - v = ' + v);
 		if(v == 1){
@@ -317,6 +304,6 @@ $(document).ready(function(){
 		    })
 		}
 	})
-	*/
+	
 	
 });	
