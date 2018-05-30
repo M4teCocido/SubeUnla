@@ -15,11 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.TarjetaSubeDao;
 import dao.fichadas.colectivo.LineaColectivoDao;
+import dao.fichadas.colectivo.TramoColectivoDao;
 import dao.fichadas.tren.EstacionTrenDao;
 import dao.lectoras.LectoraDao;
 import dao.fichadas.subte.EstacionSubteDao;
 import modelo.TarjetaSube;
 import modelo.fichadas.FichadaRecarga;
+import modelo.fichadas.colectivo.FichadaColectivo;
 import modelo.fichadas.colectivo.InternoColectivo;
 import modelo.fichadas.colectivo.LineaColectivo;
 import modelo.fichadas.colectivo.TramoColectivo;
@@ -140,8 +142,8 @@ public class ControladorIngresarFichada extends HttpServlet {
 	}
 	
 	private void procesarPeticionCarga(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String codigo = request.getParameter("codigo");
-		TarjetaSube tarjeta = this.obtenerTarjetaPorCodigo(codigo);
+		
+		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
 		TarjetaSube.Resultado resultado;
 		if (tarjeta != null) {
 			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
@@ -153,11 +155,27 @@ public class ControladorIngresarFichada extends HttpServlet {
 			resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
 		}
 		request.setAttribute("resultado", resultado);
+		System.out.println("Resultado : " + resultado);
 		request.getRequestDispatcher("views/respuestaProcesarFichada.jsp").forward(request, response);
 	}
 	
 	private void procesarPeticionProcesarFichadaColectivo (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String codigo = request.getParameter("codigo");
+		TarjetaSube tarjeta = this.obtenerTarjetaPorCodigo(codigo);
+		TarjetaSube.Resultado resultado;
+		if (tarjeta != null) {
+			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
+			int idLinea = Integer.parseInt(request.getParameter("idLina"));
+			int idInterno = Integer.parseInt(request.getParameter("idInterno"));
+			int idTramo = Integer.parseInt(request.getParameter("idTramo"));
+			GregorianCalendar fecha = new GregorianCalendar(); //Pendiente levantar fecha.
+			FichadaColectivo fichada = new FichadaColectivo(fecha, this.obtenerTramoColectivo(idTramo), this.obtenerLectora(idLectora));
+			resultado = tarjeta.procesarFichada(fichada);
+		} else {
+			resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
+		}
+		request.setAttribute("resultado", resultado);
+		request.getRequestDispatcher("views/respuestaProcesarFichada.jsp").forward(request, response);
 	}
 	
 	private void procesarPeticionProcesarFichadaTren (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -171,6 +189,16 @@ public class ControladorIngresarFichada extends HttpServlet {
 	private Lectora obtenerLectora(int idLectora) {
 		LectoraDao dao = new LectoraDao();
 		return dao.traerLectora(idLectora);
+	}
+	
+	private TramoColectivo obtenerTramoColectivo(int idTramo) {
+		TramoColectivoDao dao = new TramoColectivoDao();
+		return dao.traerTramo(idTramo);
+	}
+	
+	private TarjetaSube obtenerTarjetaDesdeRequest(HttpServletRequest request) {
+		String codigo = request.getParameter("numeroTarjeta");
+		return obtenerTarjetaPorCodigo(codigo);
 	}
 	
 	private TarjetaSube obtenerTarjetaPorCodigo(String codigo) {

@@ -4,7 +4,7 @@ pageEncoding="ISO-8859-1"%>
 <% TarjetaSube.Resultado r = (TarjetaSube.Resultado)request.getAttribute("resultado"); %>
 <% String strAprobado = (r.isAprobado() ? "¡Fichada Exitosa" : "Fichada Fallida!"); %>
 <div class="modal-content">
-	<h4 id="headerModal"> <% strAprobado; %> </h4>
+	<h4 id="headerModal"> <%= strAprobado %> </h4>
 	<p id="pModal">r.getMensaje()</p>
 	</div>
 	<div class="modal-footer">
