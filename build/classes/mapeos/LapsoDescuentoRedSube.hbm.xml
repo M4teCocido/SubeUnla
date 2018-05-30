@@ -7,7 +7,7 @@
 			<generator class = "identity" />
 		</id>
 		<property column="fechaHoraVencimiento" name="fechaHoraVencimiento" type="calendar" />
-		<set name="viajesRealizados" table="fichada" inverse="false" lazy="false" fetch="select" cascade="save-update"><!-- order-by="idFichada asc" -->
+		<set name="viajesRealizados" table="fichada" inverse="false" lazy="false" fetch="select" cascade="all"><!-- order-by="idFichada asc" -->
 			<key column="idLapsoDescuentoRedSUBE" not-null="true" />
 			<one-to-many class="modelo.fichadas.Fichada" />
 		</set>

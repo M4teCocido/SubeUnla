@@ -14,19 +14,23 @@
 	<joined-subclass name = "modelo.fichadas.subte.FichadaSubte" table="fichadasubte" extends="modelo.fichadas.Fichada">
 		<key column="idFichada" />
 		<!--  <one-to-one name="estacionSubte" class="modelo.fichadas.subte.EstacionSubte"></one-to-one> -->
-		<many-to-one name="estacionSubte" class="modelo.fichadas.subte.EstacionSubte" fetch="select" column="idEstacion" not-null="true" />
+		<many-to-one name="estacionSubte" class="modelo.fichadas.subte.EstacionSubte" lazy="false" fetch="select" column="idEstacion" not-null="true" />
 	</joined-subclass>
 	
 	<joined-subclass name = "modelo.fichadas.colectivo.FichadaColectivo" table="fichadacolectivo" extends="modelo.fichadas.Fichada">
 		<key column="idFichada" />
 		<many-to-one name="tramo" class="modelo.fichadas.colectivo.TramoColectivo" column="idTramo"></many-to-one>
-		<many-to-one name="interno" class="modelo.fichadas.colectivo.InternoColectivo" column="idInterno"></many-to-one>
+		<many-to-one name="interno" class="modelo.fichadas.colectivo.InternoColectivo" lazy="false" column="idInterno"></many-to-one>
 	</joined-subclass>
 	
 	<joined-subclass name="modelo.fichadas.tren.FichadaTren" table="fichadaTren" extends="modelo.fichadas.Fichada">
 		<key column="idFichada" />
-		<property name="tipoFichada" column="idTipoFichada" type="int" />
-		<many-to-one name="estacion" class="modelo.fichadas.tren.EstacionTren" column="idEstacion"></many-to-one>
+		<property column="tipoFichada" name="tipoFichada">
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">modelo.fichadas.tren.eTipoFichadaTren</param>
+	    	</type>
+	    </property>
+		<many-to-one name="estacion" class="modelo.fichadas.tren.EstacionTren" lazy="false" column="idEstacion"></many-to-one>
 	</joined-subclass>
 	
 	<joined-subclass name="modelo.fichadas.FichadaRecarga" table="fichadaRecarga" extends="modelo.fichadas.Fichada">

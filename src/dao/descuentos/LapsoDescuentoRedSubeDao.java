@@ -78,12 +78,26 @@ public class LapsoDescuentoRedSubeDao {
 		return lapso;
 	}
 	
+	public LapsoDescuentoRedSube traerLapsoPorDescuento(int idDescuento) throws HibernateException {
+		LapsoDescuentoRedSube lapso = null;
+		try {
+			iniciaOperacion();
+			lapso = (LapsoDescuentoRedSube) session.createQuery("from lapsodescuentoredsube l WHERE l.idDescuentoRedSube = " + idDescuento).uniqueResult();
+		} catch (HibernateException he) {
+			manejaExcepcion(he);
+			throw he;
+		} finally {
+			session.close();
+		}
+		return lapso;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<LapsoDescuentoRedSube> traerDescuentos() throws HibernateException {
 		List<LapsoDescuentoRedSube> lista = null;
 		try {
 			iniciaOperacion();
-			lista = session.createQuery("from LapsoDescuentoRedSUBE l order by l.idLapso asc").list();
+			lista = session.createQuery("from lapsodescuentoredsube l order by l.idLapso asc").list();
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
 			throw he;

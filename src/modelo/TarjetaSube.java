@@ -108,27 +108,28 @@ public class TarjetaSube {
 	}
 
 	public Resultado procesarFichada(FichadaColectivo fichadaColectivo) {
-		BigDecimal monto = procesarDescuento(fichadaColectivo.obtenerPrecio(), fichadaColectivo);
+		BigDecimal monto = procesarDescuento(fichadaColectivo.obtenerPrecio(), fichadaColectivo).setScale(2, RoundingMode.HALF_UP);
 		
 		TransaccionSUBE transaccion = null; 
 		Resultado resultado = null;
 		
 		if (comprobarSaldoSuficiente(monto) == true ) {
 			transaccion = this.procesarTransaccion(fichadaColectivo, monto); 
-			transaccion.setImporte(new BigDecimal (transaccion.getImporte().ROUND_HALF_UP));
 			this.transacciones.add(transaccion);
-			resultado = new Resultado  (true,"-"+transaccion.getImporte().toString(), transaccion);
-		}else {resultado = new Resultado  (false, "Saldo insuficiente", transaccion);}
+			resultado = generarResultadoTransaccionExitosa(" -$" + transaccion.getImporte().toString(), transaccion );
+		} else {
+			resultado = generarResultadoSaldoInsuficiente(null, monto);
+		}
 		
 		return resultado;
 	}
 	
 	private Resultado generarResultadoTransaccionExitosa(String extraText, TransaccionSUBE tx) {
-		return new Resultado(true, "Transaccion Exitosa! : " + extraText, tx);
+		return new Resultado(true, "Transaccion Exitosa! : " + extraText + " - Saldo actual : " + this.saldo, tx);
 	}
 	
-	private Resultado generarResultadoSaldoInsuficiente(TransaccionSUBE tx) {
-		return new Resultado (false, "Saldo Insuficiente", tx);
+	private Resultado generarResultadoSaldoInsuficiente(TransaccionSUBE tx, BigDecimal monto) {
+		return new Resultado (false, "Saldo Insuficiente - Coste Transaccion : $" + monto +  " - Saldo Actual : $" + this.saldo, tx);
 	}
 	
 	public Resultado procesarFichada(FichadaTren fichadaActual) { //Se procesa fichada tren. -----------
@@ -139,7 +140,7 @@ public class TarjetaSube {
 		if (fichadaActual.getTipoFichada().equals(eTipoFichadaTren.ENTRADA)) {
 			System.out.println("Fichada Tren : Actual es de ENTRADA");
 			
-				resultado = procesarImporteMaximoTren (fichadaActual );
+			resultado = procesarImporteMaximoTren (fichadaActual );
 			
 		} else {		
 			
@@ -157,7 +158,7 @@ public class TarjetaSube {
 						
 					
 						
-						if((fichadaActual.getFechaHora().get(GregorianCalendar.HOUR_OF_DAY)-fichadaAnterior.getFechaHora().get(GregorianCalendar.HOUR_OF_DAY))<2){
+						if((fichadaActual.getFechaHora().get(GregorianCalendar.HOUR_OF_DAY) - fichadaAnterior.getFechaHora().get(GregorianCalendar.HOUR_OF_DAY)) < 2){
 							System.out.println("Fichada Tren : Es menor a 2 horas");
 							
 							ViajeTren viajeAux = fichadaActual.getEstacion().getLinea().obtenerViaje(fichadaAnterior.getEstacion(), fichadaActual.getEstacion());
@@ -177,7 +178,7 @@ public class TarjetaSube {
 				    		
 					     	transaccion = procesarTransaccion (fichadaActual, bonificacion.negate());
 	
-				    		resultado = generarResultadoTransaccionExitosa(" +" + bonificacion.toString(), transaccion );
+				    		resultado = generarResultadoTransaccionExitosa(" +$" + bonificacion.toString(), transaccion );
 				    		
 						    System.out.println("Bonificacion : " + bonificacion.toString());
 					    	this.transacciones.add(transaccion);
@@ -185,11 +186,10 @@ public class TarjetaSube {
 						
 						} else {
 							System.out.println("Fichada Tren : NO Es menor a 2 horas");
-							if (comprobarSaldoSuficiente (fichadaActual.getEstacion().getLinea().obtenerMayorSeccion() )){
-								transaccion = new  TransaccionSUBE ( new BigDecimal (0),this, fichadaActual );
-								resultado =  new Resultado (true, "-" + getUltimaTransaccion().getImporte() , transaccion );
-								
-							}
+	
+							transaccion = new  TransaccionSUBE ( new BigDecimal (0),this, fichadaActual );
+							this.transacciones.add(transaccion);
+							resultado =  generarResultadoTransaccionExitosa("+ $0.00", transaccion );
 						} 	
 					} else {	
 						System.out.println("Fichada Tren : Anterior NO es de entrada");
@@ -224,8 +224,10 @@ public class TarjetaSube {
 			transaccion = this.procesarTransaccion(fichadaSubte, monto); 
 			//System.out.println(transaccion.getImporte().toString());
 			this.transacciones.add(transaccion);
-			resultado = new Resultado (true, "Transaccion Exitosa! : 	-" + transaccion.getImporte().toString(),transaccion);
-		}else {resultado = new Resultado(false, "Saldo insuficiente", transaccion);}
+			resultado = this.generarResultadoTransaccionExitosa(" -$" + monto , transaccion);
+		} else {
+			resultado = this.generarResultadoSaldoInsuficiente(null, monto);
+		}
 		
 		
 		return  resultado ;
@@ -240,10 +242,9 @@ public class TarjetaSube {
 		if (saldoDespuesCarga.compareTo(new BigDecimal (saldoMinimo))==1) {
 			if (saldoDespuesCarga.compareTo(new BigDecimal (saldoMaximo))!=1) {
 					this.saldo = saldoDespuesCarga;
-					transaccion =  new TransaccionSUBE ( fichadaCarga.getMonto(),this, fichadaCarga );
+					transaccion =  new TransaccionSUBE ( fichadaCarga.getMonto().negate(),this, fichadaCarga );
 					this.transacciones.add(transaccion);
-					
-					resultado = new Resultado (true, "Carga Exitosa : +" + transaccion.getImporte().toString(), transaccion );
+					resultado = generarResultadoTransaccionExitosa ("Carga Exitosa : +$" + fichadaCarga.getMonto(), transaccion );
 			} else {resultado = new Resultado (false, "Carga supera maximo", transaccion);}
 		}else { resultado =  new Resultado (false, "Carga no supera minimo", transaccion );}
 	
@@ -320,34 +321,22 @@ public class TarjetaSube {
 		BigDecimal monto = fichadaTren.getEstacion().getLinea().obtenerMayorSeccion();
 		System.out.println("Monto maximo de sexion?"+ monto.toString());
 		Resultado resultado = null;
-		
-		if(comprobarSaldoSuficiente (fichadaTren.getEstacion().getLinea().obtenerMayorSeccion() )){
+		if(comprobarSaldoSuficiente (monto)){
 			
 			monto = procesarDescuento (monto, fichadaTren);
 			
 			transaccion = procesarTransaccion (fichadaTren, monto);
 			
 			this.transacciones.add(transaccion);
-			resultado = generarResultadoTransaccionExitosa("-" + transaccion.getImporte().toString(), transaccion );
+			resultado = generarResultadoTransaccionExitosa("-$" + transaccion.getImporte().toString(), transaccion );
 			
-		}else {generarResultadoSaldoInsuficiente(transaccion);}
+		} else {
+			resultado = generarResultadoSaldoInsuficiente(transaccion, monto);
+		}
 	
 		
 		return resultado;
 	}
-			
-		
-		
-		
-		
-		
-	
-	
-	
-	
-	
-	
-	
 	
 	public boolean comprobarSaldoSuficiente (BigDecimal monto ) {//Comprueba saldo suficiente ---------------------
 		

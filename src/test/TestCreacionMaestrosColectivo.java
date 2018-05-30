@@ -36,9 +36,9 @@ public class TestCreacionMaestrosColectivo {
 		List<LectoraColectivo> lectorasLinea74 = new ArrayList<LectoraColectivo>();
 		List<TramoColectivo> tramosLinea74 = new ArrayList<TramoColectivo>();
 		
-		tramosLinea74.add(new TramoColectivo("0 a 3 km", new BigDecimal(9), linea74));
-		tramosLinea74.add(new TramoColectivo("3 a 6 km", new BigDecimal(9.25), linea74));
-		tramosLinea74.add(new TramoColectivo("6  a 12 km", new BigDecimal(9.50), linea74));
+		tramosLinea74.add(new TramoColectivo("0 a 3 km", new BigDecimal(9).setScale(2), linea74));
+		tramosLinea74.add(new TramoColectivo("3 a 6 km", new BigDecimal(9.25).setScale(2), linea74));
+		tramosLinea74.add(new TramoColectivo("6  a 12 km", new BigDecimal(9.50).setScale(2), linea74));
 		
 		agregarInternoColectivo("1", linea74, internosLinea74, lectorasLinea74);
 		agregarInternoColectivo("2", linea74, internosLinea74, lectorasLinea74);

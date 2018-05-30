@@ -34,10 +34,10 @@ public class DescuentoBoletoEstudiantil extends DescuentoSube {
 		} else {
 			this.porcentajeDescuento = new BigDecimal(0);
 			this.viajesRestantes = 45;	
+			}
+			this.persona = persona;
+			this.tipoBoletoEstudiantil = tipoBoletoEstudiantil;
 		}
-		this.persona = persona;
-		this.tipoBoletoEstudiantil = tipoBoletoEstudiantil;
-	}
 
 	public boolean leQuedanCargas() {
 		return (this.viajesRestantes > 0);
