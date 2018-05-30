@@ -26,7 +26,7 @@
 	<script type="text/javascript" src="js/jquery.js"></script>
    	<script type="text/javascript" src="js/materialize.js"></script>
    	<script type="text/javascript" src="js/js.js"></script>
-   	<div id="modal1" class="modal" id="footerModal">
+   	<div class="modal" id="footerModal">
 		<div class="modal-content">
     		<h4 id="headerModal"></h4>
     		<p id="pModal"></p>

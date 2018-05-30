@@ -1,11 +1,6 @@
 var URL_INGRESAR_FICHADA = "/SubeUnla/IngresarFichada";
 
 $(document).ready(function(){
-
-	$('#fecha').on('change', function(){
-		var s = this.value;
-		alert($('#fecha').val().substring(0, 2));
-	})
 	
 	//FUNCIONES
 	
