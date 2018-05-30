@@ -381,7 +381,7 @@ public class TarjetaSube {
 		
 	}
 
-	public class Resultado{
+	public static class Resultado{
 		 private boolean aprobado;
 		 private String mensaje;
 		 private TransaccionSUBE transaccion;
@@ -390,7 +390,8 @@ public class TarjetaSube {
 			this.aprobado = aprobado;
 			this.mensaje = mensaje;
 			this.transaccion = transaccion;
-		}
+		 }
+		 
 		public Resultado() {
 			super();
 		}

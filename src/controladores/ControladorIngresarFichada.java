@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -15,8 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import dao.TarjetaSubeDao;
 import dao.fichadas.colectivo.LineaColectivoDao;
 import dao.fichadas.tren.EstacionTrenDao;
+import dao.lectoras.LectoraDao;
 import dao.fichadas.subte.EstacionSubteDao;
 import modelo.TarjetaSube;
+import modelo.fichadas.FichadaRecarga;
 import modelo.fichadas.colectivo.InternoColectivo;
 import modelo.fichadas.colectivo.LineaColectivo;
 import modelo.fichadas.colectivo.TramoColectivo;
@@ -24,6 +27,7 @@ import modelo.fichadas.subte.EstacionSubte;
 import modelo.fichadas.subte.LineaSubte;
 import modelo.fichadas.tren.EstacionTren;
 import modelo.fichadas.tren.LineaTren;
+import modelo.lectoras.Lectora;
 import modelo.lectoras.LectoraExterna;
 import modelo.lectoras.LectoraSubte;
 import modelo.lectoras.LectoraTren;
@@ -34,6 +38,9 @@ import negocio.LineaTrenABM;
 import negocio.LineaSubteABM;
 import negocio.LineaTrenABM;
 import negocio.LectorasExternasABM;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class ControladorIngresarFichada extends HttpServlet {
 	
@@ -132,9 +139,38 @@ public class ControladorIngresarFichada extends HttpServlet {
 		request.getRequestDispatcher("views/listaLectorasTren.jsp").forward(request, response);
 	}
 	
-	private void procesarPeticionCarga(HttpServletRequest request, HttpServletResponse response) {
+	private void procesarPeticionCarga(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String codigo = request.getParameter("codigo");
 		TarjetaSube tarjeta = this.obtenerTarjetaPorCodigo(codigo);
+		TarjetaSube.Resultado resultado;
+		if (tarjeta != null) {
+			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
+			BigDecimal monto = new BigDecimal(request.getParameter("monto"));
+			GregorianCalendar fecha = new GregorianCalendar(); //Pendiente levantar fecha.
+			FichadaRecarga fichada = new FichadaRecarga(fecha, monto, this.obtenerLectora(idLectora));
+			resultado = tarjeta.procesarFichada(fichada);
+		} else {
+			resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
+		}
+		request.setAttribute("resultado", resultado);
+		request.getRequestDispatcher("views/respuestaProcesarFichada.jsp").forward(request, response);
+	}
+	
+	private void procesarPeticionProcesarFichadaColectivo (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+	
+	private void procesarPeticionProcesarFichadaTren (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			
+	}
+	
+	private void procesarPeticionProcesarFichadaSubte (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+	
+	private Lectora obtenerLectora(int idLectora) {
+		LectoraDao dao = new LectoraDao();
+		return dao.traerLectora(idLectora);
 	}
 	
 	private TarjetaSube obtenerTarjetaPorCodigo(String codigo) {
