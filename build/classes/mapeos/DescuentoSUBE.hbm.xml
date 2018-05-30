@@ -12,7 +12,7 @@
 	 
 	<joined-subclass name = "modelo.Descuentos.DescuentoRedSube" table="descuentoredsube" extends="modelo.Descuentos.DescuentoSube">
 		<key column="idDescuento" />
-		<one-to-one name="lapsoDescuentoRedSube" class="modelo.Descuentos.LapsoDescuentoRedSube" property-ref="descuento" cascade="all"></one-to-one>
+		<one-to-one name="lapsoDescuentoRedSube" class="modelo.Descuentos.LapsoDescuentoRedSube" lazy="false" property-ref="descuento" cascade="all"></one-to-one>
 		<many-to-one name="tarjeta" class="modelo.TarjetaSube" fetch="select" lazy="false" column="idTarjetaSube" cascade="all" not-null="true" />
 	</joined-subclass>
 	

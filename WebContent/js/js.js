@@ -46,7 +46,7 @@ $(document).ready(function(){
 
 	
 	$('.datepicker').datepicker({
-		format: "d-m-yyyy",
+		format: "dd-mm-yyyy",
 		maxDate: date,
 		yearRange: 2,
 		showClearBtn: true,
@@ -126,9 +126,9 @@ $(document).ready(function(){
 	$('#estacioninterno').on('change', function(){
 		var transaccion = $('#tipotransaccion').val();
 		if(transaccion == 3){
-			$('#divmonto').show();
+			$('#divlectora').show();
 		}else if(transaccion == 4){
-			$('#divmonto').show();
+			$('#divlectora').show();
 		}
 	})
 	
@@ -362,10 +362,10 @@ $(document).ready(function(){
 		//PREPARA LA DATA PARA FICHAR UNA CARGA
 		var dia = $('#fecha').val().substring(0, 2);
 		var mes = $('#fecha').val().substring(3, 4);
-		var anio = $('#fecha').val().substring(7, 11);
+		var anio = $('#fecha').val().substring(5, 11);
 		var hora = $('#hora').val().substring(0, 2);
 		var min = $('#hora').val().substring(3, 5);
-		
+		console.log("Fecha : " + $('#fecha').val());
 		console.log("Fechahora : " + dia + " " + mes + " " + anio + " " + hora + " " + min);
 		
 		if(transaccion == 1){
