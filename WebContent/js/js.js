@@ -14,6 +14,9 @@ $(document).ready(function(){
 	
 	//INICIALIZACIONES
 	
+	$('.modal').modal();
+	var modal = M.Modal.getInstance($('#footerModal'));
+	
 	$('.carousel').carousel({
 		fullWidth: true,
     	indicators: true
