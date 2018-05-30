@@ -9,7 +9,8 @@ import modelo.lectoras.LectoraColectivo;
 public class FichadaColectivo extends Fichada {
 	
 	private TramoColectivo tramo;
-
+	private InternoColectivo interno;
+	
 	public FichadaColectivo() {}
 
 	public FichadaColectivo(GregorianCalendar fechaHora, TramoColectivo tramo, LectoraColectivo lectora) {
@@ -27,6 +28,14 @@ public class FichadaColectivo extends Fichada {
 	
 	public BigDecimal obtenerPrecio() {
 		return this.tramo.getPrecio();
+	}
+	
+	public InternoColectivo getInterno() {
+		return interno;
+	}
+
+	public void setInterno(InternoColectivo interno) {
+		this.interno = interno;
 	}
 
 	@Override

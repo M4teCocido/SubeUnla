@@ -20,6 +20,7 @@
 	<joined-subclass name = "modelo.fichadas.colectivo.FichadaColectivo" table="fichadacolectivo" extends="modelo.fichadas.Fichada">
 		<key column="idFichada" />
 		<many-to-one name="tramo" class="modelo.fichadas.colectivo.TramoColectivo" column="idTramo"></many-to-one>
+		<many-to-one name="interno" class="modelo.fichadas.colectivo.InternoColectivo" column="idInterno"></many-to-one>
 	</joined-subclass>
 	
 	<joined-subclass name="modelo.fichadas.tren.FichadaTren" table="fichadaTren" extends="modelo.fichadas.Fichada">
