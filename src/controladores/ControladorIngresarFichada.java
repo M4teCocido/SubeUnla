@@ -12,7 +12,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.TarjetaSubeDao;
 import dao.fichadas.colectivo.LineaColectivoDao;
+import dao.fichadas.tren.EstacionTrenDao;
+import dao.fichadas.subte.EstacionSubteDao;
+import modelo.TarjetaSube;
 import modelo.fichadas.colectivo.InternoColectivo;
 import modelo.fichadas.colectivo.LineaColectivo;
 import modelo.fichadas.colectivo.TramoColectivo;
@@ -108,6 +112,37 @@ public class ControladorIngresarFichada extends HttpServlet {
 		request.getRequestDispatcher("views/listaEstacionesTren.jsp").forward(request, response);
 	}
 	
+	private void procesarPeticionLectorasSubte(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int idEstacion = Integer.parseInt(request.getParameter("idEstacion"));
+		EstacionSubteDao dao = new EstacionSubteDao();
+		EstacionSubte estacion = dao.traerEstacion(idEstacion);
+		List<LectoraSubte> lstLectora = new ArrayList<LectoraSubte>();
+		lstLectora.addAll(estacion.getLectoras());
+		request.setAttribute("lstLectoras", lstLectora);
+		request.getRequestDispatcher("views/listaLectorasSubte.jsp").forward(request, response);
+	}
+	
+	private void procesarPeticionLectorasTren(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int idEstacion = Integer.parseInt(request.getParameter("idEstacion"));
+		EstacionTrenDao dao = new EstacionTrenDao();
+		EstacionTren estacion = dao.traerEstacion(idEstacion);
+		List<LectoraTren> lstLectora = new ArrayList<LectoraTren>();
+		lstLectora.addAll(estacion.getLectoras());
+		request.setAttribute("lstLectoras", lstLectora);
+		request.getRequestDispatcher("views/listaLectorasTren.jsp").forward(request, response);
+	}
+	
+	private void procesarPeticionCarga(HttpServletRequest request, HttpServletResponse response) {
+		String codigo = request.getParameter("codigo");
+		TarjetaSube tarjeta = this.obtenerTarjetaPorCodigo(codigo);
+	}
+	
+	private TarjetaSube obtenerTarjetaPorCodigo(String codigo) {
+		TarjetaSubeDao dao = new TarjetaSubeDao();
+		TarjetaSube tarjeta = dao.traerTarjeta(codigo);
+		return tarjeta;
+	}
+	
 	private void procesarPeticion(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		response.setContentType("text/html;	charset=UTF-8");
 		try {
@@ -143,8 +178,19 @@ public class ControladorIngresarFichada extends HttpServlet {
 					this.procesarPeticionEstacionesTren(request, response);
 					break;
 				case 9: //Recibe idEstacionSubte, devuelve lectoras de esa estacion
+					this.procesarPeticionLectorasSubte(request, response);
 					break;
 				case 10: //Recibe idEstacionTren, devuelve lectoras de esa estacion
+					this.procesarPeticionLectorasTren(request, response);
+					break;
+				case 11: //Recibe numero Tarjeta, fecha, hora, idLectora, monto
+					this.procesarPeticionCarga(request, response);
+					break;
+				case 12:
+					break;
+				case 13:
+					break;
+				case 14:
 					break;
 				default:
 					break;
