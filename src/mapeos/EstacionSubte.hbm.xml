@@ -8,7 +8,7 @@
 		</id>
 		<property column="nombre" name="nombre" type="string" />
 		<many-to-one name="lineaSubte" class="modelo.fichadas.subte.LineaSubte" lazy="false" column="idLinea" not-null="true" />
-		<set name="lectoras" table="lectorasubte" inverse="true" lazy="true" fetch="select"><!-- order-by="idLectora asc"  -->
+		<set name="lectoras" table="lectorasubte" inverse="true" lazy="false" fetch="select"><!-- order-by="idLectora asc"  -->
 			<key column="idEstacion" not-null="true" />
 			<one-to-many class="modelo.lectoras.LectoraSubte" />
 		</set>
