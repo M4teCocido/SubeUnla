@@ -237,7 +237,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 
             GregorianCalendar fecha = parsearFecha(request);
 
-            BigDecimal monto = new BigDecimal(request.getParameter("monto"));
+           
          
             FichadaSubte fichada = new FichadaSubte(fecha, this.obtenerLectoraSubte(idLectora), this.obtenerEstacionSubte (idEstacion) );
             resultado = tarjeta.procesarFichada(fichada);
@@ -326,17 +326,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 	}
 	
 	
-	private void persistirEstadoTarjeta(TarjetaSube tarjeta) {
-		TarjetaSubeDao daoTarjeta = new TarjetaSubeDao();
-		daoTarjeta.modificarTarjetaSube(tarjeta);
-		
-		if (tarjeta.getPropietario()!=null) {
-			PersonaDao daoPersona = new PersonaDao ();
-			daoPersona.modificarPersona(tarjeta.getPropietario());
-		}
-		
-	}
-	
+
 	GregorianCalendar parsearFecha(HttpServletRequest request) {
 		
 		
