@@ -17,7 +17,9 @@ import dao.TarjetaSubeDao;
 import dao.fichadas.colectivo.LineaColectivoDao;
 import dao.fichadas.colectivo.TramoColectivoDao;
 import dao.fichadas.tren.EstacionTrenDao;
+import dao.lectoras.LectoraColectivoDao;
 import dao.lectoras.LectoraDao;
+import dao.lectoras.LectoraTrenDao;
 import dao.fichadas.subte.EstacionSubteDao;
 import modelo.TarjetaSube;
 import modelo.fichadas.FichadaRecarga;
@@ -28,8 +30,11 @@ import modelo.fichadas.colectivo.TramoColectivo;
 import modelo.fichadas.subte.EstacionSubte;
 import modelo.fichadas.subte.LineaSubte;
 import modelo.fichadas.tren.EstacionTren;
+import modelo.fichadas.tren.FichadaTren;
 import modelo.fichadas.tren.LineaTren;
+import modelo.fichadas.tren.eTipoFichadaTren;
 import modelo.lectoras.Lectora;
+import modelo.lectoras.LectoraColectivo;
 import modelo.lectoras.LectoraExterna;
 import modelo.lectoras.LectoraSubte;
 import modelo.lectoras.LectoraTren;
@@ -147,9 +152,13 @@ public class ControladorIngresarFichada extends HttpServlet {
 		TarjetaSube.Resultado resultado;
 		if (tarjeta != null) {
 			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
-			System.out.println("IdLectora : " + idLectora);
+			int dia = Integer.parseInt(request.getParameter("dia"));
+			int mes = Integer.parseInt(request.getParameter("mes"));
+			int anio = Integer.parseInt(request.getParameter("anio"));
+			int hora = Integer.parseInt(request.getParameter("hora"));
+			int min = Integer.parseInt(request.getParameter("min"));
+			GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min); //Pendiente levantar fecha.
 			BigDecimal monto = new BigDecimal(request.getParameter("monto"));
-			GregorianCalendar fecha = new GregorianCalendar(); //Pendiente levantar fecha.
 			FichadaRecarga fichada = new FichadaRecarga(fecha, monto, this.obtenerLectora(idLectora));
 			resultado = tarjeta.procesarFichada(fichada);
 		} else {
@@ -161,16 +170,21 @@ public class ControladorIngresarFichada extends HttpServlet {
 	}
 	
 	private void procesarPeticionProcesarFichadaColectivo (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String codigo = request.getParameter("codigo");
-		TarjetaSube tarjeta = this.obtenerTarjetaPorCodigo(codigo);
+		
+		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
 		TarjetaSube.Resultado resultado;
 		if (tarjeta != null) {
 			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
 			int idLinea = Integer.parseInt(request.getParameter("idLina"));
 			int idInterno = Integer.parseInt(request.getParameter("idInterno"));
 			int idTramo = Integer.parseInt(request.getParameter("idTramo"));
-			GregorianCalendar fecha = new GregorianCalendar(); //Pendiente levantar fecha.
-			FichadaColectivo fichada = new FichadaColectivo(fecha, this.obtenerTramoColectivo(idTramo), this.obtenerLectora(idLectora));
+			int dia = Integer.parseInt(request.getParameter("dia"));
+			int mes = Integer.parseInt(request.getParameter("mes"));
+			int anio = Integer.parseInt(request.getParameter("anio"));
+			int hora = Integer.parseInt(request.getParameter("hora"));
+			int min = Integer.parseInt(request.getParameter("min"));
+			GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min);
+			FichadaColectivo fichada = new FichadaColectivo(fecha, this.obtenerTramoColectivo(idTramo), this.obtenerLectoraColectivo(idLectora));
 			resultado = tarjeta.procesarFichada(fichada);
 		} else {
 			resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
@@ -180,15 +194,54 @@ public class ControladorIngresarFichada extends HttpServlet {
 	}
 	
 	private void procesarPeticionProcesarFichadaTren (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
+		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
+		TarjetaSube.Resultado resultado;
+		if (tarjeta != null) {
+			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
+			int idLinea = Integer.parseInt(request.getParameter("idLina"));
+			int idEstacion = Integer.parseInt(request.getParameter("idEstacion"));
+			int dia = Integer.parseInt(request.getParameter("dia"));
+			int mes = Integer.parseInt(request.getParameter("mes"));
+			int anio = Integer.parseInt(request.getParameter("anio"));
+			int hora = Integer.parseInt(request.getParameter("hora"));
+			int min = Integer.parseInt(request.getParameter("min"));
+			GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min);
+			LectoraTren lectora = this.obtenerLectoraTren(idLectora);
+			FichadaTren fichada = null;
+			if(lectora.isEsEntrada()) {
+				fichada = new FichadaTren(fecha, this.obtenerEstacionTren(idEstacion), eTipoFichadaTren.ENTRADA, lectora);
+			}else if(!lectora.isEsEntrada()) {
+				fichada = new FichadaTren(fecha, this.obtenerEstacionTren(idEstacion), eTipoFichadaTren.SALIDA, lectora);
+			}
+			resultado = tarjeta.procesarFichada(fichada);
+		} else {
+			resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
+		}
+		request.setAttribute("resultado", resultado);
+		request.getRequestDispatcher("views/respuestaProcesarFichada.jsp").forward(request, response);
 	}
 	
 	private void procesarPeticionProcesarFichadaSubte (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}
+
+	private LectoraTren obtenerLectoraTren(int idLectora) {
+		LectoraTrenDao dao = new LectoraTrenDao();
+		return dao.traerLectora(idLectora);
+	}
+	
+	private EstacionTren obtenerEstacionTren(int idEstacion) {
+		EstacionTrenDao dao = new EstacionTrenDao();
+		return dao.traerEstacion(idEstacion);
+	}
 	
 	private Lectora obtenerLectora(int idLectora) {
 		LectoraDao dao = new LectoraDao();
+		return dao.traerLectora(idLectora);
+	}
+	
+	private LectoraColectivo obtenerLectoraColectivo(int idLectora) {
+		LectoraColectivoDao dao = new LectoraColectivoDao();
 		return dao.traerLectora(idLectora);
 	}
 	
@@ -199,6 +252,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 	
 	private TarjetaSube obtenerTarjetaDesdeRequest(HttpServletRequest request) {
 		String codigo = request.getParameter("nroTarjeta");
+
 		System.out.println("Codigo : " + codigo);
 		return obtenerTarjetaPorCodigo(codigo);
 	}
