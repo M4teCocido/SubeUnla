@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.TarjetaSubeDao;
+import dao.fichadas.colectivo.InternoColectivoDao;
 import dao.fichadas.colectivo.LineaColectivoDao;
 import dao.fichadas.colectivo.TramoColectivoDao;
 import dao.fichadas.tren.EstacionTrenDao;
@@ -176,8 +177,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
 		TarjetaSube.Resultado resultado;
 		if (tarjeta != null) {
-			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
-			int idLinea = Integer.parseInt(request.getParameter("idLina"));
+			int idLinea = Integer.parseInt(request.getParameter("idLinea"));
 			int idInterno = Integer.parseInt(request.getParameter("idInterno"));
 			int idTramo = Integer.parseInt(request.getParameter("idTramo"));
 			int dia = Integer.parseInt(request.getParameter("dia"));
@@ -186,7 +186,9 @@ public class ControladorIngresarFichada extends HttpServlet {
 			int hora = Integer.parseInt(request.getParameter("hora"));
 			int min = Integer.parseInt(request.getParameter("min"));
 			GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min);
-			FichadaColectivo fichada = new FichadaColectivo(fecha, this.obtenerTramoColectivo(idTramo), this.obtenerLectoraColectivo(idLectora));
+			InternoColectivo interno = obtenerInternoColectivo(idInterno);
+			FichadaColectivo fichada = new FichadaColectivo(fecha, this.obtenerTramoColectivo(idTramo), interno.getLectora());
+			fichada.setInterno(interno);
 			resultado = tarjeta.procesarFichada(fichada);
 		} else {
 			resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
@@ -236,9 +238,13 @@ public class ControladorIngresarFichada extends HttpServlet {
             int anio = Integer.parseInt(request.getParameter("anio"));
             int hora = Integer.parseInt(request.getParameter("hora"));
             int min = Integer.parseInt(request.getParameter("min"));
+            GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min);       
             GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min);
+            BigDecimal monto = new BigDecimal(request.getParameter("monto"));
+         
             FichadaSubte fichada = new FichadaSubte(fecha, this.obtenerLectoraSubte(idLectora), this.obtenerEstacionSubte (idEstacion) );
             resultado = tarjeta.procesarFichada(fichada);
+            
         } else {
             resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
         }
@@ -247,6 +253,11 @@ public class ControladorIngresarFichada extends HttpServlet {
         request.getRequestDispatcher("views/respuestaProcesarFichada.jsp").forward(request, response);
 	}
 
+	private InternoColectivo obtenerInternoColectivo(int idInterno) {
+		InternoColectivoDao dao = new InternoColectivoDao();
+		return dao.traerInterno(idInterno);
+	}
+	
 	private EstacionSubte obtenerEstacionSubte (int idEstacion) {
         EstacionSubteDao dao = new EstacionSubteDao();
         return dao.traerEstacion(idEstacion);
