@@ -371,7 +371,6 @@ $(document).ready(function(){
 		if(transaccion == 1){
 			var nroTarjeta = $('#numerotarjeta').val();
 			var fecha = $('#fecha').val();
-			var hora = $('#hora').val();
 			var idLectora = $('#lectora').val();
 			var monto = $('#monto').val();
 			if (idLectora == null){
@@ -408,7 +407,6 @@ $(document).ready(function(){
 		if(transaccion == 2){
 			var nroTarjeta = $('#numerotarjeta').val();
 			var fecha = $('#fecha').val();
-			var hora = $('#hora').val();
 			var idLinea = $('#linea').val();
 			var idInterno = $('#estacioninterno').val();
 			var idTramo = $('#tramo').val();
@@ -454,7 +452,6 @@ $(document).ready(function(){
 		if(transaccion == 3){
 			var nroTarjeta = $('#numerotarjeta').val();
 			var fecha = $('#fecha').val();
-			var hora = $('#hora').val();
 			var idLinea = $('#linea').val();
 			var idEstacion = $('#estacioninterno').val();
 			var idLectora = $('#lectora').val();
@@ -499,7 +496,6 @@ $(document).ready(function(){
 		if(transaccion == 4){
 			var nroTarjeta = $('#numerotarjeta').val();
 			var fecha = $('#fecha').val();
-			var hora = $('#hora').val();
 			var idLinea = $('#linea').val();
 			var idEstacion = $('#estacioninterno').val();
 			var idLectora = $('#lectora').val();
