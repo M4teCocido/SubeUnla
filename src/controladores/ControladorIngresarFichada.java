@@ -140,8 +140,8 @@ public class ControladorIngresarFichada extends HttpServlet {
 	}
 	
 	private void procesarPeticionCarga(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String codigo = request.getParameter("codigo");
-		TarjetaSube tarjeta = this.obtenerTarjetaPorCodigo(codigo);
+		
+		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
 		TarjetaSube.Resultado resultado;
 		if (tarjeta != null) {
 			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
@@ -171,6 +171,11 @@ public class ControladorIngresarFichada extends HttpServlet {
 	private Lectora obtenerLectora(int idLectora) {
 		LectoraDao dao = new LectoraDao();
 		return dao.traerLectora(idLectora);
+	}
+	
+	private TarjetaSube obtenerTarjetaDesdeRequest(HttpServletRequest request) {
+		String codigo = request.getParameter("numeroTarjeta");
+		return obtenerTarjetaPorCodigo(codigo);
 	}
 	
 	private TarjetaSube obtenerTarjetaPorCodigo(String codigo) {
