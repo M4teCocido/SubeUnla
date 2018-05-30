@@ -153,6 +153,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 			resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
 		}
 		request.setAttribute("resultado", resultado);
+		System.out.println("Resultado : " + resultado);
 		request.getRequestDispatcher("views/respuestaProcesarFichada.jsp").forward(request, response);
 	}
 	
