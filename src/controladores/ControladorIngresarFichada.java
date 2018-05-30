@@ -172,6 +172,8 @@ public class ControladorIngresarFichada extends HttpServlet {
 			BigDecimal monto = new BigDecimal(request.getParameter("monto"));
 			FichadaRecarga fichada = new FichadaRecarga(fecha, monto, this.obtenerLectora(idLectora));
 			resultado = tarjeta.procesarFichada(fichada);
+			if (resultado.isAprobado())
+            	persistirEstadoTarjeta(tarjeta);
 		} else {
 			resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
 		}
@@ -196,6 +198,8 @@ public class ControladorIngresarFichada extends HttpServlet {
 
 			
 			resultado = tarjeta.procesarFichada(fichada);
+			if (resultado.isAprobado())
+            	persistirEstadoTarjeta(tarjeta);
 		} else {
 			resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
 		}
@@ -221,6 +225,8 @@ public class ControladorIngresarFichada extends HttpServlet {
 				fichada = new FichadaTren(fecha, this.obtenerEstacionTren(idEstacion), eTipoFichadaTren.SALIDA, lectora);
 			}
 			resultado = tarjeta.procesarFichada(fichada);
+			if (resultado.isAprobado())
+            	persistirEstadoTarjeta(tarjeta);
 		} else {
 			resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
 		}
@@ -247,6 +253,8 @@ public class ControladorIngresarFichada extends HttpServlet {
             GregorianCalendar fecha = parsearFecha(request);         
             FichadaSubte fichada = new FichadaSubte(fecha, this.obtenerLectoraSubte(idLectora), this.obtenerEstacionSubte (idEstacion) );
             resultado = tarjeta.procesarFichada(fichada);
+            if (resultado.isAprobado())
+            	persistirEstadoTarjeta(tarjeta);
             
         } else {
             resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
@@ -256,6 +264,22 @@ public class ControladorIngresarFichada extends HttpServlet {
         request.getRequestDispatcher("views/respuestaProcesarFichada.jsp").forward(request, response);
 	}
 
+	private void persistirEstadoTarjeta(TarjetaSube tarjeta) {
+        TarjetaSubeDao daoTarjeta = new TarjetaSubeDao();
+        daoTarjeta.modificarTarjetaSube(tarjeta);
+
+        if (tarjeta.getPropietario()!=null) {
+            PersonaDao daoPersona = new PersonaDao ();
+            daoPersona.modificarPersona(tarjeta.getPropietario());
+        }
+        
+        if (tarjeta.getDescuentoRedSube() != null) {
+        	System.out.println("Lapso : " + tarjeta.getDescuentoRedSube().getLapsoDescuentoRedSube().getCantidadViajes());
+        }
+        	
+        
+    }
+	
 	private InternoColectivo obtenerInternoColectivo(int idInterno) {
 		InternoColectivoDao dao = new InternoColectivoDao();
 		return dao.traerInterno(idInterno);
