@@ -179,7 +179,6 @@ public class ControladorIngresarFichada extends HttpServlet {
 		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
 		TarjetaSube.Resultado resultado;
 		if (tarjeta != null) {
-			int idLinea = Integer.parseInt(request.getParameter("idLinea"));
 			int idInterno = Integer.parseInt(request.getParameter("idInterno"));
 			int idTramo = Integer.parseInt(request.getParameter("idTramo"));
 			GregorianCalendar fecha = parsearFecha(request);
@@ -204,7 +203,6 @@ public class ControladorIngresarFichada extends HttpServlet {
 		TarjetaSube.Resultado resultado;
 		if (tarjeta != null) {
 			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
-			int idLinea = Integer.parseInt(request.getParameter("idLina"));
 			int idEstacion = Integer.parseInt(request.getParameter("idEstacion"));
 			
 			GregorianCalendar fecha = parsearFecha(request);
@@ -237,7 +235,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 
             GregorianCalendar fecha = parsearFecha(request);
 
-            BigDecimal monto = new BigDecimal(request.getParameter("monto"));
+            
          
             FichadaSubte fichada = new FichadaSubte(fecha, this.obtenerLectoraSubte(idLectora), this.obtenerEstacionSubte (idEstacion) );
             resultado = tarjeta.procesarFichada(fichada);
@@ -260,12 +258,7 @@ public class ControladorIngresarFichada extends HttpServlet {
             PersonaDao daoPersona = new PersonaDao ();
             daoPersona.modificarPersona(tarjeta.getPropietario());
         }
-        
-        if (tarjeta.getDescuentoRedSube() != null) {
-        	System.out.println("Lapso : " + tarjeta.getDescuentoRedSube().getLapsoDescuentoRedSube().getCantidadViajes());
-        }
-        	
-        
+ 
     }
 	
 	private InternoColectivo obtenerInternoColectivo(int idInterno) {
@@ -326,17 +319,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 	}
 	
 	
-	private void persistirEstadoTarjeta(TarjetaSube tarjeta) {
-		TarjetaSubeDao daoTarjeta = new TarjetaSubeDao();
-		daoTarjeta.modificarTarjetaSube(tarjeta);
-		
-		if (tarjeta.getPropietario()!=null) {
-			PersonaDao daoPersona = new PersonaDao ();
-			daoPersona.modificarPersona(tarjeta.getPropietario());
-		}
-		
-	}
-	
+
 	GregorianCalendar parsearFecha(HttpServletRequest request) {
 		
 		

@@ -44,7 +44,6 @@ $(document).ready(function(){
 	
 	$('select').formSelect();
 
-	
 	$('.datepicker').datepicker({
 		format: "dd-mm-yyyy",
 		maxDate: date,
@@ -61,7 +60,8 @@ $(document).ready(function(){
 	$('input, #input_text, textarea#textarea2').characterCounter();
 
 	$('.timepicker').timepicker({
-		showClearBtn: true
+		showClearBtn: true,
+		twelveHour : false
 	});
 	
 	setFormFichada();
@@ -372,7 +372,6 @@ $(document).ready(function(){
 		
 		if(transaccion == 1){
 			var nroTarjeta = $('#numerotarjeta').val();
-			var fecha = $('#fecha').val();
 			var idLectora = $('#lectora').val();
 			var monto = $('#monto').val();
 			if (idLectora == null){
@@ -408,7 +407,6 @@ $(document).ready(function(){
 		//PREPARA LA DATA PARA PROCESAR FICHADA COLECTIVO
 		if(transaccion == 2){
 			var nroTarjeta = $('#numerotarjeta').val();
-			var fecha = $('#fecha').val();
 			var idLinea = $('#linea').val();
 			var idInterno = $('#estacioninterno').val();
 			var idTramo = $('#tramo').val();
@@ -453,7 +451,6 @@ $(document).ready(function(){
 		//PREPARA LA DATA PARA PROCESAR FICHADA SUBTE
 		if(transaccion == 3){
 			var nroTarjeta = $('#numerotarjeta').val();
-			var fecha = $('#fecha').val();
 			var idLinea = $('#linea').val();
 			var idEstacion = $('#estacioninterno').val();
 			var idLectora = $('#lectora').val();
@@ -497,7 +494,6 @@ $(document).ready(function(){
 		//PREPARA LA DATA PARA PROCESAR FICHADA TREN
 		if(transaccion == 4){
 			var nroTarjeta = $('#numerotarjeta').val();
-			var fecha = $('#fecha').val();
 			var idLinea = $('#linea').val();
 			var idEstacion = $('#estacioninterno').val();
 			var idLectora = $('#lectora').val();
