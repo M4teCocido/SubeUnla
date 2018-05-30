@@ -2,6 +2,11 @@ var URL_INGRESAR_FICHADA = "/SubeUnla/IngresarFichada";
 
 $(document).ready(function(){
 
+	$('#fecha').on('change', function(){
+		var s = this.value;
+		alert($('#fecha').val().substring(0, 2));
+	})
+	
 	//FUNCIONES
 	
 	function setFormFichada(){
@@ -35,7 +40,7 @@ $(document).ready(function(){
 
 	
 	$('.datepicker').datepicker({
-		format: "d-m-yyyy",
+		format: "dd-mm-yyyy",
 		maxDate: date,
 		yearRange: 2,
 		showClearBtn: true,
@@ -115,9 +120,9 @@ $(document).ready(function(){
 	$('#estacioninterno').on('change', function(){
 		var transaccion = $('#tipotransaccion').val();
 		if(transaccion == 3){
-			$('#divmonto').show();
-		}else if(trasaccion == 4){
-			$('#divmonto').show();
+			$('#divlectora').show();
+		}else if(transaccion == 4){
+			$('#divlectora').show();
 		}
 	})
 	
@@ -350,15 +355,21 @@ $(document).ready(function(){
 		var transaccion = $('#tipotransaccion').val();
 		//PREPARA LA DATA PARA FICHAR UNA CARGA
 		if(transaccion == 1){
-			var nroTarjeta = $('#numerotarjeta').value();
-			var fecha = $('#fecha').value();
-			var hora = $('#hora').value();
-			var idLectora = $('#lectora').value();
-			var monto = $('#monto').value();
+			var nroTarjeta = $('#numerotarjeta').val();
+			var dia = $('#fecha').val().substring(0, 2);
+			var mes = $('#fecha').val().substring(3, 5);
+			var anio = $('#fecha').val().substring(7, 11);
+			var hora = $('#hora').val().substring(0, 2);
+			var min = $('#hora').val().substring(3, 5);
+			var idLectora = $('#lectora').val();
+			var monto = $('#monto').val();
 			var data = {
 				nroValidacion : 11,
-				fecha : fecha,
-				hora : hora, 
+				dia : dia,
+				mes : mes,
+				anio : anio,
+				hora : hora,
+				min : min,
 				idLectora : idLectora,
 				monto : monto
 			}
@@ -378,16 +389,22 @@ $(document).ready(function(){
 		}
 		//PREPARA LA DATA PARA PROCESAR FICHADA COLECTIVO
 		if(transaccion == 2){
-			var nroTarjeta = $('#numerotarjeta').value();
-			var fecha = $('#fecha').value();
-			var hora = $('#hora').value();
-			var idLinea = $('#linea').value();
-			var idInterno = $('#estacioninterno').value();
-			var idTramo = $('#tramo').value();
+			var nroTarjeta = $('#numerotarjeta').val();
+			var dia = $('#fecha').val().substring(0, 2);
+			var mes = $('#fecha').val().substring(3, 5);
+			var anio = $('#fecha').val().substring(7, 11);
+			var hora = $('#hora').val().substring(0, 2);
+			var min = $('#hora').val().substring(3, 5);
+			var idLinea = $('#linea').val();
+			var idInterno = $('#estacioninterno').val();
+			var idTramo = $('#tramo').val();
 			var data = {
 				nroValidacion : 12,
-				fecha : fecha,
+				dia : dia,
+				mes : mes,
+				anio : anio,
 				hora : hora,
+				min : min,
 				idLinea : idLinea,
 				idInterno : idInterno,
 				idTramo : idTramo
@@ -408,16 +425,22 @@ $(document).ready(function(){
 		}
 		//PREPARA LA DATA PARA PROCESAR FICHADA SUBTE
 		if(transaccion == 3){
-			var nroTarjeta = $('#numerotarjeta').value();
-			var fecha = $('#fecha').value();
-			var hora = $('#hora').value();
-			var idLinea = $('#linea').value();
-			var idEstacion = $('#estacioninterno').value();
-			var idTramo = $('#tramo').value();
+			var nroTarjeta = $('#numerotarjeta').val();
+			var dia = $('#fecha').val().substring(0, 2);
+			var mes = $('#fecha').val().substring(3, 5);
+			var anio = $('#fecha').val().substring(7, 11);
+			var hora = $('#hora').val().substring(0, 2);
+			var min = $('#hora').val().substring(3, 5);
+			var idLinea = $('#linea').val();
+			var idEstacion = $('#estacioninterno').val();
+			var idTramo = $('#tramo').val();
 			var data = {
 				nroValidacion : 13,
-				fecha : fecha,
+				dia : dia,
+				mes : mes,
+				anio : anio,
 				hora : hora,
+				min : min,
 				idLinea : idLinea,
 				idEstacion : idEstacion,
 				idTramo : idTramo
@@ -438,16 +461,22 @@ $(document).ready(function(){
 		}
 		//PREPARA LA DATA PARA PROCESAR FICHADA TREN
 		if(transaccion == 4){
-			var nroTarjeta = $('#numerotarjeta').value();
-			var fecha = $('#fecha').value();
-			var hora = $('#hora').value();
-			var idLinea = $('#linea').value();
-			var idEstacion = $('#estacioninterno').value();
-			var idTramo = $('#tramo').value();
+			var nroTarjeta = $('#numerotarjeta').val();
+			var dia = $('#fecha').val().substring(0, 2);
+			var mes = $('#fecha').val().substring(3, 5);
+			var anio = $('#fecha').val().substring(7, 11);
+			var hora = $('#hora').val().substring(0, 2);
+			var min = $('#hora').val().substring(3, 5);
+			var idLinea = $('#linea').val();
+			var idEstacion = $('#estacioninterno').val();
+			var idTramo = $('#tramo').val();
 			var data = {
 				nroValidacion : 14,
-				fecha : fecha,
+				dia : dia,
+				mes : mes,
+				anio : anio,
 				hora : hora,
+				min : min,
 				idLinea : idLinea,
 				idEstacion : idEstacion,
 				idTramo : idTramo
