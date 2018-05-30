@@ -19,8 +19,7 @@ $(document).ready(function(){
 	
 	//INICIALIZACIONES
 	
-	$('.modal').modal();
-	var modal = M.Modal.getInstance($('#footerModal'));
+	$('#footerModal').modal();
 	
 	$('.carousel').carousel({
 		fullWidth: true,
