@@ -127,8 +127,10 @@ $(document).ready(function(){
 		var transaccion = $('#tipotransaccion').val();
 		if(transaccion == 3){
 			$('#divlectora').show();
+			$('#divmonto').hide();
 		}else if(transaccion == 4){
 			$('#divlectora').show();
+			$('#divmonto').hide();
 		}
 	})
 	
