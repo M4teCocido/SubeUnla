@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.PersonaDao;
 import dao.TarjetaSubeDao;
 import dao.fichadas.colectivo.LineaColectivoDao;
 import dao.fichadas.colectivo.TramoColectivoDao;
@@ -148,18 +149,16 @@ public class ControladorIngresarFichada extends HttpServlet {
 		request.getRequestDispatcher("views/listaLectorasTren.jsp").forward(request, response);
 	}
 	
+	
 	private void procesarPeticionCarga(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
 		TarjetaSube.Resultado resultado;
 		if (tarjeta != null) {
 			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
-			int dia = Integer.parseInt(request.getParameter("dia"));
-			int mes = Integer.parseInt(request.getParameter("mes"));
-			int anio = Integer.parseInt(request.getParameter("anio"));
-			int hora = Integer.parseInt(request.getParameter("hora"));
-			int min = Integer.parseInt(request.getParameter("min"));
-			GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min); //Pendiente levantar fecha.
+			
+			
+			GregorianCalendar fecha =parsearFecha(request);
 			BigDecimal monto = new BigDecimal(request.getParameter("monto"));
 			FichadaRecarga fichada = new FichadaRecarga(fecha, monto, this.obtenerLectora(idLectora));
 			resultado = tarjeta.procesarFichada(fichada);
@@ -171,6 +170,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 		request.getRequestDispatcher("views/respuestaProcesarFichada.jsp").forward(request, response);
 	}
 	
+	
 	private void procesarPeticionProcesarFichadaColectivo (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
@@ -180,12 +180,8 @@ public class ControladorIngresarFichada extends HttpServlet {
 			int idLinea = Integer.parseInt(request.getParameter("idLina"));
 			int idInterno = Integer.parseInt(request.getParameter("idInterno"));
 			int idTramo = Integer.parseInt(request.getParameter("idTramo"));
-			int dia = Integer.parseInt(request.getParameter("dia"));
-			int mes = Integer.parseInt(request.getParameter("mes"));
-			int anio = Integer.parseInt(request.getParameter("anio"));
-			int hora = Integer.parseInt(request.getParameter("hora"));
-			int min = Integer.parseInt(request.getParameter("min"));
-			GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min);
+	
+			GregorianCalendar fecha = parsearFecha(request);
 			FichadaColectivo fichada = new FichadaColectivo(fecha, this.obtenerTramoColectivo(idTramo), this.obtenerLectoraColectivo(idLectora));
 			resultado = tarjeta.procesarFichada(fichada);
 		} else {
@@ -195,6 +191,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 		request.getRequestDispatcher("views/respuestaProcesarFichada.jsp").forward(request, response);
 	}
 	
+	
 	private void procesarPeticionProcesarFichadaTren (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
 		TarjetaSube.Resultado resultado;
@@ -202,12 +199,8 @@ public class ControladorIngresarFichada extends HttpServlet {
 			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
 			int idLinea = Integer.parseInt(request.getParameter("idLina"));
 			int idEstacion = Integer.parseInt(request.getParameter("idEstacion"));
-			int dia = Integer.parseInt(request.getParameter("dia"));
-			int mes = Integer.parseInt(request.getParameter("mes"));
-			int anio = Integer.parseInt(request.getParameter("anio"));
-			int hora = Integer.parseInt(request.getParameter("hora"));
-			int min = Integer.parseInt(request.getParameter("min"));
-			GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min);
+			
+			GregorianCalendar fecha = parsearFecha(request);
 			LectoraTren lectora = this.obtenerLectoraTren(idLectora);
 			FichadaTren fichada = null;
 			if(lectora.isEsEntrada()) {
@@ -223,6 +216,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 		request.getRequestDispatcher("views/respuestaProcesarFichada.jsp").forward(request, response);
 	}
 	
+	
 	private void procesarPeticionProcesarFichadaSubte (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
 
@@ -232,14 +226,10 @@ public class ControladorIngresarFichada extends HttpServlet {
             int idLectora = Integer.parseInt(request.getParameter("idLectora"));
             int idEstacion =  Integer.parseInt(request.getParameter("idEstacion"));
 
-            int dia = Integer.parseInt(request.getParameter("dia"));
-            int mes = Integer.parseInt(request.getParameter("mes"));
-            int anio = Integer.parseInt(request.getParameter("anio"));
-            int hora = Integer.parseInt(request.getParameter("hora"));
-            int min = Integer.parseInt(request.getParameter("min"));
+            
 
 
-            GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min);
+            GregorianCalendar fecha = parsearFecha(request);
             BigDecimal monto = new BigDecimal(request.getParameter("monto"));
 
             
@@ -304,6 +294,34 @@ public class ControladorIngresarFichada extends HttpServlet {
 			return null;
 		}
 	}
+	
+	
+	private void persistirEstadoTarjeta(TarjetaSube tarjeta) {
+		TarjetaSubeDao daoTarjeta = new TarjetaSubeDao();
+		daoTarjeta.modificarTarjetaSube(tarjeta);
+		
+		if (tarjeta.getPropietario()!=null) {
+			PersonaDao daoPersona = new PersonaDao ();
+			daoPersona.modificarPersona(tarjeta.getPropietario());
+		}
+		
+	}
+	
+	GregorianCalendar parsearFecha(HttpServletRequest request) {
+		
+		
+    	int anio = Integer.parseInt(request.getParameter("anio"));
+    	int mes  = Integer.parseInt(request.getParameter("mes"));
+    	int dia  = Integer.parseInt(request.getParameter("dia"));
+    	int hora = Integer.parseInt(request.getParameter("hora"));
+    	int min  = Integer.parseInt(request.getParameter("min"));
+    	
+    	
+    	GregorianCalendar fecha = new GregorianCalendar  (anio, mes, dia, hora , min);
+    	
+    	return  fecha;
+	}
+	
 	
 	private void procesarPeticion(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		response.setContentType("text/html;	charset=UTF-8");
