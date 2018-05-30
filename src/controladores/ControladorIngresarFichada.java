@@ -147,6 +147,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 		TarjetaSube.Resultado resultado;
 		if (tarjeta != null) {
 			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
+			System.out.println("IdLectora : " + idLectora);
 			BigDecimal monto = new BigDecimal(request.getParameter("monto"));
 			GregorianCalendar fecha = new GregorianCalendar(); //Pendiente levantar fecha.
 			FichadaRecarga fichada = new FichadaRecarga(fecha, monto, this.obtenerLectora(idLectora));
@@ -203,9 +204,13 @@ public class ControladorIngresarFichada extends HttpServlet {
 	}
 	
 	private TarjetaSube obtenerTarjetaPorCodigo(String codigo) {
-		TarjetaSubeDao dao = new TarjetaSubeDao();
-		TarjetaSube tarjeta = dao.traerTarjeta(codigo);
-		return tarjeta;
+		if (codigo != "") {
+			TarjetaSubeDao dao = new TarjetaSubeDao();
+			TarjetaSube tarjeta = dao.traerTarjeta(codigo);
+			return tarjeta;
+		} else {
+			return null;
+		}
 	}
 	
 	private void procesarPeticion(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {

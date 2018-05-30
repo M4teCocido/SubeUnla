@@ -12,6 +12,17 @@ $(document).ready(function(){
 		$('#divmonto').hide();
 	}
 	
+	function mostrarModal(data){
+		$('#footerModal').html(data);
+	    $('#footerModal').modal('open');
+	}
+	
+	function notificarError(msg){
+		$('#headerModal').html('Error!');
+		$('#pModal').html(msg);
+	    $('#footerModal').modal('open');
+	}
+	
 	function actualizarSelect(select, data){
 		select.html(data);
 		select.formSelect();
@@ -116,7 +127,7 @@ $(document).ready(function(){
 		var transaccion = $('#tipotransaccion').val();
 		if(transaccion == 3){
 			$('#divmonto').show();
-		}else if(trasaccion == 4){
+		}else if(transaccion == 4){
 			$('#divmonto').show();
 		}
 	})
@@ -355,6 +366,10 @@ $(document).ready(function(){
 			var hora = $('#hora').val();
 			var idLectora = $('#lectora').val();
 			var monto = $('#monto').val();
+			if (idLectora == null){
+				notificarError("La lectora seleccionada es invalida!");
+				return;
+			}
 			var data = {
 				nroTarjeta : nroTarjeta,
 				nroValidacion : 11,
@@ -370,7 +385,7 @@ $(document).ready(function(){
 				data: data,
 				async: false
 			}).done(function(data){
-				actualizarSelect($('#lectora'), data);
+				mostrarModal(data);
 			}).fail( function(xhr, textStatus, errorThrown) {
 				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
 				$('#headerModal').html('Ups! Algo salio mal!');
@@ -386,6 +401,18 @@ $(document).ready(function(){
 			var idLinea = $('#linea').val();
 			var idInterno = $('#estacioninterno').val();
 			var idTramo = $('#tramo').val();
+			
+			if (idLinea == null){
+				notificarError("La Linea seleccionada es invalida!");
+				return;
+			} else if (idTramo == null){
+				notificarError("El Tramo seleccionado es invalido!");
+				return;
+			} else if (idInterno == null){
+				notificarError("El Interno seleccionado es invalido!");
+				return;
+			} 
+			
 			var data = {
 				nroTarjeta : nroTarjeta,
 				nroValidacion : 12,
@@ -401,7 +428,7 @@ $(document).ready(function(){
 				data: data,
 				async: false
 			}).done(function(data){
-				actualizarSelect($('#lectora'), data);
+				mostrarModal(data);
 			}).fail( function(xhr, textStatus, errorThrown) {
 				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
 				$('#headerModal').html('Ups! Algo salio mal!');
@@ -416,7 +443,18 @@ $(document).ready(function(){
 			var hora = $('#hora').val();
 			var idLinea = $('#linea').val();
 			var idEstacion = $('#estacioninterno').val();
-			var idTramo = $('#tramo').val();
+			var idLectora = $('#lectora').val();
+			
+			if (idLinea == null){
+				notificarError("La Linea seleccionada es invalida!");
+				return;
+			} else if (idEstacion == null){
+				notificarError("La Estacion seleccionada es invalida!");
+				return;
+			} else if (idLectora == null){
+				notificarError("La Lectora seleccionada es invalida!");
+				return;
+			}
 			var data = {
 				nroTarjeta : nroTarjeta,
 				nroValidacion : 13,
@@ -424,7 +462,7 @@ $(document).ready(function(){
 				hora : hora,
 				idLinea : idLinea,
 				idEstacion : idEstacion,
-				idTramo : idTramo
+				idLectora : idLectora
 			}
 			$.ajax({
 				method: "POST",
@@ -432,7 +470,7 @@ $(document).ready(function(){
 				data: data,
 				async: false
 			}).done(function(data){
-				actualizarSelect($('#lectora'), data);
+				mostrarModal(data);
 			}).fail( function(xhr, textStatus, errorThrown) {
 				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
 				$('#headerModal').html('Ups! Algo salio mal!');
@@ -447,7 +485,19 @@ $(document).ready(function(){
 			var hora = $('#hora').val();
 			var idLinea = $('#linea').val();
 			var idEstacion = $('#estacioninterno').val();
-			var idTramo = $('#tramo').val();
+			var idLectora = $('#lectora').val();
+			
+			if (idLinea == null){
+				notificarError("La Linea seleccionada es invalida!");
+				return;
+			} else if (idEstacion == null){
+				notificarError("La Estacion seleccionada es invalida!");
+				return;
+			} else if (idLectora == null){
+				notificarError("La Lectora seleccionada es invalida!");
+				return;
+			}
+			
 			var data = {
 				nroTarjeta : nroTarjeta,
 				nroValidacion : 14,
@@ -455,7 +505,7 @@ $(document).ready(function(){
 				hora : hora,
 				idLinea : idLinea,
 				idEstacion : idEstacion,
-				idTramo : idTramo
+				idLectora : idLectora
 			}
 			$.ajax({
 				method: "POST",
@@ -463,7 +513,7 @@ $(document).ready(function(){
 				data: data,
 				async: false
 			}).done(function(data){
-				actualizarSelect($('#lectora'), data);
+				mostrarModal(data);
 			}).fail( function(xhr, textStatus, errorThrown) {
 				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
 				$('#headerModal').html('Ups! Algo salio mal!');
