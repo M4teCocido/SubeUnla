@@ -157,18 +157,9 @@ public class ControladorIngresarFichada extends HttpServlet {
 		TarjetaSube.Resultado resultado;
 		if (tarjeta != null) {
 			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
-<<<<<<< HEAD
-			int dia = Integer.parseInt(request.getParameter("dia"));
-			int mes = Integer.parseInt(request.getParameter("mes"));
-			int anio = Integer.parseInt(request.getParameter("anio"));
-			int hora = Integer.parseInt(request.getParameter("hora"));
-			int min = Integer.parseInt(request.getParameter("min"));
-			GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min); 
-=======
 			
 			
 			GregorianCalendar fecha =parsearFecha(request);
->>>>>>> 930398a45873b85631ca7a1695323ddf6625439a
 			BigDecimal monto = new BigDecimal(request.getParameter("monto"));
 			FichadaRecarga fichada = new FichadaRecarga(fecha, monto, this.obtenerLectora(idLectora));
 			resultado = tarjeta.procesarFichada(fichada);
@@ -243,14 +234,11 @@ public class ControladorIngresarFichada extends HttpServlet {
         if (tarjeta != null) {
             int idLectora = Integer.parseInt(request.getParameter("idLectora"));
             int idEstacion =  Integer.parseInt(request.getParameter("idEstacion"));
-            int dia = Integer.parseInt(request.getParameter("dia"));
-            int mes = Integer.parseInt(request.getParameter("mes"));
-            int anio = Integer.parseInt(request.getParameter("anio"));
-            int hora = Integer.parseInt(request.getParameter("hora"));
-            int min = Integer.parseInt(request.getParameter("min"));
-            GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min);         
 
-            GregorianCalendar fecha = parsearFecha(request);         
+            GregorianCalendar fecha = parsearFecha(request);
+
+            BigDecimal monto = new BigDecimal(request.getParameter("monto"));
+         
             FichadaSubte fichada = new FichadaSubte(fecha, this.obtenerLectoraSubte(idLectora), this.obtenerEstacionSubte (idEstacion) );
             resultado = tarjeta.procesarFichada(fichada);
             if (resultado.isAprobado())
