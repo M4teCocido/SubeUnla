@@ -160,7 +160,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 			int anio = Integer.parseInt(request.getParameter("anio"));
 			int hora = Integer.parseInt(request.getParameter("hora"));
 			int min = Integer.parseInt(request.getParameter("min"));
-			GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min); //Pendiente levantar fecha.
+			GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min); 
 			BigDecimal monto = new BigDecimal(request.getParameter("monto"));
 			FichadaRecarga fichada = new FichadaRecarga(fecha, monto, this.obtenerLectora(idLectora));
 			resultado = tarjeta.procesarFichada(fichada);
@@ -238,10 +238,7 @@ public class ControladorIngresarFichada extends HttpServlet {
             int anio = Integer.parseInt(request.getParameter("anio"));
             int hora = Integer.parseInt(request.getParameter("hora"));
             int min = Integer.parseInt(request.getParameter("min"));
-            GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min);       
-            GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min);
-            BigDecimal monto = new BigDecimal(request.getParameter("monto"));
-         
+            GregorianCalendar fecha = new GregorianCalendar(anio, mes, dia, hora, min);         
             FichadaSubte fichada = new FichadaSubte(fecha, this.obtenerLectoraSubte(idLectora), this.obtenerEstacionSubte (idEstacion) );
             resultado = tarjeta.procesarFichada(fichada);
             
