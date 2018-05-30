@@ -112,6 +112,15 @@ $(document).ready(function(){
 		}
 	})
 	
+	$('#estacioninterno').on('change', function(){
+		var transaccion = $('#tipotransaccion').val();
+		if(transaccion == 3){
+			$('#divmonto').show();
+		}else if(trasaccion == 4){
+			$('#divmonto').show();
+		}
+	})
+	
 	//AJAX
 	/*
 	$('#numerotarjeta').focusout(function(){
@@ -144,9 +153,12 @@ $(document).ready(function(){
 				async: false
 			}).done(function(data){
 				actualizarSelect($('#lectora'), data);
-				$('#monto').show();
+				$('#divmonto').show();
 			}).fail( function(xhr, textStatus, errorThrown) {
-				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				$('#headerModal').html('Ups! Algo salio mal!');
+				$('#pModal').html(xhr.responseText);
+			    $('#footerModal').modal('open');
 		    })
 		} else if (v == 2){
 			var data = {
@@ -161,7 +173,10 @@ $(document).ready(function(){
 			}).done(function(data){
 				actualizarSelect($('#linea'), data);
 			}).fail( function(xhr, textStatus, errorThrown) {
-				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				$('#headerModal').html('Ups! Algo salio mal!');
+				$('#pModal').html(xhr.responseText);
+			    $('#footerModal').modal('open');
 		    })
 
 		} else if(v == 3){
@@ -177,7 +192,10 @@ $(document).ready(function(){
 				actualizarSelect($('#linea'), data);
 				//$('#linea').show();
 			}).fail( function(xhr, textStatus, errorThrown) {
-				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				$('#headerModal').html('Ups! Algo salio mal!');
+				$('#pModal').html(xhr.responseText);
+			    $('#footerModal').modal('open');
 		    })
 			
 		} else if(v == 4){
@@ -192,7 +210,10 @@ $(document).ready(function(){
 			}).done(function(data){
 				actualizarSelect($('#linea'), data);
 			}).fail( function(xhr, textStatus, errorThrown) {
-				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				$('#headerModal').html('Ups! Algo salio mal!');
+				$('#pModal').html(xhr.responseText);
+			    $('#footerModal').modal('open');
 		    })
 		}
 	})
@@ -215,7 +236,10 @@ $(document).ready(function(){
 			}).done(function(data){
 				actualizarSelect($('#estacioninterno'), data);
 			}).fail( function(xhr, textStatus, errorThrown) {
-				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				$('#headerModal').html('Ups! Algo salio mal!');
+				$('#pModal').html(xhr.responseText);
+			    $('#footerModal').modal('open');
 		    })
 			
 			var data = {
@@ -230,7 +254,10 @@ $(document).ready(function(){
 			}).done(function(data){
 				actualizarSelect($('#tramo'), data);
 			}).fail( function(xhr, textStatus, errorThrown) {
-				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				$('#headerModal').html('Ups! Algo salio mal!');
+				$('#pModal').html(xhr.responseText);
+			    $('#footerModal').modal('open');
 		    })
 		}
 		//PREPARA LA INFO PARA SOLICITAR LAS ESTACIONES DE LA LINEA DE SUBTE SELECCIONADA Y HACE LA PETICION
@@ -247,7 +274,10 @@ $(document).ready(function(){
 			}).done(function(data){
 				actualizarSelect($('#estacioninterno'), data);
 			}).fail( function(xhr, textStatus, errorThrown) {
-				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				$('#headerModal').html('Ups! Algo salio mal!');
+				$('#pModal').html(xhr.responseText);
+			    $('#footerModal').modal('open');
 		    })
 		}
 		//PREPARA LA INFO PARA SOLICITAR LAS ESTACIONES DE LA LINEA DE TREN SELECCIONADA Y HACE LA PETICION
@@ -264,7 +294,10 @@ $(document).ready(function(){
 			}).done(function(data){
 				actualizarSelect($('#estacioninterno'), data);
 			}).fail( function(xhr, textStatus, errorThrown) {
-				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				$('#headerModal').html('Ups! Algo salio mal!');
+				$('#pModal').html(xhr.responseText);
+			    $('#footerModal').modal('open');
 		    })
 		}
 	})
@@ -285,7 +318,10 @@ $(document).ready(function(){
 			}).done(function(data){
 				actualizarSelect($('#lectora'), data);
 			}).fail( function(xhr, textStatus, errorThrown) {
-				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				$('#headerModal').html('Ups! Algo salio mal!');
+				$('#pModal').html(xhr.responseText);
+			    $('#footerModal').modal('open');
 		    })
 		}
 		if(transaccion == 4){
@@ -302,10 +338,134 @@ $(document).ready(function(){
 			}).done(function(data){
 				actualizarSelect($('#lectora'), data);
 			}).fail( function(xhr, textStatus, errorThrown) {
-				alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				$('#headerModal').html('Ups! Algo salio mal!');
+				$('#pModal').html(xhr.responseText);
+			    $('#footerModal').modal('open');
 		    })
 		}
 	})
 	
-	
+	$('#enviarfichada').click(function(){
+		var transaccion = $('#tipotransaccion').val();
+		//PREPARA LA DATA PARA FICHAR UNA CARGA
+		if(transaccion == 1){
+			var nroTarjeta = $('#numerotarjeta').value();
+			var fecha = $('#fecha').value();
+			var hora = $('#hora').value();
+			var idLectora = $('#lectora').value();
+			var monto = $('#monto').value();
+			var data = {
+				nroValidacion : 11,
+				fecha : fecha,
+				hora : hora, 
+				idLectora : idLectora,
+				monto : monto
+			}
+			$.ajax({
+				method: "POST",
+				url: URL_INGRESAR_FICHADA,
+				data: data,
+				async: false
+			}).done(function(data){
+				actualizarSelect($('#lectora'), data);
+			}).fail( function(xhr, textStatus, errorThrown) {
+				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				$('#headerModal').html('Ups! Algo salio mal!');
+				$('#pModal').html(xhr.responseText);
+			    $('#footerModal').modal('open');
+		    })
+		}
+		//PREPARA LA DATA PARA PROCESAR FICHADA COLECTIVO
+		if(transaccion == 2){
+			var nroTarjeta = $('#numerotarjeta').value();
+			var fecha = $('#fecha').value();
+			var hora = $('#hora').value();
+			var idLinea = $('#linea').value();
+			var idInterno = $('#estacioninterno').value();
+			var idTramo = $('#tramo').value();
+			var data = {
+				nroValidacion : 12,
+				fecha : fecha,
+				hora : hora,
+				idLinea : idLinea,
+				idInterno : idInterno,
+				idTramo : idTramo
+			}
+			$.ajax({
+				method: "POST",
+				url: URL_INGRESAR_FICHADA,
+				data: data,
+				async: false
+			}).done(function(data){
+				actualizarSelect($('#lectora'), data);
+			}).fail( function(xhr, textStatus, errorThrown) {
+				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				$('#headerModal').html('Ups! Algo salio mal!');
+				$('#pModal').html(xhr.responseText);
+			    $('#footerModal').modal('open');
+		    })
+		}
+		//PREPARA LA DATA PARA PROCESAR FICHADA SUBTE
+		if(transaccion == 3){
+			var nroTarjeta = $('#numerotarjeta').value();
+			var fecha = $('#fecha').value();
+			var hora = $('#hora').value();
+			var idLinea = $('#linea').value();
+			var idEstacion = $('#estacioninterno').value();
+			var idTramo = $('#tramo').value();
+			var data = {
+				nroValidacion : 13,
+				fecha : fecha,
+				hora : hora,
+				idLinea : idLinea,
+				idEstacion : idEstacion,
+				idTramo : idTramo
+			}
+			$.ajax({
+				method: "POST",
+				url: URL_INGRESAR_FICHADA,
+				data: data,
+				async: false
+			}).done(function(data){
+				actualizarSelect($('#lectora'), data);
+			}).fail( function(xhr, textStatus, errorThrown) {
+				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				$('#headerModal').html('Ups! Algo salio mal!');
+				$('#pModal').html(xhr.responseText);
+			    $('#footerModal').modal('open');
+		    })
+		}
+		//PREPARA LA DATA PARA PROCESAR FICHADA TREN
+		if(transaccion == 4){
+			var nroTarjeta = $('#numerotarjeta').value();
+			var fecha = $('#fecha').value();
+			var hora = $('#hora').value();
+			var idLinea = $('#linea').value();
+			var idEstacion = $('#estacioninterno').value();
+			var idTramo = $('#tramo').value();
+			var data = {
+				nroValidacion : 14,
+				fecha : fecha,
+				hora : hora,
+				idLinea : idLinea,
+				idEstacion : idEstacion,
+				idTramo : idTramo
+			}
+			$.ajax({
+				method: "POST",
+				url: URL_INGRESAR_FICHADA,
+				data: data,
+				async: false
+			}).done(function(data){
+				actualizarSelect($('#lectora'), data);
+			}).fail( function(xhr, textStatus, errorThrown) {
+				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				$('#headerModal').html('Ups! Algo salio mal!');
+				$('#pModal').html(xhr.responseText);
+			    $('#footerModal').modal('open');
+		    })
+		}
+		
+	})
 });	
