@@ -2,6 +2,7 @@ package modelo;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -156,22 +157,31 @@ public class TarjetaSube {
 					if (fichadaAnterior.getTipoFichada().equals(eTipoFichadaTren.ENTRADA)){
 						System.out.println("Fichada Tren : Anterior es de ENTRADA");
 						
-					
+						GregorianCalendar fechaMenos2 = (GregorianCalendar) fichadaActual.getFechaHora().clone();
+						fechaMenos2.add(Calendar.HOUR, -2);
 						
-						if((fichadaActual.getFechaHora().get(GregorianCalendar.HOUR_OF_DAY) - fichadaAnterior.getFechaHora().get(GregorianCalendar.HOUR_OF_DAY)) < 2){
+						if (fichadaAnterior.getFechaHora().after(fechaMenos2)) {
+						//if((fichadaActual.getFechaHora().get(GregorianCalendar.HOUR_OF_DAY) - fichadaAnterior.getFechaHora().get(GregorianCalendar.HOUR_OF_DAY)) < 2){
 							System.out.println("Fichada Tren : Es menor a 2 horas");
 							
 							ViajeTren viajeAux = fichadaActual.getEstacion().getLinea().obtenerViaje(fichadaAnterior.getEstacion(), fichadaActual.getEstacion());
 						    BigDecimal bonificacion = new BigDecimal(0);
 						    BigDecimal viajeDescontado;
-						    System.out.println("Importe Viaje : " + viajeAux.getSeccionTren().getImporte().toString());
 						    
+						    
+						    System.out.println("Estacion Anterior : " + fichadaAnterior.getEstacion());
+						    System.out.println("Estacion Actual : " + fichadaActual.getEstacion());
+						    System.out.println("Linea : " + fichadaActual.getEstacion().getLinea());
+						    System.out.println("Viajes : " + fichadaActual.getEstacion().getLinea().getViajes());
 						    
 						    if (viajeAux != null) {
 						    	viajeDescontado = procesarDescuento(viajeAux.getSeccionTren().getImporte(), fichadaActual).setScale(2, RoundingMode.HALF_UP);
 						    	System.out.println("viaje descontado : " + viajeDescontado.toString());
-						    } else
+						    	System.out.println("Importe Viaje : " + viajeAux.getSeccionTren().getImporte().toString());
+						    } else {
 						    	viajeDescontado = getUltimaTransaccion().getImporte().add(BigDecimal.ZERO);
+						    	System.out.println("viaje es NULO!");
+						    }
 						    
 					     	bonificacion = getUltimaTransaccion().getImporte().subtract(viajeDescontado).setScale(2, RoundingMode.HALF_UP);
 				

@@ -94,9 +94,10 @@ public class LineaTren {
 	
 	public ViajeTren obtenerViaje (EstacionTren estacionOrigen, EstacionTren estacionDestino) {
 		ViajeTren viajeTren = null;
-		for(int i=0; i<this.viajes.size(); i++) {
-			if(IndexableSet.get(this.viajes,i).getEstacionOrigen() == estacionOrigen && IndexableSet.get(this.viajes,i).getEstacionDestino() == estacionDestino) {
-		        viajeTren = IndexableSet.get(this.viajes,i); 
+		for(int i = 0; i < this.viajes.size(); i++) {
+			if(IndexableSet.get(this.viajes, i).getEstacionOrigen().getIdEstacion() == estacionOrigen.getIdEstacion() 
+					&& IndexableSet.get(this.viajes, i).getEstacionDestino().getIdEstacion() == estacionDestino.getIdEstacion()) {
+		        viajeTren = IndexableSet.get(this.viajes, i); 
 		    }
 		}
 		return viajeTren;

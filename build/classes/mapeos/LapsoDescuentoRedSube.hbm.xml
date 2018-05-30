@@ -8,7 +8,7 @@
 		</id>
 		<property column="fechaHoraVencimiento" name="fechaHoraVencimiento" type="calendar" />
 		<set name="viajesRealizados" table="fichada" inverse="false" lazy="false" fetch="select" cascade="all"><!-- order-by="idFichada asc" -->
-			<key column="idLapsoDescuentoRedSUBE" not-null="true" />
+			<key column="idLapsoDescuentoRedSUBE" not-null="false" />
 			<one-to-many class="modelo.fichadas.Fichada" />
 		</set>
 		<many-to-one name="descuento" class="modelo.Descuentos.DescuentoRedSube" fetch="select" column="idDescuentoRedSube" lazy="false" cascade="all" not-null="true" />

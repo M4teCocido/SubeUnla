@@ -329,7 +329,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 		}
 	}
 	
-	private GregorianCalendar parsearFecha(HttpServletRequest request) {
+	GregorianCalendar parsearFecha(HttpServletRequest request) {
 		
 		
     	int anio = Integer.parseInt(request.getParameter("anio"));

@@ -6,7 +6,7 @@
 		<id column="idViaje" name="idViaje">
 			<generator class = "identity" />
 		</id>
-		<many-to-one name="linea" class="modelo.fichadas.tren.LineaTren" fetch="select" column="idLinea" not-null="true" />		
+		<many-to-one name="linea" class="modelo.fichadas.tren.LineaTren" fetch="select" column="idLinea" cascade="all" not-null="true" />		
 		<many-to-one name="estacionOrigen" class="modelo.fichadas.tren.EstacionTren" fetch="select" column="idEstacionOrigen" not-null="true" />
 		<many-to-one name="estacionDestino" class="modelo.fichadas.tren.EstacionTren" fetch="select" column="idEstacionDestino" not-null="true" />
 		<many-to-one name="seccionTren" class="modelo.fichadas.tren.SeccionTren" fetch="select" column="idSeccion" not-null="true" />

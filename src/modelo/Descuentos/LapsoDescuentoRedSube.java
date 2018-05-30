@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import dao.fichadas.FichadaDao;
 import modelo.fichadas.Fichada;
 import modelo.fichadas.tren.FichadaTren;
 import util.IndexableSet;
@@ -32,6 +33,7 @@ public class LapsoDescuentoRedSube {
 		this.fechaHoraVencimiento = fechaHoraVencimiento;
 		for (Fichada f : this.viajesRealizados) {
 			f.setLapso(null);
+			FichadaDao daoFichada = new FichadaDao();
 		}
 		this.viajesRealizados.clear();
 	}

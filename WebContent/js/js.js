@@ -367,6 +367,10 @@ $(document).ready(function(){
 		var anio = $('#fecha').val().substring(5, 11);
 		var hora = $('#hora').val().substring(0, 2);
 		var min = $('#hora').val().substring(3, 5);
+		if ($('#fecha').val() == "" || $('#hora').val() == ""){
+			notificarError("Ingrese fecha y hora");
+			return;
+		}
 		console.log("Fecha : " + $('#fecha').val());
 		console.log("Fechahora : " + dia + " " + mes + " " + anio + " " + hora + " " + min);
 		
