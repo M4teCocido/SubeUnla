@@ -360,6 +360,14 @@ $(document).ready(function(){
 	$('#enviarfichada').click(function(){
 		var transaccion = $('#tipotransaccion').val();
 		//PREPARA LA DATA PARA FICHAR UNA CARGA
+		var dia = $('#fecha').val().substring(0, 2);
+		var mes = $('#fecha').val().substring(3, 4);
+		var anio = $('#fecha').val().substring(7, 11);
+		var hora = $('#hora').val().substring(0, 2);
+		var min = $('#hora').val().substring(3, 5);
+		
+		console.log("Fechahora : " + dia + " " + mes + " " + anio + " " + hora + " " + min);
+		
 		if(transaccion == 1){
 			var nroTarjeta = $('#numerotarjeta').val();
 			var fecha = $('#fecha').val();
@@ -373,8 +381,11 @@ $(document).ready(function(){
 			var data = {
 				nroTarjeta : nroTarjeta,
 				nroValidacion : 11,
-				fecha : fecha,
-				hora : hora, 
+				dia : dia,
+				mes : mes,
+				anio : anio,
+				hora : hora,
+				min : min,
 				idLectora : idLectora,
 				monto : monto
 			}
@@ -416,8 +427,11 @@ $(document).ready(function(){
 			var data = {
 				nroTarjeta : nroTarjeta,
 				nroValidacion : 12,
-				fecha : fecha,
+				dia : dia,
+				mes : mes,
+				anio : anio,
 				hora : hora,
+				min : min,
 				idLinea : idLinea,
 				idInterno : idInterno,
 				idTramo : idTramo
@@ -458,8 +472,11 @@ $(document).ready(function(){
 			var data = {
 				nroTarjeta : nroTarjeta,
 				nroValidacion : 13,
-				fecha : fecha,
+				dia : dia,
+				mes : mes,
+				anio : anio,
 				hora : hora,
+				min : min,
 				idLinea : idLinea,
 				idEstacion : idEstacion,
 				idLectora : idLectora
@@ -501,8 +518,11 @@ $(document).ready(function(){
 			var data = {
 				nroTarjeta : nroTarjeta,
 				nroValidacion : 14,
-				fecha : fecha,
+				dia : dia,
+				mes : mes,
+				anio : anio,
 				hora : hora,
+				min : min,
 				idLinea : idLinea,
 				idEstacion : idEstacion,
 				idLectora : idLectora
