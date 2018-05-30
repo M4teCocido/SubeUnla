@@ -282,11 +282,11 @@ public class TarjetaSube {
 			//Aplica descuentos
 			if (this.propietario.getDescuentoBoletoEstudiantil() != null && this.propietario.getDescuentoBoletoEstudiantil().leQuedanCargas()) { //Como es del 100%, si existe ignoramos los otros.
 				montoFinal=this.propietario.getDescuentoBoletoEstudiantil().aplicarDescuento(montoFinal, fichada);
-			} else {
-				if (this.propietario.getDescuentoTarifaSocial() != null) {
-					montoFinal=this.propietario.getDescuentoTarifaSocial().aplicarDescuento(montoFinal, fichada);
-				}
 			}
+			if (this.propietario.getDescuentoTarifaSocial() != null) {
+				montoFinal=this.propietario.getDescuentoTarifaSocial().aplicarDescuento(montoFinal, fichada);
+			}
+			
 		}
 		
 		if (this.descuentoRedSube != null) {
