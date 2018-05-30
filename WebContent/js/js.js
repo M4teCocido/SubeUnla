@@ -2,11 +2,6 @@ var URL_INGRESAR_FICHADA = "/SubeUnla/IngresarFichada";
 
 $(document).ready(function(){
 
-	$('#fecha').on('change', function(){
-		var s = this.value;
-		alert($('#fecha').val().substring(0, 2));
-	})
-	
 	//FUNCIONES
 	
 	function setFormFichada(){
@@ -40,7 +35,7 @@ $(document).ready(function(){
 
 	
 	$('.datepicker').datepicker({
-		format: "dd-mm-yyyy",
+		format: "d-m-yyyy",
 		maxDate: date,
 		yearRange: 2,
 		showClearBtn: true,
@@ -120,9 +115,9 @@ $(document).ready(function(){
 	$('#estacioninterno').on('change', function(){
 		var transaccion = $('#tipotransaccion').val();
 		if(transaccion == 3){
-			$('#divlectora').show();
-		}else if(transaccion == 4){
-			$('#divlectora').show();
+			$('#divmonto').show();
+		}else if(trasaccion == 4){
+			$('#divmonto').show();
 		}
 	})
 	
@@ -356,23 +351,19 @@ $(document).ready(function(){
 		//PREPARA LA DATA PARA FICHAR UNA CARGA
 		if(transaccion == 1){
 			var nroTarjeta = $('#numerotarjeta').val();
-			var dia = $('#fecha').val().substring(0, 2);
-			var mes = $('#fecha').val().substring(3, 5);
-			var anio = $('#fecha').val().substring(7, 11);
-			var hora = $('#hora').val().substring(0, 2);
-			var min = $('#hora').val().substring(3, 5);
+			var fecha = $('#fecha').val();
+			var hora = $('#hora').val();
 			var idLectora = $('#lectora').val();
 			var monto = $('#monto').val();
 			var data = {
+				nroTarjeta : nroTarjeta,
 				nroValidacion : 11,
-				dia : dia,
-				mes : mes,
-				anio : anio,
-				hora : hora,
-				min : min,
+				fecha : fecha,
+				hora : hora, 
 				idLectora : idLectora,
 				monto : monto
 			}
+			console.log(data);
 			$.ajax({
 				method: "POST",
 				url: URL_INGRESAR_FICHADA,
@@ -390,21 +381,16 @@ $(document).ready(function(){
 		//PREPARA LA DATA PARA PROCESAR FICHADA COLECTIVO
 		if(transaccion == 2){
 			var nroTarjeta = $('#numerotarjeta').val();
-			var dia = $('#fecha').val().substring(0, 2);
-			var mes = $('#fecha').val().substring(3, 5);
-			var anio = $('#fecha').val().substring(7, 11);
-			var hora = $('#hora').val().substring(0, 2);
-			var min = $('#hora').val().substring(3, 5);
+			var fecha = $('#fecha').val();
+			var hora = $('#hora').val();
 			var idLinea = $('#linea').val();
 			var idInterno = $('#estacioninterno').val();
 			var idTramo = $('#tramo').val();
 			var data = {
+				nroTarjeta : nroTarjeta,
 				nroValidacion : 12,
-				dia : dia,
-				mes : mes,
-				anio : anio,
+				fecha : fecha,
 				hora : hora,
-				min : min,
 				idLinea : idLinea,
 				idInterno : idInterno,
 				idTramo : idTramo
@@ -426,21 +412,16 @@ $(document).ready(function(){
 		//PREPARA LA DATA PARA PROCESAR FICHADA SUBTE
 		if(transaccion == 3){
 			var nroTarjeta = $('#numerotarjeta').val();
-			var dia = $('#fecha').val().substring(0, 2);
-			var mes = $('#fecha').val().substring(3, 5);
-			var anio = $('#fecha').val().substring(7, 11);
-			var hora = $('#hora').val().substring(0, 2);
-			var min = $('#hora').val().substring(3, 5);
+			var fecha = $('#fecha').val();
+			var hora = $('#hora').val();
 			var idLinea = $('#linea').val();
 			var idEstacion = $('#estacioninterno').val();
 			var idTramo = $('#tramo').val();
 			var data = {
+				nroTarjeta : nroTarjeta,
 				nroValidacion : 13,
-				dia : dia,
-				mes : mes,
-				anio : anio,
+				fecha : fecha,
 				hora : hora,
-				min : min,
 				idLinea : idLinea,
 				idEstacion : idEstacion,
 				idTramo : idTramo
@@ -462,21 +443,16 @@ $(document).ready(function(){
 		//PREPARA LA DATA PARA PROCESAR FICHADA TREN
 		if(transaccion == 4){
 			var nroTarjeta = $('#numerotarjeta').val();
-			var dia = $('#fecha').val().substring(0, 2);
-			var mes = $('#fecha').val().substring(3, 5);
-			var anio = $('#fecha').val().substring(7, 11);
-			var hora = $('#hora').val().substring(0, 2);
-			var min = $('#hora').val().substring(3, 5);
+			var fecha = $('#fecha').val();
+			var hora = $('#hora').val();
 			var idLinea = $('#linea').val();
 			var idEstacion = $('#estacioninterno').val();
 			var idTramo = $('#tramo').val();
 			var data = {
+				nroTarjeta : nroTarjeta,
 				nroValidacion : 14,
-				dia : dia,
-				mes : mes,
-				anio : anio,
+				fecha : fecha,
 				hora : hora,
-				min : min,
 				idLinea : idLinea,
 				idEstacion : idEstacion,
 				idTramo : idTramo

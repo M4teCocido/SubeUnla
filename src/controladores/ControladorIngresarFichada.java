@@ -175,7 +175,8 @@ public class ControladorIngresarFichada extends HttpServlet {
 	}
 	
 	private TarjetaSube obtenerTarjetaDesdeRequest(HttpServletRequest request) {
-		String codigo = request.getParameter("numeroTarjeta");
+		String codigo = request.getParameter("nroTarjeta");
+		System.out.println("Codigo : " + codigo);
 		return obtenerTarjetaPorCodigo(codigo);
 	}
 	

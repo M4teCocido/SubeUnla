@@ -6,7 +6,7 @@
 	<h4 class="center-align">Ingreso de fichadas</h4>
 	<div class="row">
 		<div class="input-field col s12 m6 l4">
-          	<input placeholder="Numero" name="numerotarjeta" id="numerotarjeta" type="text" class="validate" data-length="16">
+          	<input placeholder="Numero" name="numerotarjeta" id="numerotarjeta" type="text" class="validate" data-length="16"></input>
           	<label for="numerotarjeta">Numero de Tarjeta SUBE</label>
         </div>
   		<div class="input-field col s12 m6 l4">
