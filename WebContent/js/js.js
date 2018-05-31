@@ -377,7 +377,8 @@ $(document).ready(function(){
 			async: false
 		}).done(function(data){
 			if(data!=null && data!="" && data!=''){
-				mostrarModalMensaje("Validacion Tarjeta", data);
+				//mostrarModalMensaje("Validacion Tarjeta", data);
+				mostrarModal(data);
 			}
 		}).fail( function(xhr, textStatus, errorThrown) {
 			//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);

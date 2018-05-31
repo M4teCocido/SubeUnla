@@ -200,12 +200,6 @@ public class ControladorIngresarFichada extends HttpServlet {
 		request.getRequestDispatcher("views/respuestaProcesarFichada.jsp").forward(request, response);
 	}
 	
-	private void procesarPeticionEsTarjetaValida(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(this.obtenerTarjetaDesdeRequest(request)==null) {
-			request.getRequestDispatcher("<h1>Tarjeta no existente</h1>").forward(request, response);
-		}
-	}
-	
 	private void procesarPeticionProcesarFichadaTren (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
 		TarjetaSube.Resultado resultado;
@@ -258,6 +252,12 @@ public class ControladorIngresarFichada extends HttpServlet {
         request.getRequestDispatcher("views/respuestaProcesarFichada.jsp").forward(request, response);
 	}
 
+	private void procesarPeticionEsTarjetaValida(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(this.obtenerTarjetaDesdeRequest(request)==null) {
+			request.getRequestDispatcher("views/respuestaValidarTarjeta.jsp").forward(request, response);
+		}
+	}
+	
 	private void persistirEstadoTarjeta(TarjetaSube tarjeta) {
         TarjetaSubeDao daoTarjeta = new TarjetaSubeDao();
         daoTarjeta.modificarTarjetaSube(tarjeta);
