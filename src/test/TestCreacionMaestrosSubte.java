@@ -66,6 +66,8 @@ private static int numeroSerieLectora = 1000;
 		EstacionSubte estacion = new EstacionSubte(nombre, linea);
 		estaciones.add(estacion);
 		lectoras.add(new LectoraSubte(numeroSerieLectora++, estacion));
+		lectoras.add(new LectoraSubte(numeroSerieLectora++, estacion));
+		lectoras.add(new LectoraSubte(numeroSerieLectora++, estacion));
 	}
 
 }
