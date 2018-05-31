@@ -41,6 +41,7 @@ public class TestDaos {
 
 	public static void main(String[] args) {
 
+		//Test inicial de persistencia : Movido a los distintos tests de creacion de maestros.
 		try {
 			//----------------------------TEST PERMISO----------------------------
 			/*PermisoDao dao = new PermisoDao();

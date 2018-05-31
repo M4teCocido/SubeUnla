@@ -17,7 +17,7 @@ import modelo.fichadas.tren.eTipoFichadaTren;
 import modelo.lectoras.LectoraExterna;
 import modelo.lectoras.LectoraTren;
 
-public class TestTarjetaSube {
+public class TestTarjetaSubeTren {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

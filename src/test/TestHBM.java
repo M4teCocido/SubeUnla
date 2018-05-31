@@ -6,12 +6,12 @@ import dao.HibernateUtil;
 public class TestHBM {
 	
 	public static void main(String[] args) throws Exception{
-			
+		//Simplemente chequea la conexion.
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		
 		session.beginTransaction();
 		session.close();
-		System.out.println("Hasta aca ok!");
+		System.out.println("Conexion OK!");
 	}
 
 }

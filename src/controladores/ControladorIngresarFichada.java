@@ -153,7 +153,6 @@ public class ControladorIngresarFichada extends HttpServlet {
 		request.getRequestDispatcher("views/listaLectorasTren.jsp").forward(request, response);
 	}
 	
-	
 	private void procesarPeticionCarga(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
@@ -393,16 +392,16 @@ public class ControladorIngresarFichada extends HttpServlet {
 				case 11: //Recibe numero Tarjeta, fecha, hora, idLectora, monto
 					this.procesarPeticionCarga(request, response);
 					break;
-				case 12:
+				case 12: //Recibe Numero Tarjeta, fecha, hora, idLinea, idEstacion, idInterno. Devuelve RespuestaProcesamiento
 					this.procesarPeticionProcesarFichadaColectivo(request, response);
 					break;
-				case 13:
+				case 13: //Recibe Numero Tarjeta, fecha, hora, idLinea, idEstacion, idLectora. Devuelve RespuestaProcesamiento
 					this.procesarPeticionProcesarFichadaSubte(request, response);
 					break;
-				case 14:
+				case 14: //Recibe Numero Tarjeta, fecha, hora, idLinea, idEstacion, idLectora. Devuelve RespuestaProcesamiento
 					this.procesarPeticionProcesarFichadaTren(request, response);
 					break;
-				case 15:
+				case 15: //Recibe Numero Tarjeta. Devuelve RespuestaValidarSube
 					this.procesarPeticionEsTarjetaValida(request, response);
 					break;
 				default:
