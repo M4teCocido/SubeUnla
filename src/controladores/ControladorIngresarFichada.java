@@ -159,14 +159,18 @@ public class ControladorIngresarFichada extends HttpServlet {
 		TarjetaSube.Resultado resultado;
 		if (tarjeta != null) {
 			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
+
+			try {
+				GregorianCalendar fecha = parsearFecha(request);
+				BigDecimal monto = new BigDecimal(request.getParameter("monto"));
+				FichadaRecarga fichada = new FichadaRecarga(fecha, monto, this.obtenerLectora(idLectora));
+				resultado = tarjeta.procesarFichada(fichada);
+				if (resultado.isAprobado())
+	            	persistirEstadoTarjeta(tarjeta);
+			} catch (Exception e) { 
+				resultado = new TarjetaSube.Resultado(false, "Alguno de los datos ingresados es invalido", null);
+			}
 			
-			
-			GregorianCalendar fecha =parsearFecha(request);
-			BigDecimal monto = new BigDecimal(request.getParameter("monto"));
-			FichadaRecarga fichada = new FichadaRecarga(fecha, monto, this.obtenerLectora(idLectora));
-			resultado = tarjeta.procesarFichada(fichada);
-			if (resultado.isAprobado())
-            	persistirEstadoTarjeta(tarjeta);
 		} else {
 			resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
 		}
@@ -181,17 +185,21 @@ public class ControladorIngresarFichada extends HttpServlet {
 		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
 		TarjetaSube.Resultado resultado;
 		if (tarjeta != null) {
-			int idInterno = Integer.parseInt(request.getParameter("idInterno"));
-			int idTramo = Integer.parseInt(request.getParameter("idTramo"));
-			GregorianCalendar fecha = parsearFecha(request);
-			InternoColectivo interno = obtenerInternoColectivo(idInterno);
-			FichadaColectivo fichada = new FichadaColectivo(fecha, this.obtenerTramoColectivo(idTramo), interno.getLectora());
-			fichada.setInterno(interno);
-
-			
-			resultado = tarjeta.procesarFichada(fichada);
-			if (resultado.isAprobado())
-            	persistirEstadoTarjeta(tarjeta);
+			try {
+				int idInterno = Integer.parseInt(request.getParameter("idInterno"));
+				int idTramo = Integer.parseInt(request.getParameter("idTramo"));
+				GregorianCalendar fecha = parsearFecha(request);
+				InternoColectivo interno = obtenerInternoColectivo(idInterno);
+				FichadaColectivo fichada = new FichadaColectivo(fecha, this.obtenerTramoColectivo(idTramo), interno.getLectora());
+				fichada.setInterno(interno);
+	
+				
+				resultado = tarjeta.procesarFichada(fichada);
+				if (resultado.isAprobado())
+	            	persistirEstadoTarjeta(tarjeta);
+			} catch (Exception e) {
+				resultado = new TarjetaSube.Resultado(false, "Alguno de los datos ingresados es invalido", null);
+			}
 		} else {
 			resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
 		}
@@ -207,18 +215,21 @@ public class ControladorIngresarFichada extends HttpServlet {
 
 			int idLinea = Integer.parseInt(request.getParameter("idLinea"));
 			int idEstacion = Integer.parseInt(request.getParameter("idEstacion"));
-			
-			GregorianCalendar fecha = parsearFecha(request);
-			LectoraTren lectora = this.obtenerLectoraTren(idLectora);
-			FichadaTren fichada = null;
-			if(lectora.isEsEntrada()) {
-				fichada = new FichadaTren(fecha, this.obtenerEstacionTren(idEstacion), eTipoFichadaTren.ENTRADA, lectora);
-			}else if(!lectora.isEsEntrada()) {
-				fichada = new FichadaTren(fecha, this.obtenerEstacionTren(idEstacion), eTipoFichadaTren.SALIDA, lectora);
+			try {
+				GregorianCalendar fecha = parsearFecha(request);
+				LectoraTren lectora = this.obtenerLectoraTren(idLectora);
+				FichadaTren fichada = null;
+				if(lectora.isEsEntrada()) {
+					fichada = new FichadaTren(fecha, this.obtenerEstacionTren(idEstacion), eTipoFichadaTren.ENTRADA, lectora);
+				}else if(!lectora.isEsEntrada()) {
+					fichada = new FichadaTren(fecha, this.obtenerEstacionTren(idEstacion), eTipoFichadaTren.SALIDA, lectora);
+				}
+				resultado = tarjeta.procesarFichada(fichada);
+				if (resultado.isAprobado())
+	            	persistirEstadoTarjeta(tarjeta);
+			} catch (Exception e) {
+				resultado = new TarjetaSube.Resultado(false, "Alguno de los datos ingresados es invalido", null);
 			}
-			resultado = tarjeta.procesarFichada(fichada);
-			if (resultado.isAprobado())
-            	persistirEstadoTarjeta(tarjeta);
 		} else {
 			resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
 		}
@@ -233,7 +244,9 @@ public class ControladorIngresarFichada extends HttpServlet {
         TarjetaSube.Resultado resultado;
 
         if (tarjeta != null) {
-            int idLectora = Integer.parseInt(request.getParameter("idLectora"));
+            
+        	try {
+        	int idLectora = Integer.parseInt(request.getParameter("idLectora"));
             int idEstacion =  Integer.parseInt(request.getParameter("idEstacion"));
             int idLinea = Integer.parseInt(request.getParameter("idLinea"));
             GregorianCalendar fecha = parsearFecha(request);
@@ -242,6 +255,9 @@ public class ControladorIngresarFichada extends HttpServlet {
             resultado = tarjeta.procesarFichada(fichada);
             if (resultado.isAprobado())
             	persistirEstadoTarjeta(tarjeta);
+        	} catch (Exception e) {
+				resultado = new TarjetaSube.Resultado(false, "Alguno de los datos ingresados es invalido", null);
+			}
             
         } else {
             resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);

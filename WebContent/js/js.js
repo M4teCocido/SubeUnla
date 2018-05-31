@@ -407,6 +407,10 @@ $(document).ready(function(){
 			var nroTarjeta = $('#numerotarjeta').val();
 			var idLectora = $('#lectora').val();
 			var monto = $('#monto').val();
+			if (monto == null || monto == ""){
+				notificarError("El monto ingresado es invalido!");
+				return;
+			}
 			if (idLectora == null){
 				notificarError("La lectora seleccionada es invalida!");
 				return;

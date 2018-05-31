@@ -159,10 +159,12 @@ public class TarjetaSube {
 						
 						GregorianCalendar fechaMenos2 = (GregorianCalendar) fichadaActual.getFechaHora().clone();
 						fechaMenos2.add(Calendar.HOUR, -2);
+						System.out.println("FechaMenos2 : " + fechaMenos2);
+						System.out.println("HoraAnterior : " + fichadaAnterior.getFechaHora());
 						
 						if (fichadaAnterior.getFechaHora().after(fechaMenos2)) {
 						//if((fichadaActual.getFechaHora().get(GregorianCalendar.HOUR_OF_DAY) - fichadaAnterior.getFechaHora().get(GregorianCalendar.HOUR_OF_DAY)) < 2){
-							System.out.println("Fichada Tren : Es menor a 2 horas");
+							System.out.println("Fichada Tren : ES menor a 2 horas");
 							
 							ViajeTren viajeAux = fichadaActual.getEstacion().getLinea().obtenerViaje(fichadaAnterior.getEstacion(), fichadaActual.getEstacion());
 						    BigDecimal bonificacion = new BigDecimal(0);
