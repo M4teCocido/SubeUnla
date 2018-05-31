@@ -17,6 +17,12 @@ $(document).ready(function(){
 	    $('#footerModal').modal('open');
 	}
 	
+	function mostrarModalMensaje(titulo, msg){
+		$('#headerModal').html(titulo);
+		$('#pModal').html(msg);
+	    $('#footerModal').modal('open');
+	}
+	
 	function notificarError(msg){
 		$('#headerModal').html('Error!');
 		$('#pModal').html(msg);
@@ -359,12 +365,34 @@ $(document).ready(function(){
 		}
 	})
 	
+	$('#numerotarjeta').change(function(){
+		var data = {
+				nroTarjeta : this.value,
+				nroValidacion : 15
+			}
+		$.ajax({
+			method: "POST",
+			url: URL_INGRESAR_FICHADA,
+			data: data,
+			async: false
+		}).done(function(data){
+			if(data!=null && data!="" && data!=''){
+				mostrarModalMensaje("Validacion Tarjeta", data);
+			}
+		}).fail( function(xhr, textStatus, errorThrown) {
+			//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+			$('#headerModal').html('Ups! Algo salio mal!');
+			$('#pModal').html(xhr.responseText);
+		    $('#footerModal').modal('open');
+	    });
+	});
+	
 	$('#enviarfichada').click(function(){
 		var transaccion = $('#tipotransaccion').val();
 		//PREPARA LA DATA PARA FICHAR UNA CARGA
 		var dia = $('#fecha').val().substring(0, 2);
-		var mes = $('#fecha').val().substring(3, 4);
-		var anio = $('#fecha').val().substring(5, 11);
+		var mes = $('#fecha').val().substring(3, 5);
+		var anio = $('#fecha').val().substring(6, 11);
 		var hora = $('#hora').val().substring(0, 2);
 		var min = $('#hora').val().substring(3, 5);
 		if ($('#fecha').val() == "" || $('#hora').val() == ""){
