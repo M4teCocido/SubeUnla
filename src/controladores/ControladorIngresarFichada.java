@@ -200,6 +200,11 @@ public class ControladorIngresarFichada extends HttpServlet {
 		request.getRequestDispatcher("views/respuestaProcesarFichada.jsp").forward(request, response);
 	}
 	
+	private void procesarPeticionEsTarjetaValida(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(this.obtenerTarjetaDesdeRequest(request)==null) {
+			request.getRequestDispatcher("<h1>Tarjeta no existente</h1>").forward(request, response);
+		}
+	}
 	
 	private void procesarPeticionProcesarFichadaTren (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
@@ -312,21 +317,21 @@ public class ControladorIngresarFichada extends HttpServlet {
 	}
 	
 	private TarjetaSube obtenerTarjetaPorCodigo(String codigo) {
+		TarjetaSube tarjeta = null;
 		if (codigo != "") {
 			TarjetaSubeDao dao = new TarjetaSubeDao();
-			LapsoDescuentoRedSubeDao daoLapso = new LapsoDescuentoRedSubeDao(); 
-			TarjetaSube tarjeta = dao.traerTarjeta(codigo);
-			DescuentoRedSubeDao daoDesc = new DescuentoRedSubeDao ();
-			DescuentoRedSube desc = tarjeta.getDescuentoRedSube();
-			desc = daoDesc.traerDescuento(desc.getIdDescuento());
-			System.out.println("Descuento : " + desc);
-			tarjeta.setDescuentoRedSube(desc);
-			desc.setTarjeta(tarjeta);
-			//tarjeta.getDescuentoRedSube().setLapsoDescuentoRedSube(daoLapso.traerLapsoPorDescuento(tarjeta.getDescuentoRedSube().getIdDescuento()));
-			return tarjeta;
-		} else {
-			return null;
+			tarjeta = dao.traerTarjeta(codigo);
+			if (tarjeta != null) {
+				DescuentoRedSubeDao daoDesc = new DescuentoRedSubeDao ();
+				DescuentoRedSube desc = tarjeta.getDescuentoRedSube();
+				desc = daoDesc.traerDescuento(desc.getIdDescuento());
+				System.out.println("Descuento : " + desc);
+				tarjeta.setDescuentoRedSube(desc);
+				desc.setTarjeta(tarjeta);
+				//tarjeta.getDescuentoRedSube().setLapsoDescuentoRedSube(daoLapso.traerLapsoPorDescuento(tarjeta.getDescuentoRedSube().getIdDescuento()));
+			}
 		}
+		return tarjeta;
 	}
 	
 	private GregorianCalendar parsearFecha(HttpServletRequest request) {
@@ -339,7 +344,7 @@ public class ControladorIngresarFichada extends HttpServlet {
     	int min  = Integer.parseInt(request.getParameter("min"));
     	
     	
-    	GregorianCalendar fecha = new GregorianCalendar  (anio, mes, dia, hora , min);
+    	GregorianCalendar fecha = new GregorianCalendar  (anio, mes - 1, dia, hora , min, 0);
     	
     	return  fecha;
 	}
@@ -396,6 +401,9 @@ public class ControladorIngresarFichada extends HttpServlet {
 					break;
 				case 14:
 					this.procesarPeticionProcesarFichadaTren(request, response);
+					break;
+				case 15:
+					this.procesarPeticionEsTarjetaValida(request, response);
 					break;
 				default:
 					break;

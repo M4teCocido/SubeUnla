@@ -29,13 +29,20 @@ public class LapsoDescuentoRedSube {
 		this.descuento = descuento;
 	}
 
-	public void reiniciar(GregorianCalendar fechaHoraVencimiento) {
-		this.fechaHoraVencimiento = fechaHoraVencimiento;
+	public void reiniciar(GregorianCalendar fechaHoraFichada) {
+		this.fechaHoraVencimiento = (GregorianCalendar) fechaHoraFichada.clone();
+		this.fechaHoraVencimiento.add(Calendar.HOUR_OF_DAY, 2);
 		for (Fichada f : this.viajesRealizados) {
 			f.setLapso(null);
 			FichadaDao daoFichada = new FichadaDao();
 		}
 		this.viajesRealizados.clear();
+	}
+	
+	public boolean yaTermino(GregorianCalendar horaFichada) {
+		System.out.println("horaFichada : " + horaFichada);
+		System.out.println("horaVencimiento : " + this.fechaHoraVencimiento);
+		return (this.getCantidadViajes() >= 5 || horaFichada.after(this.fechaHoraVencimiento));
 	}
 	
 	public int getIdLapso() {
@@ -60,10 +67,6 @@ public class LapsoDescuentoRedSube {
 
 	public void setViajesRealizados(Set<Fichada> viajesRealizados) {
 		this.viajesRealizados = viajesRealizados;
-	}
-	
-	public boolean yaTermino(GregorianCalendar horaFichada) {
-		return (this.getCantidadViajes() >= 5 || this.fechaHoraVencimiento.before (horaFichada));
 	}
 	
 	public int getCantidadViajes() {

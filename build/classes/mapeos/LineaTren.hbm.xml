@@ -18,7 +18,7 @@
 			<one-to-many class="modelo.fichadas.tren.EstacionTren" />
 		</set>
 		
-		<set name="viajes" table="viajetren" order-by="idViaje asc" inverse="false" lazy="false" fetch="select">
+		<set name="viajes" table="viajetren" order-by="idViaje asc" inverse="true" lazy="false" fetch="select">
 			<key column="idlinea" not-null="true" />
 			<one-to-many class="modelo.fichadas.tren.ViajeTren" />
 		</set>
