@@ -52,6 +52,12 @@ public class TramoColectivo {
 		this.idTramo = idTramo;
 	}
 
+	@Override
+	public String toString() {
+		return "TramoColectivo [idTramo=" + idTramo + ", nombre=" + nombre + ", precio=" + precio + ", lineaColectivo="
+				+ lineaColectivo + "]";
+	}
 
+	
 	
 }

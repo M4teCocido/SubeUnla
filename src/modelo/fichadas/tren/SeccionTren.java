@@ -64,4 +64,11 @@ public class SeccionTren {
 		this.viajesTren = viajesTren;
 	}
 
+	@Override
+	public String toString() {
+		return "SeccionTren [idSeccion=" + idSeccion + ", nombre=" + nombre + ", importe=" + importe + ", linea="
+				+ linea + ", viajesTren=" + viajesTren + "]";
+	}
+
+	
 }

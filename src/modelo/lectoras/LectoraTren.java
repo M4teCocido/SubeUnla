@@ -30,6 +30,11 @@ public class LectoraTren extends Lectora{
 	public void setEsEntrada(boolean esEntrada) {
 		this.esEntrada = esEntrada;
 	}
+
+	@Override
+	public String toString() {
+		return "LectoraTren [estacion=" + estacion + ", esEntrada=" + esEntrada + "]";
+	}
 	
 	
 }

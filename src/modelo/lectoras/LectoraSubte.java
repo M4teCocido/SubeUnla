@@ -20,4 +20,11 @@ public class LectoraSubte extends Lectora{
 	public void setEstacion(EstacionSubte estacion) {
 		this.estacion = estacion;
 	}
+
+	@Override
+	public String toString() {
+		return "LectoraSubte [estacion=" + estacion + "]";
+	}
+	
+	
 }
