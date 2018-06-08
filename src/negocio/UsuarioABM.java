@@ -2,10 +2,13 @@ package negocio;
 
 import modelo.Persona;
 import modelo.Usuario;
+
+import java.util.List;
+
 import dao.UsuarioDao;
 
 public class UsuarioABM {
-	UsuarioDao dao = new UsuarioDao();
+UsuarioDao dao = new UsuarioDao();
 	
 	public Usuario traerUsuarioPorId(int idUsuario)throws Exception {
 		Usuario u = dao.traerUsuarioPorId(idUsuario);
@@ -13,25 +16,28 @@ public class UsuarioABM {
 		return u;
 	}
 	
-	public int agregarPermiso(String nombreUsuario, String password, Persona persona) {
-		//validar si existe un usuario con ese nombre y/o Persona, si la hay tirar excepcion
-		
+	public int agregarUsuario(String nombreUsuario, String password, Persona persona) throws Exception {
+		for (Usuario usuario : dao.traerUsuarios()) {
+			if (usuario.getNombreUsuario().equalsIgnoreCase(nombreUsuario) || usuario.getPersona().equals(persona)) throw new Exception("Ya existe un usuario con el nombre: " + nombreUsuario + " o persona: " + persona);
+		}
 		Usuario u = new Usuario(nombreUsuario, password, persona);
 		return dao.agregarUsuario(u);
 	}
 	
-	public void modificarUsuario(Usuario u) {
-		/* implementar antes de actualizar que no exista un user
-		con el mismo nombre a modificar
-		y con el mismo id, lanzar la Exception */
+	public void modificarUsuario(Usuario u) throws Exception {
+		for (Usuario usuario : dao.traerUsuarios()) {
+			if (usuario.getNombreUsuario().equalsIgnoreCase(u.getNombreUsuario())) throw new Exception("Ya existe un usuario con el nombre: " + u.getNombreUsuario());
+		}
 		dao.modificarUsuario(u);
 	}
 	
-	public void eliminarPermisoPorId(int idUsuario) {
+	public void eliminarPermisoPorId(int idUsuario) throws Exception {
 		Usuario u = dao.traerUsuarioPorId(idUsuario);
-		/*si es null arrojar exception
-		 * tambien habria que chequear que el user no tenga ninguna dependencia 
-		 * si la tienen tiramos exception o eliminamos las dependencias?*/
+		if (u == null) throw new Exception("El usuario de id: " + idUsuario + " ya existe");
 		dao.eliminarUsuario(u);
+	}
+	
+	public List<Usuario> traerUsuarios() {
+		return dao.traerUsuarios();
 	}
 }

@@ -22,23 +22,24 @@ public class LineaSubteABM {
 		return l;
 	}
 	
-	public int agregarLinea(String nombre, BigDecimal precio) {
-		//validar si existe una linea con ese nombre, si la hay tirar excepcion
-		
+	public int agregarLinea(String nombre, BigDecimal precio) throws Exception {
+		for (LineaSubte linea : dao.traerLineas()) {
+			if (linea.getNombre().equalsIgnoreCase(nombre)) throw new Exception("La linea de nombre " + nombre + " ya existe");
+		}
 		LineaSubte l = new LineaSubte(nombre, precio);
 		return dao.agregarLinea(l);
 	}
 	
-	public void modificarLinea(LineaSubte l) {
-		// implementar antes de actualizar que no exista una linea con el mismo nombre a modificar lanzar la Exception 
+	public void modificarLinea(LineaSubte l) throws Exception {
+		for (LineaSubte linea : dao.traerLineas()) {
+			if (linea.equals(l)) throw new Exception("La linea " + l + " ya existe");
+		}
 		dao.modificarLinea(l);
 	}
 	
-	public void eliminarLineaPorId(int idLinea) {
+	public void eliminarLineaPorId(int idLinea) throws Exception {
 		LineaSubte l = dao.traerLinea(idLinea);
-		/*si es null arrojar exception
-		 * tambien habria que chequear que esta linea no tenga ninguna dependencia 
-		 * si la tienen tiramos exception o eliminamos las dependencias?*/
+		if (l == null) throw new Exception("La linea de id " + idLinea + " no existe");
 		dao.eliminarLinea(l);
 	}
 	
@@ -46,11 +47,11 @@ public class LineaSubteABM {
 		return dao.traerLineas();
 	}
 	
-	public List<EstacionSubte> traerEstacionesPorIdLinea(int idLinea){
+	public List<EstacionSubte> traerEstacionesPorIdLinea(int idLinea) {
 		return daoEstacion.traerEstacionesPorIdLinea(idLinea);
 	}
 	
-	public List<LectoraSubte> traerLectorasPorIdEstacion(int idEstacion){
+	public List<LectoraSubte> traerLectorasPorIdEstacion(int idEstacion) {
 		return daoLectora.traerLectorasPorIdEstacion(idEstacion);
 	}
 }

@@ -10,13 +10,8 @@ import modelo.fichadas.colectivo.LineaColectivo;
 
 public class LineaColectivoABM {
 
-	InternoColectivoDao daoInterno;
-	LineaColectivoDao dao;
-	
-	public LineaColectivoABM() {
-		daoInterno = new InternoColectivoDao();
-		dao = new LineaColectivoDao();
-	}
+	LineaColectivoDao dao = new LineaColectivoDao();
+	InternoColectivoDao daoInterno = new InternoColectivoDao();
 	
 	public LineaColectivo traerLineaPorId(int idLinea)throws Exception {
 		LineaColectivo l = dao.traerLineaPorId(idLinea);
@@ -24,25 +19,24 @@ public class LineaColectivoABM {
 		return l;
 	}
 	
-	public int agregar(String nombre) {
-		//validar si existe una linea con ese nombre, si la hay tirar excepcion
-		
+	public int agregar(String nombre) throws Exception {
+		for (LineaColectivo linea : dao.traerLineas()) {
+			if (linea.getNombre().equalsIgnoreCase(nombre)) throw new Exception("La linea con nombre " + nombre + " ya existe");
+		}
 		LineaColectivo l = new LineaColectivo(nombre);
 		return dao.agregarLinea(l);
 	}
 	
-	public void modificar(LineaColectivo l) {
-		/* implementar antes de actualizar que no exista una linea
-		con el mismo nombre a modificar
-		y con el mismo id, lanzar la Exception */
+	public void modificar(LineaColectivo l) throws Exception {
+		for (LineaColectivo linea : dao.traerLineas()) {
+			if (linea.getNombre().equalsIgnoreCase(l.getNombre())) throw new Exception("La linea con nombre " + l + " ya existe");
+		}
 		dao.modificarLinea(l);
 	}
 	
-	public void eliminarPorId(int idLinea) {
+	public void eliminarPorId(int idLinea) throws Exception {
 		LineaColectivo l = dao.traerLineaPorId(idLinea);
-		/*si es null arrojar exception
-		 * tambien habria que chequear que esta linea no tenga ninguna dependencia 
-		 * si la tienen tiramos exception o eliminamos las dependencias?*/
+		if (l == null) throw new Exception("La linea de id: " + idLinea + " no existe");
 		dao.eliminarLinea(l);
 	}
 	

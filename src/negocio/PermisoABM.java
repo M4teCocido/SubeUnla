@@ -1,6 +1,9 @@
 package negocio;
 
 import modelo.Permiso;
+
+import java.util.List;
+
 import dao.PermisoDao;
 
 public class PermisoABM {
@@ -12,21 +15,28 @@ public class PermisoABM {
 		return l;
 	}
 	
-	public int agregarPermiso(String nombre, String descripcion, String codigo) {
-		//validar si existe un permiso con ese nombre y/o codigo, si la hay tirar excepcion
-		
+	public int agregarPermiso(String nombre, String descripcion, String codigo) throws Exception {
+		for (Permiso permiso : dao.traerPermisos()) {
+			if (permiso.getNombre().equalsIgnoreCase(nombre) || permiso.getCodigo().equalsIgnoreCase(codigo)) throw new Exception("El permiso de nombre; " + nombre + " o codigo: " + codigo + " ya existe");
+		}
 		Permiso p = new Permiso(nombre, descripcion, codigo);
 		return dao.agregarPermiso(p);
 	}
 	
-	public void modificarPermiso(Permiso p) {
-		// implementar antes de actualizar que no exista un permiso con el mismo nombre a modificar lanzar la Exception 
+	public void modificarPermiso(Permiso p) throws Exception {
+		for (Permiso permiso : dao.traerPermisos()) {
+			if (permiso.equals(p)) throw new Exception("El permiso " + p + " ya existe");
+		}
 		dao.modificarPermiso(p);
 	}
 	
-	public void eliminarPermisoPorId(int idPermiso) {
+	public void eliminarPermisoPorId(int idPermiso) throws Exception {
 		Permiso l = dao.traerPermisoPorId(idPermiso);
-		//si es null arrojar exception tambien habria que chequear que este permiso no tenga ninguna dependencia si la tienen tiramos exception o eliminamos las dependencias? 
+		if (l == null) throw new Exception("El permiso de id: " + idPermiso + " no existe");
 		dao.eliminarPermiso(l);
+	}
+	
+	public List<Permiso> traerPermisos() {
+		return dao.traerPermisos();
 	}
 }

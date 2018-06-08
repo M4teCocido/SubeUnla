@@ -62,6 +62,14 @@ public class Usuario {
 		this.persona = persona;
 	}
 
+	
+	
+	@Override
+	public String toString() {
+		return "Usuario [idUsuario=" + idUsuario + ", nombreUsuario=" + nombreUsuario + ", password=" + password
+				+ ", persona=" + persona + ", permisos=" + permisos + "]";
+	}
+
 	public boolean tienePermiso(Permiso permiso) {
 		boolean encontrado = false;
 		int i = 0;

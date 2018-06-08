@@ -61,6 +61,12 @@ public class Permiso {
 		}
 		return equivalente;
 	}
+	
+	@Override
+	public String toString() {
+		return "Permiso [idPermiso=" + idPermiso + ", nombre=" + nombre + ", descripcion=" + descripcion + ", codigo="
+				+ codigo + ", usuarios=" + usuarios + "]";
+	}
 
 	public Set<Usuario> getUsuarios() {
 		return usuarios;
