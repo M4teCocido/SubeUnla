@@ -16,25 +16,24 @@ public class LectoraExternaABM {
 		return lectora;
 	}
 	
-	public int agregar(int nroSerie ,String ubicacion) {
-		//validar si existe una linea con ese nombre, si la hay tirar excepcion
-		
+	public int agregar(int nroSerie ,String ubicacion) throws Exception {
+		for (LectoraExterna lectora : dao.traerLectoras()) {
+			if (lectora.getNroSerie() == nroSerie && lectora.getUbicacion().equalsIgnoreCase(ubicacion)) throw new Exception("La lectora de nro: " + nroSerie + " y ubicacion: " + ubicacion + " ya existe");
+		}
 		LectoraExterna l = new LectoraExterna(nroSerie, ubicacion);
 		return dao.agregarLectora(l);
 	}
 	
-	public void modificar(LectoraExterna l) {
-		/* implementar antes de actualizar que no exista una linea
-		con el mismo nombre a modificar
-		y con el mismo id, lanzar la Exception */
+	public void modificar(LectoraExterna l) throws Exception {
+		for (LectoraExterna lectora : dao.traerLectoras()) {
+			if (lectora.equals(l)) throw new Exception("");
+		}
 		dao.modificarLectora(l);
 	}
 	
-	public void eliminarLectora(int idLectora) {
+	public void eliminarLectora(int idLectora) throws Exception {
 		LectoraExterna l = dao.traerLectora(idLectora);
-		/*si es null arrojar exception
-		 * tambien habria que chequear que esta linea no tsenga ninguna dependencia 
-		 * si la tienen tiramos exception o eliminamos las dependencias?*/
+		if (l == null) throw new Exception("La lectora de id: " + idLectora + " no existe");
 		dao.elimninarLectora(l);
 	}
 	

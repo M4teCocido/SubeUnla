@@ -100,4 +100,12 @@ public class LapsoDescuentoRedSube {
 		return importeFinal;
 		
 	}
+
+	@Override
+	public String toString() {
+		return "LapsoDescuentoRedSube [idLapso=" + idLapso + ", descuento=" + descuento + ", fechaHoraVencimiento="
+				+ fechaHoraVencimiento + ", viajesRealizados=" + viajesRealizados + "]";
+	}
+	
+	
 }

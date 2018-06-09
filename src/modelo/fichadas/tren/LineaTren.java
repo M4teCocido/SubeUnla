@@ -102,4 +102,12 @@ public class LineaTren {
 		}
 		return viajeTren;
 	}
+
+	@Override
+	public String toString() {
+		return "LineaTren [idLinea=" + idLinea + ", nombre=" + nombre + ", secciones=" + secciones + ", estaciones="
+				+ estaciones + ", viajes=" + viajes + "]";
+	}
+	
+	
 } 

@@ -22,25 +22,24 @@ public class LineaTrenABM {
 		return l;
 	}
 	
-	public int agregarLinea(String nombre) {
-		//validar si existe una tarjeta con ese nombre, si la hay tirar excepcion
-		
+	public int agregarLinea(String nombre) throws Exception {
+		for (LineaTren linea : dao.traerLineas()) {
+			if (linea.getNombre().equalsIgnoreCase(nombre)) throw new Exception("La linea " + nombre + " ya existe");
+		}
 		LineaTren l = new LineaTren(nombre);
 		return dao.agregarLinea(l);
 	}
 	
-	public void modificarLinea(LineaTren l) {
-		/* implementar antes de actualizar que no exista un cliente
-		con el mismo documento a modificar
-		y con el mismo id, lanzar la Exception */
+	public void modificarLinea(LineaTren l) throws Exception {
+		for (LineaTren linea : dao.traerLineas()) {
+			if (linea.getNombre().equalsIgnoreCase(l.getNombre())) throw new Exception("La linea " + l + " ya existe");
+		}
 		dao.modificarLinea(l);
 	}
 	
-	public void eliminarLineaPorId(int idLinea) {
+	public void eliminarLineaPorId(int idLinea) throws Exception {
 		LineaTren l = dao.traerLineaPorId(idLinea);
-		/*si es null arrojar exception
-		 * tambien habria que chequear que esta linea no tenga ninguna dependencia 
-		 * si la tienen tiramos exception o eliminamos las dependencias?*/
+		if (l == null) throw new Exception("La linea de id " + idLinea + " no existe");
 		dao.eliminarLinea(l);
 	}
 	

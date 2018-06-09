@@ -92,6 +92,12 @@ public class DescuentoBoletoEstudiantil extends DescuentoSube {
 	public void setPersona(Persona persona) {
 		this.persona = persona;
 	}
+
+	@Override
+	public String toString() {
+		return "DescuentoBoletoEstudiantil [porcentajeDescuento=" + porcentajeDescuento + ", viajesRestantes="
+				+ viajesRestantes + ", tipoBoletoEstudiantil=" + tipoBoletoEstudiantil + ", persona=" + persona + "]";
+	}
 	
 	
 }

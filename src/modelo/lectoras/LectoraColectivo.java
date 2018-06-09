@@ -20,4 +20,11 @@ public class LectoraColectivo extends Lectora {
 	public void setInterno(InternoColectivo interno) {
 		this.interno = interno;
 	}
+
+	@Override
+	public String toString() {
+		return "LectoraColectivo [interno=" + interno + "]";
+	}
+	
+	
 }

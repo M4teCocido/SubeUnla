@@ -43,4 +43,10 @@ public abstract class Lectora {
 		this.fichadas = fichadas;
 	}
 
+	@Override
+	public String toString() {
+		return "Lectora [idLectora=" + idLectora + ", nroSerie=" + nroSerie + ", fichadas=" + fichadas + "]";
+	}
+
+	
 }

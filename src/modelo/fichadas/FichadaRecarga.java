@@ -24,4 +24,11 @@ public class FichadaRecarga extends Fichada {
 	public void setMonto(BigDecimal monto) {
 		this.monto = monto;
 	}
+
+	@Override
+	public String toString() {
+		return "FichadaRecarga [monto=" + monto + "]";
+	}
+	
+	
 }
