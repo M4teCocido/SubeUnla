@@ -6,10 +6,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Ingreso de Fichadas SUBE</title>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-	<div class="container">
+	<!--<div class="container">
 
             <div class="row white z-depth-3 valign-wrapper">
                 <a href="https://www.argentina.gob.ar/sube"><img class="responsive-img" src="img/logo.jpg"></a>
@@ -35,14 +36,7 @@
                         <li><a href="collapsible.html" class="black-text">Reportes</a></li>
                       </ul>
                 </div>
-              </nav>
-        </div>
-        <!--  <div class="col hide-on-small m12 l12">
-            <div class="carousel carousel-slider">
-                <a class="carousel-item" href="#one!"><img src="https://www.argentina.gob.ar/sites/default/files/styles/jumbotron/public/sube_header_1.jpg?itok=GVxD3CAT" class="responsive-img"></a>
-                <a class="carousel-item" href="#two!"><img src="" class="responsive-img"></a>
-                <a class="carousel-item" href="#three!"><img src="" class="responsive-img"></a>
-            </div>
+            </nav>
         </div>
         -->
         

@@ -1,4 +1,4 @@
-	<div class="container">	
+	
 		<footer class="page-footer blue lighten-2">
 			<div class="container">
 				<div class="row">
@@ -19,10 +19,10 @@
 				</div>
 			</div>
 			<div class="footer-copyright">
-			  <div class="container black-text">© 2014 Todos los derechos reservados</div>
+			  <div class="container black-text">© 2018 Todos los derechos reservados</div>
 			</div>
         </footer>
-	</div>
+	
 	<script type="text/javascript" src="js/jquery.js"></script>
    	<script type="text/javascript" src="js/materialize.js"></script>
    	<script type="text/javascript" src="js/js.js"></script>
