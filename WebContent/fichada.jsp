@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <% String title = "Fichadas"; %>    
-    
 <%@ include file = "/views/header.jsp" %>
-
+<script type="text/javascript" src="js/jsIngresarFichada.js"></script>
+</head>
+<body>
 <div class="container">
 	<div class="section no-pad-bot">
 		<br>
@@ -78,11 +79,5 @@
   		</div>
 	</div>
 </div>
-
-	<script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/materialize.js"></script>
-	<script type="text/javascript" src="js/js.js"></script>
-	<script type="text/javascript" src="js/jsIngresarFichada.js"></script>
-
 
 <%@ include file = "/views/footer.jsp" %>
