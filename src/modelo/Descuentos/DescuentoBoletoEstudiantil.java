@@ -2,7 +2,6 @@ package modelo.Descuentos;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import modelo.Persona;
 import modelo.Descuentos.eTipoBoletoEstudiantil;
@@ -92,12 +91,13 @@ public class DescuentoBoletoEstudiantil extends DescuentoSube {
 	public void setPersona(Persona persona) {
 		this.persona = persona;
 	}
-
+	
+	/*
 	@Override
 	public String toString() {
 		return "DescuentoBoletoEstudiantil [porcentajeDescuento=" + porcentajeDescuento + ", viajesRestantes="
-				+ viajesRestantes + ", tipoBoletoEstudiantil=" + tipoBoletoEstudiantil + ", persona=" + persona + "]";
+				+ viajesRestantes + ", tipoBoletoEstudiantil=" + tipoBoletoEstudiantil.toString() + ", persona=" + persona.toString() + "]";
 	}
-	
+	*/
 	
 }

@@ -23,7 +23,7 @@ public class LectoraColectivo extends Lectora {
 
 	@Override
 	public String toString() {
-		return "LectoraColectivo [interno=" + interno + "]";
+		return "LectoraColectivo [interno= " + interno.getIdInterno() + " nombre= "+ interno.getNombre() + "]";
 	}
 	
 	

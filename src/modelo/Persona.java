@@ -155,7 +155,7 @@ public class Persona {
 		
 		documentoString = (this.documento != null ? this.documento.toString() : "Ninguno");
 		descuentoSocialString = (this.descuentoTarifaSocial != null ? this.descuentoTarifaSocial.toString() : "Ninguno"); 
-		descuentoEstudiantilString =(this.descuentoBoletoEstudiantil != null ? this.descuentoBoletoEstudiantil.toString() : "Ninguno");
+		descuentoEstudiantilString = (this.descuentoBoletoEstudiantil != null ? this.descuentoBoletoEstudiantil.toString() : "Ninguno");
 		if (this.tarjetasAsociadas.size() > 0) {
 			tarjetasString = "";
 			for (int i = 0; i < this.tarjetasAsociadas.size(); i++)	 {

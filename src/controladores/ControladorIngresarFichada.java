@@ -51,7 +51,6 @@ import negocio.LineaSubteABM;
 import negocio.LineaTrenABM;
 import negocio.LineaSubteABM;
 import negocio.LineaTrenABM;
-import negocio.LectorasExternasABM;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -77,7 +76,7 @@ public class ControladorIngresarFichada extends HttpServlet {
 	}
 	
 	private void procesarPeticionLectorasCarga(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		LectorasExternasABM abm = new LectorasExternasABM();
+		LectoraExternaABM abm = new LectoraExternaABM();
 		List<LectoraExterna> lstLectora = abm.traerLectoras();
 		request.setAttribute("lstLectoras", lstLectora);
 		request.getRequestDispatcher("views/listaLectorasExternas.jsp").forward(request, response);

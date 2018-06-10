@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+
 <%@ include file = "/views/header.jsp" %>
 
 <div class="section no-pad-bot" id="index-banner">
@@ -23,7 +24,7 @@
 		<div class="col s3 center-align">
 			<a class="waves-effect waves-light" href="registroSube.jsp"><i class="large material-icons">credit_card</i></a>
 			<h6>Registrar Tarjeta</h6>
-			<p>Resgistra una tarjeta a tu nombre para poder acceder a los beneficios que te corresponden.</p>
+			<p>Registra una tarjeta a tu nombre para poder acceder a los beneficios que te corresponden.</p>
 		</div>
 		<div class="col s3 center-align">
 			<a class="waves-effect waves-light" href="fichada.jsp"><i class="large material-icons">monetization_on</i></a>

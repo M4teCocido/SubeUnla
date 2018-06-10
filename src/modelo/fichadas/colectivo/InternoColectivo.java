@@ -51,7 +51,7 @@ public class InternoColectivo {
 			lectoraString = "NINGUNA";
 		else
 			lectoraString = this.lectora.toString();
-		String resultado = "InternoColectivo [idInterno=" + idInterno + ", lineaColectivo=" + lineaColectivo + ", nombre=" + nombre + ", lectora=" + lectoraString + "]"; 
+		String resultado = "InternoColectivo [idInterno=" + idInterno + ", lineaColectivo=" + lineaColectivo + ", nombre=" + nombre + "]"; 
 		return resultado; 
 				
 	}

@@ -38,6 +38,8 @@ $(document).ready(function(){
 	
 	$('#footerModal').modal();
 	
+	$('.tooltipped').tooltip();
+	
 	$('.carousel').carousel({
 		fullWidth: true,
     	indicators: true
