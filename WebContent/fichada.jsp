@@ -5,10 +5,17 @@
 <%@ include file = "/views/header.jsp" %>
 
 <div class="container">
-	<div class="section no-pad-bot" id="index-banner">
+	<div class="section no-pad-bot">
 		<br>
-		<a class="btn-floating tooltipped btn-large waves-effect waves-light blue lighten-2" data-position="bottom" data-tooltip="Volver!" href="index.jsp"><i class="material-icons">arrow_back</i></a>
-		<h1 class="header center orange-text">Fichadas</h1>
+		<div class="row">
+			<div class="col l1">
+				<a class="btn-floating tooltipped btn-large waves-effect waves-light blue lighten-2" data-position="bottom" data-tooltip="Volver!" href="index.jsp"><i class="material-icons">arrow_back</i></a>
+			</div>
+			<div class="col l10">
+				<h1 class="header center orange-text">Fichadas</h1>
+			</div>
+		</div>
+		
 		<div class="row center">
 			<h5 class="header col s12 light">Ingreso de fichadas(Carga o Boleto)</h5>
 		</div>
@@ -66,12 +73,16 @@
           	<label for="monto">Ingrese monto de carga</label>
         </div>
   		<div class="row">
-  			
 	  		<button class="btn waves-effect waves-light blue lighten-2 black-text col s12 l12 m12" type="submit" id="enviarfichada">Enviar<i class="material-icons right">send</i>
 	  		</button>
   		</div>
 	</div>
 </div>
-<script type="text/javascript" src="js/jsIngresarFichada.js"></script>
+
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/materialize.js"></script>
+	<script type="text/javascript" src="js/js.js"></script>
+	<script type="text/javascript" src="js/jsIngresarFichada.js"></script>
+
 
 <%@ include file = "/views/footer.jsp" %>

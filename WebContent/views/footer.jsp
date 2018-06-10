@@ -1,9 +1,3 @@
-	
-		
-   		
-	<script type="text/javascript" src="js/jquery.js"></script>
-   	<script type="text/javascript" src="js/materialize.js"></script>
-   	<script type="text/javascript" src="js/js.js"></script>
    	<div class="modal" id="footerModal">
 		<div class="modal-content">
     		<h4 align="center" id="headerModal"></h4>

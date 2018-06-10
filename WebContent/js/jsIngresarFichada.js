@@ -2,6 +2,28 @@ $(document).ready(function(){
 
 	//FUNCIONES
 
+	function mostrarModal(data){
+		$('#footerModal').html(data);
+	    $('#footerModal').modal('open');
+	}
+	
+	function mostrarModalMensaje(titulo, msg){
+		$('#headerModal').html(titulo);
+		$('#pModal').html(msg);
+	    $('#footerModal').modal('open');
+	}
+	
+	function notificarError(msg){
+		$('#headerModal').html('Error!');
+		$('#pModal').html(msg);
+	    $('#footerModal').modal('open');
+	}
+	
+	function actualizarSelect(select, data){
+		select.html(data);
+		select.formSelect();
+	}
+	
 	function setFormFichada(){
 		$('#divlinea').hide();
 		$('#divestacioninterno').hide();
@@ -301,6 +323,7 @@ $(document).ready(function(){
 	})
 
 	$('#enviarfichada').click(function(){
+
 		var transaccion = $('#tipotransaccion').val();
 		//PREPARA LA DATA PARA FICHAR UNA CARGA
 		var dia = $('#fecha').val().substring(0, 2);
@@ -353,6 +376,7 @@ $(document).ready(function(){
 			    $('#footerModal').modal('open');
 		    })
 		}
+		
 		//PREPARA LA DATA PARA PROCESAR FICHADA COLECTIVO
 		if(transaccion == 2){
 			var nroTarjeta = $('#numerotarjeta').val();

@@ -1,44 +1,12 @@
 var URL_INGRESAR_FICHADA = "/SubeUnla/IngresarFichada";
 
 $(document).ready(function(){
-
-	//FUNCIONES
-	
-	function mostrarModal(data){
-		$('#footerModal').html(data);
-	    $('#footerModal').modal('open');
-	}
-	
-	function mostrarModalMensaje(titulo, msg){
-		$('#headerModal').html(titulo);
-		$('#pModal').html(msg);
-	    $('#footerModal').modal('open');
-	}
-	
-	function notificarError(msg){
-		$('#headerModal').html('Error!');
-		$('#pModal').html(msg);
-	    $('#footerModal').modal('open');
-	}
-	
-	function actualizarSelect(select, data){
-		select.html(data);
-		select.formSelect();
-	}
 	
 	//INICIALIZACIONES
 	
 	$('#footerModal').modal();
 	
 	$('.tooltipped').tooltip();
-	
-	$('.carousel').carousel({
-		fullWidth: true,
-    	indicators: true
-	});
-	
-	var carousel = $('.carousel');
-	setInterval(function(){ $('.carousel').carousel('next'); }, 3500);
 
 	var date = new Date();
 	
