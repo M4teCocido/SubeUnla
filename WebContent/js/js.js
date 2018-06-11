@@ -1,5 +1,3 @@
-var URL_INGRESAR_FICHADA = "/SubeUnla/IngresarFichada";
-
 $(document).ready(function(){
 	
 	//INICIALIZACIONES

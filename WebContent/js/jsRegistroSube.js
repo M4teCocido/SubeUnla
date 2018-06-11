@@ -1,3 +1,5 @@
+//var URL_REGISTRO_TARJETA = "/SubeUnla/RegistroTarjeta";
+
 $(document).ready(function(){
 		
 	//INICIALIZACION
@@ -6,11 +8,16 @@ $(document).ready(function(){
 	
 	//FUNCIONES
 	
+	function notificarError(msg){
+		$('#headerModal').html('Error!');
+		$('#pModal').html(msg);
+	    $('#footerModal').modal('open');
+	}
+	
 	function setFormRegistro(){
 		$('#nroTarjeta').val('');
 		$('#nombre').val('');
 		$('#apellido').val('');
-		$('#tipoDoc').val('');
 		$('#nroDocumento').val('');
 		setMonthSelect();
 		setYearSelect();
@@ -84,7 +91,69 @@ $(document).ready(function(){
 		setFormRegistro();
 	});
 	
+	$('#passwordRepeat').focusout(function(){
+		var pass = $('#password').val();
+		var passRepeat = this.value;
+		if(pass != passRepeat) notificarError("Las contraseñas no coinciden");
+	});
+	
 	//AJAX
 
-
+	$('#nroTarjeta').focusout(function(){
+		var data = {
+				nroTarjeta : this.value,
+				nroValidacion : 1
+			}
+		$.ajax({
+			method: "POST",
+			url: "/SubeUnla/RegistroTarjeta",
+			data: data,
+			async: false
+		}).done(function(data){
+			if(data != null && data != "" && data != ''){
+				$('#nroTarjeta').val('');
+				mostrarModal(data);
+			}
+		}).fail(function(xhr, textStatus, errorThrown) {
+			$('#headerModal').html('Ups! Algo salio mal!');
+			$('#pModal').html(xhr.responseText);
+		    $('#footerModal').modal('open');
+	    });
+	})
+	
+	$('#enviarRegistro').click(function(){
+		var data = {
+				nroTarjeta : $('#nroTarjeta').val(),
+				nroValidacion : 2,
+				nombre : $('#nombre').val(),
+				apellido : $('#apellido').val(),
+				genero : $('#genero').val(),
+				tipoDoc : $('#tipoDoc').val(),
+				nroDocumento : $('#nroDocumento').val(),
+				year : $('#year').val(),
+				month : $('#month').val(),
+				day : $('#day').val(),
+				email : $('#email').val(),
+				celular : $('#celular').val(),
+				telefono : $('#telefono').val(),
+				descEstudiantil : $('#descEstudiantil').val(),
+				passwords : $('#password').val(),
+				tarifaSocial : $('#tarifaSocial').val()
+			}
+		$.ajax({
+			method: "POST",
+			url: "/SubeUnla/RegistroTarjeta",
+			data: data,
+			async: false
+		}).done(function(data){
+			if(data != null && data != "" && data != ''){
+				mostrarModal(data);
+			}
+		}).fail(function(xhr, textStatus, errorThrown) {
+			$('#headerModal').html('Ups! Algo salio mal!');
+			$('#pModal').html(xhr.responseText);
+		    $('#footerModal').modal('open');
+	    });
+	})
+	
 });

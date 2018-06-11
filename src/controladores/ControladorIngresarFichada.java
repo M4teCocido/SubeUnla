@@ -191,8 +191,6 @@ public class ControladorIngresarFichada extends HttpServlet {
 				InternoColectivo interno = obtenerInternoColectivo(idInterno);
 				FichadaColectivo fichada = new FichadaColectivo(fecha, this.obtenerTramoColectivo(idTramo), interno.getLectora());
 				fichada.setInterno(interno);
-	
-				
 				resultado = tarjeta.procesarFichada(fichada);
 				if (resultado.isAprobado())
 	            	persistirEstadoTarjeta(tarjeta);
