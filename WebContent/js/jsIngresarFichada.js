@@ -1,3 +1,5 @@
+var URL_INGRESAR_FICHADA = "/SubeUnla/IngresarFichada";
+
 $(document).ready(function(){
 
 	//FUNCIONES
@@ -312,10 +314,10 @@ $(document).ready(function(){
 			data: data,
 			async: false
 		}).done(function(data){
-			if(data!=null && data!="" && data!=''){
+			if(data != null && data != "" && data != ''){
 				mostrarModal(data);
 			}
-		}).fail( function(xhr, textStatus, errorThrown) {
+		}).fail(function(xhr, textStatus, errorThrown) {
 			$('#headerModal').html('Ups! Algo salio mal!');
 			$('#pModal').html(xhr.responseText);
 		    $('#footerModal').modal('open');

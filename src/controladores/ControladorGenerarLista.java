@@ -19,7 +19,6 @@ import negocio.TransaccionABM;
 
 public class ControladorGenerarLista extends HttpServlet {
 	
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		procesarPeticion(request, response);
 	}
@@ -27,7 +26,6 @@ public class ControladorGenerarLista extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		procesarPeticion(request, response);
 	}
-	
 	
 	private void procesarPeticionListadoViajesColectivo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TransaccionABM transaccionABM = new TransaccionABM();
@@ -47,7 +45,6 @@ public class ControladorGenerarLista extends HttpServlet {
 	    
 	}
 	
-	
 	private void procesarPeticionListadoViajesSubte(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TransaccionABM transaccionABM = new TransaccionABM();
 		List<TransaccionSUBE> transacciones = transaccionABM.traerTransacciones(parsearFecha(request));
@@ -63,8 +60,6 @@ public class ControladorGenerarLista extends HttpServlet {
 	    
 	}
 	
-	
-	
 	private void procesarPeticionListadoViajesTren(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TransaccionABM transaccionABM = new TransaccionABM();
 		List<TransaccionSUBE> transacciones = transaccionABM.traerTransacciones(parsearFecha(request));
@@ -79,8 +74,6 @@ public class ControladorGenerarLista extends HttpServlet {
 	    request.getRequestDispatcher("views/listaViajesTren.jsp").forward(request, response);
 	    
 	}
-	
-	
 	
 	private void procesarPeticion(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		response.setContentType("text/html;	charset=UTF-8");
@@ -113,7 +106,6 @@ public class ControladorGenerarLista extends HttpServlet {
 	
 	private List<GregorianCalendar> parsearFecha (HttpServletRequest request) {
 		
-		
     	int anioInicial = Integer.parseInt(request.getParameter("anioInicial"));
     	int mesInicial  = Integer.parseInt(request.getParameter("mesInicial"));
     	int diaInicial  = Integer.parseInt(request.getParameter("diaInicial"));
@@ -134,7 +126,3 @@ public class ControladorGenerarLista extends HttpServlet {
     	return  periodo;
 	}
 }
-	
-	
-
-
