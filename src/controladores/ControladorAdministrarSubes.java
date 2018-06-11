@@ -39,6 +39,10 @@ public class ControladorAdministrarSubes extends HttpServlet {
 		} catch (Exception e) { 
 			resultado = new TarjetaSube.Resultado(false, "Problema ingresar tarjeta al sistema", null);
 		}
+		request.setAttribute("resultado", resultado);
+        System.out.println("Resultado : " + resultado);
+        request.getRequestDispatcher("views/respuestaAltaTarjeta.jsp").forward(request, response);
+	
 	}
 	
 	void procesarPeticionRegistracion(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
@@ -47,6 +51,8 @@ public class ControladorAdministrarSubes extends HttpServlet {
 		PersonaABM personaABM = new PersonaABM();
 		TarjetaSubeABM tarjetaSubeABM = new TarjetaSubeABM();
 		TarjetaSube tarjeta = null;
+		Usuario usuario = null;
+		eGenero genero =null;
 		try {
 			tarjeta = tarjetaSubeABM.traerTarjetaPorCodigo(request.getParameter("codigo"));
 		} catch (Exception e) {
@@ -54,34 +60,43 @@ public class ControladorAdministrarSubes extends HttpServlet {
 			resultado = new TarjetaSube.Resultado(false, "Problema traer tarjeta para asociar", null);
 			}
 		
-		try {
-			Usuario usuario = usuarioABM.traerUsuarioPorDni(request.getParameter("dni"));
-			eGenero genero =null;
-			if(usuario == null) {
-				if(request.getParameter("genero")=="m") {
+		   if(tarjeta != null) {
+			usuario = usuarioABM.comprobarExistenciaUsuario(request.getParameter("dni"));
+			
+			if(usuario == null) { //Si la tarjeta es null, de entrada va al final y envia  resultado
+				if(request.getParameter("genero")=="m") {// cambiar por numero que corresponda a genero
 					 genero = eGenero.M  ;
 				}else { genero = eGenero.F;}
 				
 				GregorianCalendar fechaNacimiento = parsearFecha( request);
 				
-				Persona persona = new Persona (request.getParameter("nombre"), 
-						request.getParameter("apellido"),genero,  fechaNacimiento,  request.getParameter("email"), 
-						request.getParameter("celular"), request.getParameter("celular")); 
-				personaABM.agregarPersona(persona);
-				usuarioABM.agregarUsuario(request.getParameter("nombre"), request.getParameter("password"), persona);
-			}else usuario.getPersona().asociarTarjeta(tarjeta);
+				Persona persona;
+				try {
+					persona = new Persona (request.getParameter("nombre"),
+											request.getParameter("apellido"),genero,  fechaNacimiento,  request.getParameter("email"), 
+												request.getParameter("celular"), request.getParameter("celular"));
+						
+					personaABM.agregarPersona(persona);
+					usuarioABM.agregarUsuario(request.getParameter("dni"), request.getParameter("password"), persona);
+					persona.asociarTarjeta(tarjeta);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					resultado = new TarjetaSube.Resultado(false, "Problem para generar usuario y asignar tarjeta", null);
+				} 
+				
+				
+			} else
+				try {
+					usuario.getPersona().asociarTarjeta(tarjeta);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					resultado = new TarjetaSube.Resultado(false, "Problema asignar tarjeta a persona existente", null);
+				}
+		   }
 			
-		}catch (Exception e) {
-			// TODO Auto-generated catch block
-			
-			resultado = new TarjetaSube.Resultado(false, "Usuario Final no Existe", null);
-		}
-		
-		
-		
-		
-		
-		
+			request.setAttribute("resultado", resultado);
+		        System.out.println("Resultado : " + resultado);
+		        request.getRequestDispatcher("views/respuestaRegistracion.jsp").forward(request, response);
 	}
 	
 	
@@ -102,7 +117,7 @@ public class ControladorAdministrarSubes extends HttpServlet {
 					this.procesarPeticionAltaTarjeta(request, response);
 					break;
 				case 2: //Procesar alta de  usuario en el sistema (Posiblmente  inecesario)
-					
+					this.procesarPeticionRegistracion(request, response);
 					break;
 			
 				default:

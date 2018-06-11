@@ -45,4 +45,9 @@ UsuarioDao dao = new UsuarioDao();
 	public List<Usuario> traerUsuarios() {
 		return dao.traerUsuarios();
 	}
+	
+	public Usuario comprobarExistenciaUsuario(String dni){
+	 return dao.traerUsuarioPorDni(dni);
+		 
+	}
 }
