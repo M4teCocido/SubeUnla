@@ -78,6 +78,20 @@ public class UsuarioDao {
 		return usuario;
 	}
 	
+	public Usuario traerUsuarioPorDni(String dni) throws HibernateException {
+		Usuario usuario = null;
+		try {
+			iniciaOperacion();
+			usuario = (Usuario) session.createQuery("from Usuario u inner join Persona p on u.idPersona = p.idPersona inner join Documento d on d.idPersona = p.idPersona where d.numero='" + dni + "'").uniqueResult();
+		} catch (HibernateException he) {
+			manejaExcepcion(he);
+			throw he;
+		} finally {
+			session.close();
+		}
+		return usuario;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Usuario> traerUsuarios() throws HibernateException {
 		List<Usuario> lista = null;
