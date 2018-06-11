@@ -26,7 +26,7 @@ public class LectoraExternaABM {
 	
 	public void modificar(LectoraExterna l) throws Exception {
 		for (LectoraExterna lectora : dao.traerLectoras()) {
-			if (lectora.equals(l)) throw new Exception("");
+			if (lectora.equals(l)) throw new Exception("La lectora " + l + " ya existe");
 		}
 		dao.modificarLectora(l);
 	}
