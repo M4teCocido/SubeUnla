@@ -4,6 +4,8 @@ $(document).ready(function(){
 	
 	//INICIALIZACION
 	
+	$('#infoModal').modal();
+	
 	//FUNCIONES
 	
 	function mostrarModal(data){
@@ -29,7 +31,7 @@ $(document).ready(function(){
 			if(data != null && data != "" && data != ''){
 				$('#nroTarjeta').val('');
 				mostrarModal(data);
-				$('infoModal').open();
+				$('#infoModal').modal('open');
 			}
 		}).fail(function(xhr, textStatus, errorThrown) {
 			$('#headerModal').html('Ups! Algo salio mal!');

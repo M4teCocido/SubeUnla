@@ -30,17 +30,6 @@
 		</div>
 	</div>
 </div>
-
-tercero:
-	Su saldo actual: $...
-	
-cuarto:
-	beneficios asociados a la tarjeta.
-	
-quinto:
-
-	AGUARDA UN INSTANTE	
-	
 <script type="text/javascript" src="js/jsTerminalAutonoma.js"></script>
 <div class="modal" id="infoModal">
 	<div class="modal-content">
