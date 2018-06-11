@@ -39,50 +39,67 @@ public class ControladorListados extends HttpServlet {
 	private void procesarPeticionListadoViajesColectivo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TransaccionABM transaccionABM = new TransaccionABM();
 		
-		List<TransaccionSUBE> transacciones = transaccionABM.traerTransacciones(parsearFecha(request));
-		List<TransaccionSUBE> lstViajesColectivo = null;
+		List<TransaccionSUBE> transacciones = transaccionABM.traerViajes(parsearFecha(request));
+		List<TransaccionSUBE> viajes = new ArrayList<TransaccionSUBE>();
 		
 		for (int i = 0 ; i<transacciones.size(); i++) {
 		    if (transacciones.get(i).getFichada() instanceof FichadaColectivo) {
-		    	lstViajesColectivo.add(transacciones.get(i));
-		    
+		    	viajes.add(transacciones.get(i));
 		    }
 		}    
 	
-		request.setAttribute("transacciones", lstViajesColectivo);
-	    request.getRequestDispatcher("views/listaViajesColectivo.jsp").forward(request, response);
+		request.setAttribute("transacciones", viajes);
+	    request.getRequestDispatcher("views/listados/listaViajesColectivo.jsp").forward(request, response);
 	    
 	}
 	
 	private void procesarPeticionListadoViajesSubte(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TransaccionABM transaccionABM = new TransaccionABM();
-		List<TransaccionSUBE> transacciones = transaccionABM.traerTransacciones(parsearFecha(request));
-		List<TransaccionSUBE> lstViajesSubte = null;
+		
+		List<TransaccionSUBE> transacciones = transaccionABM.traerViajes(parsearFecha(request));
+		List<TransaccionSUBE> viajes = new ArrayList<TransaccionSUBE>();
+		
 		for (int i = 0 ; i<transacciones.size(); i++) {
 		    if (transacciones.get(i).getFichada() instanceof FichadaSubte) {
-		    	lstViajesSubte.add(transacciones.get(i));
+		    	viajes.add(transacciones.get(i));
 		    }
 		}    
 	
-		request.setAttribute("transacciones", lstViajesSubte);
-	    request.getRequestDispatcher("views/listados/listadoTransacciones.jsp").forward(request, response);
+		request.setAttribute("transacciones", viajes);
+	    request.getRequestDispatcher("views/listados/listaViajesSubte.jsp").forward(request, response);
 	    
 	}
 	
 	private void procesarPeticionListadoViajesTren(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TransaccionABM transaccionABM = new TransaccionABM();
-		List<TransaccionSUBE> transacciones = transaccionABM.traerTransacciones(parsearFecha(request));
-		List<TransaccionSUBE> lstViajesTren = null;
+		
+		List<TransaccionSUBE> transacciones = transaccionABM.traerViajes(parsearFecha(request));
+		List<TransaccionSUBE> viajes = new ArrayList<TransaccionSUBE>();
+		
 		for (int i = 0 ; i<transacciones.size(); i++) {
 		    if (transacciones.get(i).getFichada() instanceof FichadaTren) {
-		    	lstViajesTren.add(transacciones.get(i));
+		    	viajes.add(transacciones.get(i));
 		    }
 		}    
 	
-		request.setAttribute("transacciones", lstViajesTren);
-		request.getRequestDispatcher("views/listados/listadoTransacciones.jsp").forward(request, response);
+		request.setAttribute("transacciones", viajes);
+	    request.getRequestDispatcher("views/listados/listaViajesTren.jsp").forward(request, response);
 	    
 	}
+	
+	private void procesarPeticionListadoViajesColectivoPorLinea(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+	
+	private void procesarPeticionListadoViajesTrenPorLinea(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+	
+	private void procesarPeticionListadoViajesSubtePorLinea(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+	
+	
 	
 	private void procesarPeticion(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		response.setContentType("text/html;	charset=UTF-8");
@@ -98,13 +115,24 @@ public class ControladorListados extends HttpServlet {
 				case 1: //Devolver todos los viajes
 					this.procesarPeticionListadoViajesBasico(request, response);
 					break;
-				case 2: //Devolver tramos de colectivo
+				case 2: //Devolver Todos los viajes de colectivo
 					this.procesarPeticionListadoViajesColectivo(request, response);
 					break;
-				case 3: //Devolver tramos de colectivo
+				case 3: //Devolver todos los viajes de subte
 					this.procesarPeticionListadoViajesSubte(request, response);
 					break;
-			
+				case 4: //Devolver todos los viajes de tren
+					this.procesarPeticionListadoViajesTren(request, response);
+					break;
+				case 5: //Devolver Todos los viajes de colectivo por linea
+					this.procesarPeticionListadoViajesColectivoPorLinea(request, response);
+					break;
+				case 6: //Devolver todos los viajes de subte por linea
+					this.procesarPeticionListadoViajesSubtePorLinea(request, response);
+					break;
+				case 7: //Devolver todos los viajes de tren por linea
+					this.procesarPeticionListadoViajesSubtePorLinea(request, response);
+					break;
 				default:
 					break;
 				}

@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 pageEncoding="ISO-8859-1"%>
 <%@ page import = "modelo.fichadas.TransaccionSUBE" %>
-<%@ page import = "modelo.fichadas.Fichada" %>
-<%@ page import = "modelo.fichadas.colectivo.FichadaColectivo" %>
 <%@ page import = "modelo.fichadas.subte.FichadaSubte" %>
-<%@ page import = "modelo.fichadas.tren.FichadaTren" %>
 <%@ page import = "util.FuncionesGregorian" %>
 <%@ page import = "java.util.List" %>
 
@@ -13,7 +10,7 @@ pageEncoding="ISO-8859-1"%>
 	<tr>
 		<th>Fecha y Hora</th>
 		<th>Nro. Tarjeta</th>
-		<th>Tipo</th>
+		<th>Estacion Origen</th>
 		<th>Monto</th>
 	</tr>
 </thead>
@@ -36,22 +33,15 @@ pageEncoding="ISO-8859-1"%>
 			color = "black";
 			prefix = "";
 		}
-		String tipo = "";
-		Fichada f = transaccion.getFichada();
-		if (f instanceof FichadaColectivo)
-			tipo = "COLECTIVO";
-		else if (f instanceof FichadaSubte)
-			tipo = "SUBTE";
-		else if (f instanceof FichadaTren)
-			tipo = "TREN";
-		else 
-			tipo = "Recarga";
-				
+		
+		String estacion = ((FichadaSubte) transaccion.getFichada()).getEstacionSubte().getNombre();
+		
+		
 	%>
 	<tr> 
 		<td> <%= FuncionesGregorian.traerFechaCorta(transaccion.getFichada().getFechaHora()) %> </td>
 		<td> <%= transaccion.getTarjeta().getCodigo() %> </td>
-		<td> <%= tipo %> </td>  
+		<td> <%= estacion %> </td> 
 		<td> <font color="<%=color%>"> <%=prefix%><%= monto %> </font></td> 
 	</tr> 
 <% } %>

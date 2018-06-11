@@ -21,21 +21,43 @@
 			</div>
 			<br><br>
 		</div>
-		<div class="input-field col s12 m6 l4">
-  			<input placeholder="Fecha Desde" name="fecha" id="fechaDesde" type="text" class="datepicker">
-          	<label for="fecha">Fecha Desde</label>
+		<div class ="row">
+			<div class="input-field col s12 m6 l4">
+	  			<input placeholder="Fecha Desde" name="fecha" id="fechaDesde" type="text" class="datepicker">
+	          	<label for="fecha">Fecha Desde</label>
+	        </div>
+	        <div class="input-field col s12 m6 l4">
+	  			<input placeholder="Hora Desde" name="hora" id="horaDesde" type="text" class="timepicker">
+	          	<label for="hora">Hora Desde</label>
+	        </div>
         </div>
-        <div class="input-field col s12 m6 l4">
-  			<input placeholder="Hora Desde" name="hora" id="horaDesde" type="text" class="timepicker">
-          	<label for="hora">Hora Desde</label>
+        <div class ="row">
+	        <div class="input-field col s12 m6 l4">
+	  			<input placeholder="Fecha Hasta" name="fecha" id="fechaHasta" type="text" class="datepicker">
+	          	<label for="fecha">Fecha Hasta</label>
+	        </div>
+	        <div class="input-field col s12 m6 l4">
+	  			<input placeholder="Hora Hasta" name="hora" id="horaHasta" type="text" class="timepicker">
+	          	<label for="hora">Hora Hasta</label>
+	        </div>
         </div>
-        <div class="input-field col s12 m6 l4">
-  			<input placeholder="Fecha Hasta" name="fecha" id="fechaHasta" type="text" class="datepicker">
-          	<label for="fecha">Fecha Hasta</label>
-        </div>
-        <div class="input-field col s12 m6 l4">
-  			<input placeholder="Hora Hasta" name="hora" id="horaHasta" type="text" class="timepicker">
-          	<label for="hora">Hora Hasta</label>
+        <div class ="row">
+	        <div class="input-field col s12 m6 l4">
+			    <select name="medioTransporte" id="medioTransporte">
+					<option class="black-text text-lighten-3" value="0" selected>Todos</option>
+					<option class="black-text text-lighten-3" value="1">Colectivo</option>
+					<option class="black-text text-lighten-3" value="2">Subte</option>
+					<option class="black-text text-lighten-3" value="3">Tren</option>
+			    </select>
+		    	<label for="medioTransporte">Medio de Transporte</label>
+	  		</div>
+
+	  		<div class="input-field col s12 m6 l4">
+			    <select name="linea" id="linea">
+					<option class="black-text text-lighten-3" value="0" selected>Todas</option>
+			    </select>
+		    	<label for="linea">Linea</label>
+	  		</div>
         </div>
 		<div class="row">
   			<div class="l4">
