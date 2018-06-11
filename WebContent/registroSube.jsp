@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ include file = "/views/header.jsp" %>
-<script type="text/javascript" src="js/jsRegistroSube.js"></script>
 </head>
 <body>
 <div class="container">
@@ -73,33 +72,44 @@
 			    <option value="" disabled selected>Dia</option>
 			</select>
 		</div>
-		<div class="input-field col s2 m2 l2">
-          <input placeholder="Email" id="email" type="text" class="validate">
-          <label for="email">Email</label>
-        </div>
-        <div class="input-field col s2 m2 l2">
-          <input placeholder="Celular" id="celular" type="text" class="validate">
-          <label for="celular">Celular</label>
-        </div>
-        <div class="input-field col s2 m2 l2">
-          <input placeholder="Telefono" id="telefono" type="text" class="validate">
-          <label for="telefono">Telefono</label>
+		<div class="input-field col s6 m6 l6">
+          	<input placeholder="Email" id="email" type="text" class="validate">
+          	<label for="email">Email</label>
         </div>
 	</div>
 	<div class="row">
-		<div class="center-align col s6 m6 l6">
-			<label>
-   				<input id="descTarifaSocial" type="checkbox" class="filled-in" />
-     			<span>Descuento tarifa social</span>
-   			</label>
+        <div class="input-field col s3 m3 l3">
+          	<input placeholder="Celular" id="celular" type="text" class="validate">
+          	<label for="celular">Celular</label>
+        </div>
+        <div class="input-field col s3 m3 l3">
+          	<input placeholder="Telefono" id="telefono" type="text" class="validate">
+          	<label for="telefono">Telefono</label>
+        </div>
+        <div class="input-field col s3 m3 l3">
+			<select id="descEstudiantil">
+				<option value="0">No posee</option>
+				<option value="1">Escolar</option>
+        		<option value="2">Universitario</option>
+			</select>
+			<label for="descEstudiantil">Descuento Estudiantil</label>
 		</div>
-		<div class="center-align col s6 m6 l6">
-      		<label>
-			    <input id="descEstudiantil" type="checkbox" class="filled-in" />
-        		<span>Descuento boleto estudiantil</span>
-      		</label>
+		<label class="valign-wrapper center-align">
+			<input id="tarifaSocial" type="checkbox" class="filled-in" />
+			<span>Tarifa Social</span>
+		</label>
+	</div>
+	<div class="center-align row">
+		<div class="col l6">
+			<button class="btn waves-effect waves-light blue lighten-2 black-text col s12 l12 m12" type="submit" id="limpiarForm">Limpiar Formulario<i class="material-icons right">clear</i>
+  			</button>
+		</div>
+		<div class="col l6">
+			<button class="btn waves-effect waves-light blue lighten-2 black-text col s12 l12 m12" type="submit" id="enviarRegistro">Enviar<i class="material-icons right">send</i>
+	  		</button>
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="js/jsRegistroSube.js"></script>
 
 <%@ include file = "/views/footer.jsp" %>
