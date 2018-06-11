@@ -14,7 +14,7 @@
 		
 		<one-to-one name="descuentoRedSube" class="modelo.Descuentos.DescuentoRedSube" lazy="false" property-ref="tarjeta" cascade="all"></one-to-one>
 		
-		<set name="transacciones" table="transaccionsube" order-by="idTransaccion asc" inverse="false" cascade="all" lazy="false" fetch="select">
+		<set name="transacciones" table="transaccionsube" order-by="idTransaccion asc" inverse="true" lazy="false" fetch="select">
 			<key column="idTarjetaSube" not-null="true" />
 			<one-to-many class="modelo.fichadas.TransaccionSUBE" />
 		</set>

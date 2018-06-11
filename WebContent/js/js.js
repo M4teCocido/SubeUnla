@@ -1,3 +1,20 @@
+function mostrarModal(data){
+	$('#footerModal').html(data);
+    $('#footerModal').modal('open');
+}
+
+function mostrarModalMensaje(titulo, msg){
+	$('#headerModal').html(titulo);
+	$('#pModal').html(msg);
+    $('#footerModal').modal('open');
+}
+
+function notificarError(msg){
+	$('#headerModal').html('Error!');
+	$('#pModal').html(msg);
+    $('#footerModal').modal('open');
+}
+
 $(document).ready(function(){
 	
 	//INICIALIZACIONES
@@ -29,5 +46,7 @@ $(document).ready(function(){
 		showClearBtn: true,
 		twelveHour : false
 	});
+	
+	//Metodos
 	
 });	

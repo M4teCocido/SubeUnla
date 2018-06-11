@@ -386,6 +386,7 @@ public class TarjetaSube {
 		 private boolean aprobado;
 		 private String mensaje;
 		 private TransaccionSUBE transaccion;
+		 
 		 public Resultado(boolean aprobado, String mensaje, TransaccionSUBE transaccion) {
 			super();
 			this.aprobado = aprobado;
@@ -409,11 +410,12 @@ public class TarjetaSube {
 			this.mensaje = mensaje;
 		}
 		public TransaccionSUBE getTransaccion() {
-			return transaccion;
+			return this.transaccion;
 		}
 		public void setTransaccion(TransaccionSUBE transaccion) {
 			this.transaccion = transaccion;
 		}
+		
 		@Override
 		public String toString() {
 			return "Resultado [mensaje=" + mensaje + "]";

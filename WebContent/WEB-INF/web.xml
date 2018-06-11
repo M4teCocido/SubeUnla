@@ -15,6 +15,14 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id = "WebApp_ID" version = "
 		<servlet-name>ControladorIngresarFichada</servlet-name>
 		<servlet-class>controladores.ControladorIngresarFichada</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>ControladorListados</servlet-name>
+		<servlet-class>controladores.ControladorListados</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ControladorListados</servlet-name>
+		<url-pattern>/Listados</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ControladorIngresarFichada</servlet-name>
 		<url-pattern>/IngresarFichada</url-pattern>

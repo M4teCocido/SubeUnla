@@ -4,22 +4,7 @@ $(document).ready(function(){
 
 	//FUNCIONES
 
-	function mostrarModal(data){
-		$('#footerModal').html(data);
-	    $('#footerModal').modal('open');
-	}
 	
-	function mostrarModalMensaje(titulo, msg){
-		$('#headerModal').html(titulo);
-		$('#pModal').html(msg);
-	    $('#footerModal').modal('open');
-	}
-	
-	function notificarError(msg){
-		$('#headerModal').html('Error!');
-		$('#pModal').html(msg);
-	    $('#footerModal').modal('open');
-	}
 	
 	function actualizarSelect(select, data){
 		select.html(data);

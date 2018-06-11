@@ -98,7 +98,7 @@ public class TarjetaSubeDao {
 		List<TarjetaSube> lista = null;
 		try {
 			iniciaOperacion();
-			lista = session.createQuery("from TarjetaSUBE t order by t.idTarjetaSube asc").list();
+			lista = session.createQuery("from TarjetaSube t").list();
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
 			throw he;

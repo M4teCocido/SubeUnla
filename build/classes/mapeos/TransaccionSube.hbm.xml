@@ -9,7 +9,7 @@
 	        </generator>
 		</id>
 		<property column="importe" name="importe" type="java.math.BigDecimal"  precision="2"/>
-		<!--  <many-to-one name="tarjeta" class="modelo.TarjetaSube" fetch="select" column="idTarjetaSube" not-null="true" />  -->
+		<many-to-one name="tarjeta" class="modelo.TarjetaSube" fetch="select" column="idTarjetaSube" not-null="true" />
 		<one-to-one name = "Fichada" class = "modelo.fichadas.Fichada" ></one-to-one >
 	</class>
 </hibernate-mapping>

@@ -44,6 +44,16 @@ public  class FichadaTren extends Fichada {
 	}
 	
 	@Override
+	public boolean esViaje() {
+		return true;
+	}
+
+	@Override
+	public boolean esRecarga() {
+		return false;
+	}
+	
+	@Override
 	public String toString() {
 		return "FichadaTren [estacion=" + estacion + ", tipoFichada=" + tipoFichada + "]";
 	}

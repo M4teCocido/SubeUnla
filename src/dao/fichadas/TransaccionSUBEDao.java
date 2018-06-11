@@ -84,7 +84,7 @@ public class TransaccionSUBEDao {
 		List<TransaccionSUBE> lista = null;
 		try {
 			iniciaOperacion();
-			lista = session.createQuery("from TransaccionSUBE t order by t.idTransaccion asc").list();
+			lista = session.createQuery("from TransaccionSUBE t").list();
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
 			throw he;
@@ -93,8 +93,6 @@ public class TransaccionSUBEDao {
 		}
 		return lista;
 	}
-	
-	
 	
 	
 }

@@ -1,6 +1,7 @@
 package controladores;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -14,10 +15,9 @@ import modelo.fichadas.TransaccionSUBE;
 import modelo.fichadas.colectivo.FichadaColectivo;
 import modelo.fichadas.subte.FichadaSubte;
 import modelo.fichadas.tren.FichadaTren;
-import negocio.TarjetaSubeABM;
 import negocio.TransaccionABM;
 
-public class ControladorGenerarLista extends HttpServlet {
+public class ControladorListados extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		procesarPeticion(request, response);
@@ -25,6 +25,15 @@ public class ControladorGenerarLista extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		procesarPeticion(request, response);
+	}
+	
+	private void procesarPeticionListadoViajesBasico(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		TransaccionABM transaccionABM = new TransaccionABM();
+		
+		List<TransaccionSUBE> viajes = transaccionABM.traerViajes(parsearFecha(request));  
+	
+		request.setAttribute("transacciones", viajes);
+	    request.getRequestDispatcher("views/listados/listadoBasico.jsp").forward(request, response);
 	}
 	
 	private void procesarPeticionListadoViajesColectivo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -56,7 +65,7 @@ public class ControladorGenerarLista extends HttpServlet {
 		}    
 	
 		request.setAttribute("transacciones", lstViajesSubte);
-	    request.getRequestDispatcher("views/listaViajesSubte.jsp").forward(request, response);
+	    request.getRequestDispatcher("views/listados/listadoTransacciones.jsp").forward(request, response);
 	    
 	}
 	
@@ -71,7 +80,7 @@ public class ControladorGenerarLista extends HttpServlet {
 		}    
 	
 		request.setAttribute("transacciones", lstViajesTren);
-	    request.getRequestDispatcher("views/listaViajesTren.jsp").forward(request, response);
+		request.getRequestDispatcher("views/listados/listadoTransacciones.jsp").forward(request, response);
 	    
 	}
 	
@@ -80,15 +89,19 @@ public class ControladorGenerarLista extends HttpServlet {
 		try {
 			String strNroValidacion= request.getParameter("nroValidacion");
 			if (strNroValidacion == null)
-				request.getRequestDispatcher("/index.jsp").forward(request, response);
+				request.getRequestDispatcher("/listados.jsp").forward(request, response);
 			else {
 				int nroValidacion = Integer.parseInt(strNroValidacion);
 				System.out.println("Numero : " + nroValidacion);
 				switch(nroValidacion) {
-				case 1: //Devolver tramos de colectivo
-					this.procesarPeticionListadoViajesColectivo(request, response);
+				
+				case 1: //Devolver todos los viajes
+					this.procesarPeticionListadoViajesBasico(request, response);
 					break;
 				case 2: //Devolver tramos de colectivo
+					this.procesarPeticionListadoViajesColectivo(request, response);
+					break;
+				case 3: //Devolver tramos de colectivo
 					this.procesarPeticionListadoViajesSubte(request, response);
 					break;
 			
@@ -118,8 +131,7 @@ public class ControladorGenerarLista extends HttpServlet {
     	int horaFinal = Integer.parseInt(request.getParameter("horaFinal"));
     	int minFinal  = Integer.parseInt(request.getParameter("minFinal"));
     	
-    	
-    	List<GregorianCalendar> periodo = null;
+    	List<GregorianCalendar> periodo = new ArrayList<GregorianCalendar>();
     	periodo.add(new GregorianCalendar  (anioInicial, mesInicial - 1, diaInicial, horaInicial , minInicial, 0));
     	periodo.add(new GregorianCalendar  (anioFinal, mesFinal - 1, diaFinal, horaFinal , minFinal, 0));
     	

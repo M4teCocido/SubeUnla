@@ -51,6 +51,9 @@ public abstract class Fichada {
 		this.lapso = lapso;
 	}
 
+	public abstract boolean esViaje();
+	public abstract boolean esRecarga();
+	
 	@Override
 	public String toString() {
 		return "Fichada [fechaHora=" + fechaHora;

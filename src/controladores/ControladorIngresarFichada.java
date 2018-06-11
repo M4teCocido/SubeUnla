@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -16,9 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import dao.PersonaDao;
 import dao.TarjetaSubeDao;
 import dao.descuentos.DescuentoRedSubeDao;
-import dao.descuentos.LapsoDescuentoRedSubeDao;
+import dao.fichadas.TransaccionSUBEDao;
 import dao.fichadas.colectivo.InternoColectivoDao;
-import dao.fichadas.colectivo.LineaColectivoDao;
 import dao.fichadas.colectivo.TramoColectivoDao;
 import dao.fichadas.tren.EstacionTrenDao;
 import dao.lectoras.LectoraColectivoDao;
@@ -29,6 +27,7 @@ import dao.fichadas.subte.EstacionSubteDao;
 import modelo.TarjetaSube;
 import modelo.Descuentos.DescuentoRedSube;
 import modelo.fichadas.FichadaRecarga;
+import modelo.fichadas.TransaccionSUBE;
 import modelo.fichadas.colectivo.FichadaColectivo;
 import modelo.fichadas.colectivo.InternoColectivo;
 import modelo.fichadas.colectivo.LineaColectivo;
@@ -49,11 +48,8 @@ import negocio.LectoraExternaABM;
 import negocio.LineaColectivoABM;
 import negocio.LineaSubteABM;
 import negocio.LineaTrenABM;
-import negocio.LineaSubteABM;
-import negocio.LineaTrenABM;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class ControladorIngresarFichada extends HttpServlet {
 	
@@ -165,8 +161,9 @@ public class ControladorIngresarFichada extends HttpServlet {
 				FichadaRecarga fichada = new FichadaRecarga(fecha, monto, this.obtenerLectora(idLectora));
 				resultado = tarjeta.procesarFichada(fichada);
 				if (resultado.isAprobado())
-	            	persistirEstadoTarjeta(tarjeta);
+	            	persistirTransaccion(tarjeta, resultado.getTransaccion());
 			} catch (Exception e) { 
+				e.printStackTrace();
 				resultado = new TarjetaSube.Resultado(false, "Alguno de los datos ingresados es invalido", null);
 			}
 			
@@ -193,8 +190,9 @@ public class ControladorIngresarFichada extends HttpServlet {
 				fichada.setInterno(interno);
 				resultado = tarjeta.procesarFichada(fichada);
 				if (resultado.isAprobado())
-	            	persistirEstadoTarjeta(tarjeta);
+	            	persistirTransaccion(tarjeta, resultado.getTransaccion());
 			} catch (Exception e) {
+				e.printStackTrace();
 				resultado = new TarjetaSube.Resultado(false, "Alguno de los datos ingresados es invalido", null);
 			}
 		} else {
@@ -209,8 +207,6 @@ public class ControladorIngresarFichada extends HttpServlet {
 		TarjetaSube.Resultado resultado;
 		if (tarjeta != null) {
 			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
-
-			int idLinea = Integer.parseInt(request.getParameter("idLinea"));
 			int idEstacion = Integer.parseInt(request.getParameter("idEstacion"));
 			try {
 				GregorianCalendar fecha = parsearFecha(request);
@@ -223,8 +219,9 @@ public class ControladorIngresarFichada extends HttpServlet {
 				}
 				resultado = tarjeta.procesarFichada(fichada);
 				if (resultado.isAprobado())
-	            	persistirEstadoTarjeta(tarjeta);
+	            	persistirTransaccion(tarjeta, resultado.getTransaccion());
 			} catch (Exception e) {
+				e.printStackTrace();
 				resultado = new TarjetaSube.Resultado(false, "Alguno de los datos ingresados es invalido", null);
 			}
 		} else {
@@ -245,14 +242,14 @@ public class ControladorIngresarFichada extends HttpServlet {
         	try {
         	int idLectora = Integer.parseInt(request.getParameter("idLectora"));
             int idEstacion =  Integer.parseInt(request.getParameter("idEstacion"));
-            int idLinea = Integer.parseInt(request.getParameter("idLinea"));
             GregorianCalendar fecha = parsearFecha(request);
          
             FichadaSubte fichada = new FichadaSubte(fecha, this.obtenerLectoraSubte(idLectora), this.obtenerEstacionSubte (idEstacion) );
             resultado = tarjeta.procesarFichada(fichada);
             if (resultado.isAprobado())
-            	persistirEstadoTarjeta(tarjeta);
+            	persistirTransaccion(tarjeta, resultado.getTransaccion());
         	} catch (Exception e) {
+        		e.printStackTrace();
 				resultado = new TarjetaSube.Resultado(false, "Alguno de los datos ingresados es invalido", null);
 			}
             
@@ -270,10 +267,17 @@ public class ControladorIngresarFichada extends HttpServlet {
 		}
 	}
 	
-	private void persistirEstadoTarjeta(TarjetaSube tarjeta) {
+	private void persistirTransaccion(TarjetaSube tarjeta, TransaccionSUBE transaccion) {
         TarjetaSubeDao daoTarjeta = new TarjetaSubeDao();
+        TransaccionSUBEDao daoTransaccion = new TransaccionSUBEDao();
+        
+        //Guardamos Transaccion
+        daoTransaccion.agregarTransaccion(transaccion);
+        
+        //Guardamos Tarjeta
         daoTarjeta.modificarTarjetaSube(tarjeta);
 
+        //Guardamos Persona
         if (tarjeta.getPropietario()!=null) {
             PersonaDao daoPersona = new PersonaDao ();
             daoPersona.modificarPersona(tarjeta.getPropietario());
