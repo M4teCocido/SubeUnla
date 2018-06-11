@@ -21,15 +21,15 @@
 	</div>
 	<div class="row">
 		<div class="input-field col s4 m4 l4">
-          <input placeholder="Numero de tarjeta" id="nroTarjeta" type="text" class="validate">
+          <input placeholder="Numero de tarjeta" id="nroTarjeta" type="text" class="validate" />
           <label for="nroTarjeta">Numero de Tarjeta</label>
         </div>
         <div class="input-field col s4 m4 l4">
-          <input placeholder="Nombre" id="nombre" type="text" class="validate">
+          <input placeholder="Nombre" id="nombre" type="text" class="validate" />
           <label for="nombre">Nombre</label>
         </div>
         <div class="input-field col s4 m4 l4">
-			<input placeholder="Apellido" id="apellido" type="text" class="validate">
+			<input placeholder="Apellido" id="apellido" type="text" class="validate" />
 			<label for="apellido">Apellido</label>
 		</div>
 	</div>
@@ -51,7 +51,7 @@
     		<label for="tipoDoc">Tipo de Documento</label>
 		</div>
       	<div class="input-field col s4 m4 l4">
-			<input placeholder="Numero de Documento" id="nroDocumento" type="text" class="validate" data-lenght="8">
+			<input placeholder="Numero de Documento" id="nroDocumento" type="text" class="validate" data-lenght="8" />
 			<label for="nroDocumento">Numero de documento</label>
 		</div>
 	</div>
@@ -73,17 +73,17 @@
 			</select>
 		</div>
 		<div class="input-field col s6 m6 l6">
-          	<input placeholder="Email" id="email" type="email" class="validate">
+          	<input placeholder="Email" id="email" type="email" class="validate" />
           	<label for="email">Email</label>
         </div>
 	</div>
 	<div class="row">
         <div class="input-field col s4 m4 l4">
-          	<input placeholder="Celular" id="celular" type="text" class="validate">
+          	<input placeholder="Celular" id="celular" type="text" class="validate" />
           	<label for="celular">Celular</label>
         </div>
         <div class="input-field col s4 m4 l4">
-          	<input placeholder="Telefono" id="telefono" type="text" class="validate">
+          	<input placeholder="Telefono" id="telefono" type="text" class="validate" />
           	<label for="telefono">Telefono</label>
         </div>
         <div class="input-field col s4 m4 l4">
@@ -97,17 +97,20 @@
 	</div>
 	<div class="row">
 		<div class="input-field col s4 m4 l4">
-          	<input placeholder="Contraseña" id="password" type="password" class="validate" data-lenght="4">
+          	<input placeholder="Contraseña" id="password" type="password" class="validate" data-lenght="4" />
           	<label for="password">Contraseña</label>
         </div>
         <div class="input-field col s4 m4 l4">
-          	<input placeholder="Contraseña" id="passwordRepeat" type="password" class="validate" data-lenght="4">
+          	<input placeholder="Contraseña" id="passwordRepeat" type="password" class="validate" data-lenght="4" />
           	<label for="passwordRepeat">Repetir Clave</label>
         </div>
-        <label class="valign-wrapper center-align">
-			<input id="tarifaSocial" type="checkbox" class="filled-in" />
-			<span>Tarifa Social</span>
-		</label>
+        <div class="col s4 m4 l4">
+        	<br>
+        	<label class="valign-wrapper center-align">
+				<input id="tarifaSocial" type="checkbox" class="filled-in" />
+				<span>Tarifa Social</span>
+			</label>
+        </div>
 	</div>
 	<div class="center-align row">
 		<div class="col l6">
