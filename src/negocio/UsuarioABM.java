@@ -16,6 +16,11 @@ UsuarioDao dao = new UsuarioDao();
 		return u;
 	}
 	
+	public Usuario traerUsuarioPorDni(String dni) throws Exception {
+		Usuario usuario = dao.traerUsuarioPorDni(dni);
+		if (usuario == null) throw new Exception("El usuario de dni " + dni + " no existe");
+		return usuario;
+	}
 	public int agregarUsuario(String nombreUsuario, String password, Persona persona) throws Exception {
 		for (Usuario usuario : dao.traerUsuarios()) {
 			if (usuario.getNombreUsuario().equalsIgnoreCase(nombreUsuario) || usuario.getPersona().equals(persona)) throw new Exception("Ya existe un usuario con el nombre: " + nombreUsuario + " o persona: " + persona);
