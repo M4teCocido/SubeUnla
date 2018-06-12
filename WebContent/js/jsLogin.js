@@ -1,4 +1,4 @@
-var URL_PROCESAR_LOGIN = "/SubeUnla/ProcesarLogin";
+var URL_PROCESAR_LOGIN = "/SubeUnla/cLogin";
 
 $(document).ready(function(){
 	
@@ -9,10 +9,10 @@ $(document).ready(function(){
 		}
 		$.ajax({
 			method: "POST",
-			url: URL_PROCESAR_LOGIN,
+			url: "/SubeUnla/cLogin",
 			data: data,
 			async: false
-		}).fail(function(data) {
+		}).fail(function(xhr, textStatus, errorThrown) {
 			$('#headerModal').html('Ups! Algo salio mal!');
 			$('#pModal').html(xhr.responseText);
 		    $('#footerModal').modal('open');

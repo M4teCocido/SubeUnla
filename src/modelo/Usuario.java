@@ -62,8 +62,6 @@ public class Usuario {
 		this.persona = persona;
 	}
 
-	
-	
 	@Override
 	public String toString() {
 		return "Usuario [idUsuario=" + idUsuario + ", nombreUsuario=" + nombreUsuario + ", password=" + password
@@ -105,7 +103,6 @@ public class Usuario {
 		if (this.tienePermiso(permiso) != true) {
 			throw new Exception (" No se puede remover el permiso. ");
 		}
-		
 		permisos.remove(permiso);
 		
 		/*while ((i < permisos.size())&&(eliminado == false)) {
