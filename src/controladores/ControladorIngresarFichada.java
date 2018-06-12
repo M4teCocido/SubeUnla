@@ -149,24 +149,25 @@ public class ControladorIngresarFichada extends HttpServlet {
 	}
 	
 	private void procesarPeticionCarga(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
 		TarjetaSube.Resultado resultado;
 		if (tarjeta != null) {
-			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
-
-			try {
-				GregorianCalendar fecha = parsearFecha(request);
-				BigDecimal monto = new BigDecimal(request.getParameter("monto"));
-				FichadaRecarga fichada = new FichadaRecarga(fecha, monto, this.obtenerLectora(idLectora));
-				resultado = tarjeta.procesarFichada(fichada);
-				if (resultado.isAprobado())
-	            	persistirTransaccion(tarjeta, resultado.getTransaccion());
-			} catch (Exception e) { 
-				e.printStackTrace();
-				resultado = new TarjetaSube.Resultado(false, "Alguno de los datos ingresados es invalido", null);
+			if (tarjeta.isActiva() == true) {
+				int idLectora = Integer.parseInt(request.getParameter("idLectora"));
+				try {
+					GregorianCalendar fecha = parsearFecha(request);
+					BigDecimal monto = new BigDecimal(request.getParameter("monto"));
+					FichadaRecarga fichada = new FichadaRecarga(fecha, monto, this.obtenerLectora(idLectora));
+					resultado = tarjeta.procesarFichada(fichada);
+					if (resultado.isAprobado())
+		            	persistirTransaccion(tarjeta, resultado.getTransaccion());
+				} catch (Exception e) { 
+					e.printStackTrace();
+					resultado = new TarjetaSube.Resultado(false, "Alguno de los datos ingresados es invalido", null);
+				}
+			} else {
+				resultado = new TarjetaSube.Resultado(false, "La tarjeta no esta activa", null);
 			}
-			
 		} else {
 			resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
 		}
@@ -177,23 +178,26 @@ public class ControladorIngresarFichada extends HttpServlet {
 	
 	
 	private void procesarPeticionProcesarFichadaColectivo (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
 		TarjetaSube.Resultado resultado;
 		if (tarjeta != null) {
-			try {
-				int idInterno = Integer.parseInt(request.getParameter("idInterno"));
-				int idTramo = Integer.parseInt(request.getParameter("idTramo"));
-				GregorianCalendar fecha = parsearFecha(request);
-				InternoColectivo interno = obtenerInternoColectivo(idInterno);
-				FichadaColectivo fichada = new FichadaColectivo(fecha, this.obtenerTramoColectivo(idTramo), interno.getLectora());
-				fichada.setInterno(interno);
-				resultado = tarjeta.procesarFichada(fichada);
-				if (resultado.isAprobado())
-	            	persistirTransaccion(tarjeta, resultado.getTransaccion());
-			} catch (Exception e) {
-				e.printStackTrace();
-				resultado = new TarjetaSube.Resultado(false, "Alguno de los datos ingresados es invalido", null);
+			if (tarjeta.isActiva() == true) {
+				try {
+					int idInterno = Integer.parseInt(request.getParameter("idInterno"));
+					int idTramo = Integer.parseInt(request.getParameter("idTramo"));
+					GregorianCalendar fecha = parsearFecha(request);
+					InternoColectivo interno = obtenerInternoColectivo(idInterno);
+					FichadaColectivo fichada = new FichadaColectivo(fecha, this.obtenerTramoColectivo(idTramo), interno.getLectora());
+					fichada.setInterno(interno);
+					resultado = tarjeta.procesarFichada(fichada);
+					if (resultado.isAprobado())
+		            	persistirTransaccion(tarjeta, resultado.getTransaccion());
+				} catch (Exception e) {
+					e.printStackTrace();
+					resultado = new TarjetaSube.Resultado(false, "Alguno de los datos ingresados es invalido", null);
+				}
+			} else {
+				resultado = new TarjetaSube.Resultado(false, "La tarjeta no esta activa", null);
 			}
 		} else {
 			resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
@@ -206,23 +210,27 @@ public class ControladorIngresarFichada extends HttpServlet {
 		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
 		TarjetaSube.Resultado resultado;
 		if (tarjeta != null) {
-			int idLectora = Integer.parseInt(request.getParameter("idLectora"));
-			int idEstacion = Integer.parseInt(request.getParameter("idEstacion"));
-			try {
-				GregorianCalendar fecha = parsearFecha(request);
-				LectoraTren lectora = this.obtenerLectoraTren(idLectora);
-				FichadaTren fichada = null;
-				if(lectora.isEsEntrada()) {
-					fichada = new FichadaTren(fecha, this.obtenerEstacionTren(idEstacion), eTipoFichadaTren.ENTRADA, lectora);
-				}else if(!lectora.isEsEntrada()) {
-					fichada = new FichadaTren(fecha, this.obtenerEstacionTren(idEstacion), eTipoFichadaTren.SALIDA, lectora);
+			if (tarjeta.isActiva() == true) {
+				int idLectora = Integer.parseInt(request.getParameter("idLectora"));
+				int idEstacion = Integer.parseInt(request.getParameter("idEstacion"));
+				try {
+					GregorianCalendar fecha = parsearFecha(request);
+					LectoraTren lectora = this.obtenerLectoraTren(idLectora);
+					FichadaTren fichada = null;
+					if(lectora.isEsEntrada()) {
+						fichada = new FichadaTren(fecha, this.obtenerEstacionTren(idEstacion), eTipoFichadaTren.ENTRADA, lectora);
+					}else if(!lectora.isEsEntrada()) {
+						fichada = new FichadaTren(fecha, this.obtenerEstacionTren(idEstacion), eTipoFichadaTren.SALIDA, lectora);
+					}
+					resultado = tarjeta.procesarFichada(fichada);
+					if (resultado.isAprobado())
+		            	persistirTransaccion(tarjeta, resultado.getTransaccion());
+				} catch (Exception e) {
+					e.printStackTrace();
+					resultado = new TarjetaSube.Resultado(false, "Alguno de los datos ingresados es invalido", null);
 				}
-				resultado = tarjeta.procesarFichada(fichada);
-				if (resultado.isAprobado())
-	            	persistirTransaccion(tarjeta, resultado.getTransaccion());
-			} catch (Exception e) {
-				e.printStackTrace();
-				resultado = new TarjetaSube.Resultado(false, "Alguno de los datos ingresados es invalido", null);
+			} else {
+				resultado = new TarjetaSube.Resultado(false, "La tarjeta no esta activa", null);
 			}
 		} else {
 			resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
@@ -230,29 +238,27 @@ public class ControladorIngresarFichada extends HttpServlet {
 		request.setAttribute("resultado", resultado);
 		request.getRequestDispatcher("views/respuestaProcesarFichada.jsp").forward(request, response);
 	}
-	
-	
+
 	private void procesarPeticionProcesarFichadaSubte (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
-
         TarjetaSube.Resultado resultado;
-
         if (tarjeta != null) {
-            
-        	try {
-        	int idLectora = Integer.parseInt(request.getParameter("idLectora"));
-            int idEstacion =  Integer.parseInt(request.getParameter("idEstacion"));
-            GregorianCalendar fecha = parsearFecha(request);
-         
-            FichadaSubte fichada = new FichadaSubte(fecha, this.obtenerLectoraSubte(idLectora), this.obtenerEstacionSubte (idEstacion) );
-            resultado = tarjeta.procesarFichada(fichada);
-            if (resultado.isAprobado())
-            	persistirTransaccion(tarjeta, resultado.getTransaccion());
-        	} catch (Exception e) {
-        		e.printStackTrace();
-				resultado = new TarjetaSube.Resultado(false, "Alguno de los datos ingresados es invalido", null);
-			}
-            
+            if (tarjeta.isActiva() == true) {
+            	try {
+                	int idLectora = Integer.parseInt(request.getParameter("idLectora"));
+                    int idEstacion =  Integer.parseInt(request.getParameter("idEstacion"));
+                    GregorianCalendar fecha = parsearFecha(request);
+                    FichadaSubte fichada = new FichadaSubte(fecha, this.obtenerLectoraSubte(idLectora), this.obtenerEstacionSubte (idEstacion) );
+                    resultado = tarjeta.procesarFichada(fichada);
+                    if (resultado.isAprobado())
+                    	persistirTransaccion(tarjeta, resultado.getTransaccion());
+                	} catch (Exception e) {
+                		e.printStackTrace();
+        				resultado = new TarjetaSube.Resultado(false, "Alguno de los datos ingresados es invalido", null);
+        			}
+            } else {
+            	resultado = new TarjetaSube.Resultado(false, "La tarjeta no esta activa", null);
+            }
         } else {
             resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada no existe", null);
         }
