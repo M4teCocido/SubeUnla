@@ -42,4 +42,5 @@ public class PersonaABM {
 	public List<Persona> traerPersonas() throws Exception {
 		return dao.traerPersonas();
 	}
+	
 }

@@ -1,17 +1,13 @@
 <?xml version = "1.0" encoding = "UTF-8" ?>
 <web-app xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns = "http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation = "http://xmlns.jcp.org/xml/ns/javaee
 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id = "WebApp_ID" version = "3.1" >
-<display-name >SistemaFrances</display-name>
+<display-name >Sube-Unla</display-name>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
-		<welcome-file>cliente.html</welcome-file>
 	</welcome-file-list>
-	
 	
 	<servlet>
 		<servlet-name>ControladorIngresarFichada</servlet-name>
@@ -25,17 +21,25 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id = "WebApp_ID" version = "
 		<servlet-name>ControladorAdministrarSubes</servlet-name>
 		<servlet-class>controladores.ControladorAdministrarSubes</servlet-class>
 	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>ControladorListados</servlet-name>
-		<url-pattern>/Listados</url-pattern>
-	</servlet-mapping>
+	<servlet>
+		<servlet-name>ControladorLogin</servlet-name>
+		<servlet-class>controladores.ControladorLogin</servlet-class>
+	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>ControladorIngresarFichada</servlet-name>
 		<url-pattern>/IngresarFichada</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+		<servlet-name>ControladorListados</servlet-name>
+		<url-pattern>/Listados</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>ControladorAdministrarSubes</servlet-name>
 		<url-pattern>/AdministrarSubes</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ControladorLogin</servlet-name>
+		<url-pattern>/cLogin</url-pattern>
 	</servlet-mapping>
 </web-app >
