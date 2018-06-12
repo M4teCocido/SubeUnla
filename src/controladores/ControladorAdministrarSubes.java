@@ -1,4 +1,4 @@
-package controladores;
+	package controladores;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -33,9 +33,7 @@ public class ControladorAdministrarSubes extends HttpServlet {
 		TarjetaSubeABM tarjetaSubeABM = new TarjetaSubeABM();
 		Usuario usuario = new Usuario();
 		try{
-			
 			 tarjetaSubeABM.agregar(request.getParameter("codigo"), new BigDecimal(request.getParameter("saldo"))); 
-				
 		} catch (Exception e) { 
 			resultado = new TarjetaSube.Resultado(false, "Problema ingresar tarjeta al sistema", null);
 		}
@@ -119,7 +117,7 @@ public class ControladorAdministrarSubes extends HttpServlet {
 				case 2: //Procesar alta de  usuario en el sistema (Posiblmente  inecesario)
 					this.procesarPeticionRegistracion(request, response);
 					break;
-			
+				
 				default:
 					break;
 				}
