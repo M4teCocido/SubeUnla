@@ -1,6 +1,5 @@
 var URL_INGRESAR_FICHADA = "/SubeUnla/IngresarFichada";
 
-
 $(document).ready(function(){
 
 	//FUNCIONES
@@ -346,7 +345,6 @@ $(document).ready(function(){
 				idLectora : idLectora,
 				monto : monto
 			}
-			console.log(data);
 			$.ajax({
 				method: "POST",
 				url: URL_INGRESAR_FICHADA,
