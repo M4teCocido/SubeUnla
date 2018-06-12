@@ -32,12 +32,12 @@
         </div>
   		<div class="row">
   			<div class="l4">
-  				<button class="btn waves-effect waves-light blue lighten-2 black-text col s12 l12 m12" type="submit" id="guardarTarjeta">Guardar<i class="material-icons right">Guardar</i>
-  				<button class="btn waves-effect waves-light blue lighten-2 black-text col s12 l12 m12" type="submit" id="anularTarjeta">Anular<i class="material-icons right">Anular</i>
+  				<button class="btn waves-effect waves-light blue lighten-2 black-text col s12 l12 m12" type="submit" id="guardarTarjeta">Guardar<i class="material-icons right"></i>
+  				<button class="btn waves-effect waves-light blue lighten-2 black-text col s12 l12 m12" type="submit" id="anularTarjeta">Anular<i class="material-icons right"></i>
 	  			</button>
   			</div>
   		</div>
 	</div>
 </div>
-<script type="text/javascript" src="js/jsIngresarFichada.js"></script>
+<script type="text/javascript" src="js/jsAdministrarSUBE.js"></script>
 <%@ include file = "/views/footer.jsp" %>
