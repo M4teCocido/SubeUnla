@@ -5,8 +5,6 @@ var MEDIO_TRANS_COLECTIVO = 1;
 var MEDIO_TRANS_SUBTE = 2;
 var MEDIO_TRANS_TREN = 3;
 
-
-
 function llenarTabla(data){
 	$("#tabla").html(data);
 }
@@ -100,7 +98,6 @@ function solicitarListado(){
 $(document).ready(function(){
 	
 	$('#procesar').click(function(){
-		
 		solicitarListado();
 	})
 	
