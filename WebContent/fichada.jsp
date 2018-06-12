@@ -2,7 +2,6 @@
     pageEncoding="ISO-8859-1"%>
 <% String title = "Fichadas"; %>    
 <%@ include file = "/views/header.jsp" %>
-<script type="text/javascript" src="js/jsIngresarFichada.js"></script>
 </head>
 <body>
 <div class="container">
@@ -81,5 +80,5 @@
   		</div>
 	</div>
 </div>
-
+<script type="text/javascript" src="js/jsIngresarFichada.js"></script>
 <%@ include file = "/views/footer.jsp" %>

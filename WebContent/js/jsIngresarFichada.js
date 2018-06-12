@@ -84,7 +84,6 @@ $(document).ready(function(){
 	})
 
 	$('#tipotransaccion').on('change', function() {
-
 		v = this.value;
 		//console.log('Change CON ajax - v = ' + v);
 		if(v == 1){

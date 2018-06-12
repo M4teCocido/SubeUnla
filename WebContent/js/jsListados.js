@@ -6,6 +6,14 @@ var MEDIO_TRANS_SUBTE = 2;
 var MEDIO_TRANS_TREN = 3;
 
 $(document).ready(function(){
+
+	function llenarTabla(data){
+		$("#tabla").html(data);
+	}
+
+	function limpiarTabla(){
+		$("#tabla").html();
+	}
 	
 	function init(){
 		esconderLinea();
@@ -170,7 +178,6 @@ $(document).ready(function(){
 	})
 	
 	$('#procesar').click(function(){
-		
 		solicitarListado();
 	})
 	

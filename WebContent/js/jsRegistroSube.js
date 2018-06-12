@@ -100,26 +100,22 @@ $(document).ready(function(){
 	//AJAX
 
 	$('#nroTarjeta').focusout(function(){
-		var data = {
-				nroTarjeta : this.value,
-				nroValidacion : 1
-			}
-		$.ajax({
-			method: "POST",
-			url: "/SubeUnla/RegistroTarjeta",
-			data: data,
-			async: false
-		}).done(function(data){
-			if(data != null && data != "" && data != ''){
-				$('#nroTarjeta').val('');
-				mostrarModal(data);
-			}
-		}).fail(function(xhr, textStatus, errorThrown) {
-			$('#headerModal').html('Ups! Algo salio mal!');
-			$('#pModal').html(xhr.responseText);
-		    $('#footerModal').modal('open');
-	    });
-	})
+        var data = {
+                nroTarjeta : this.value,
+                nroValidacion : 1
+            }
+        $.ajax({
+            method: "POST",
+            url: "/SubeUnla/RegistroTarjeta",
+            data: data,
+            async: false
+        }).fail(function(data) {
+            if(data != null && data != "" && data != ''){
+                $('#nroTarjeta').val('');
+                mostrarModal(data);
+            }
+        });
+    })
 	
 	$('#enviarRegistro').click(function(){
 		var data = {
