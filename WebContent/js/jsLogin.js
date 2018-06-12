@@ -9,7 +9,7 @@ $(document).ready(function(){
 		}
 		$.ajax({
 			method: "POST",
-			url: "/SubeUnla/cLogin",
+			url: "/SubeUnla/ControlLogin",
 			data: data,
 			async: false
 		}).fail(function(xhr, textStatus, errorThrown) {

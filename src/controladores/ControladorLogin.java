@@ -36,7 +36,7 @@ public class ControladorLogin extends HttpServlet {
 			Usuario usuario = abm.traerUsuarioPorDni(dni);
 			Set<Permiso> permisos = usuario.getPermisos();
 			request.setAttribute("usuario", usuario);
-			if(permisos.contains(abmPermiso.traerPermisoPorCodigo("CONSULTARTARJETA"))) {
+			if(permisos.size() == 1 && permisos.contains(abmPermiso.traerPermisoPorCodigo("CONSULTARTARJETA")) ) {
 				request.getRequestDispatcher("/misube.jsp").forward(request, response );
 			}else {
 				request.setAttribute("permisos", permisos);
