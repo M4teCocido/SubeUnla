@@ -24,7 +24,7 @@ public class ControladorLogin extends HttpServlet {
 	}
 	
 	private void procesarPeticion(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		response .setContentType( "text/html;charset=UTF-8" );
+		response.setContentType( "text/html;charset=UTF-8" );
 		try {
 			String dni = request.getParameter("nroDocumento");
 			String pass = request.getParameter("pass");
