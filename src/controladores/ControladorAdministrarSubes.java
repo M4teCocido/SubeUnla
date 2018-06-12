@@ -15,6 +15,7 @@ import modelo.Usuario;
 import modelo.eGenero;
 import negocio.PersonaABM;
 import negocio.TarjetaSubeABM;
+import negocio.TransaccionABM;
 import negocio.UsuarioABM;
 
 public class ControladorAdministrarSubes extends HttpServlet {
@@ -26,6 +27,12 @@ public class ControladorAdministrarSubes extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		procesarPeticion(request, response);
 	}
+	
+	
+	
+	
+	
+	
 	
 	void procesarPeticionAltaTarjeta(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
 		TarjetaSube.Resultado resultado = null;
