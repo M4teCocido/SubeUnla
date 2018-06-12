@@ -3,9 +3,11 @@ package modelo.fichadas.tren;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+
+import util.INombrable;
 import util.IndexableSet;
 
-public class SeccionTren {
+public class SeccionTren implements INombrable {
 	
 	private int idSeccion;
 	private String nombre;
