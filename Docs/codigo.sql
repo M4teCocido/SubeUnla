@@ -96,7 +96,7 @@ DROP TABLE IF EXISTS `SUBEdb`.`LapsoDescuentoRedSUBE` ;
 
 CREATE TABLE IF NOT EXISTS `SUBEdb`.`LapsoDescuentoRedSUBE` (
   `idLapso` INT NOT NULL AUTO_INCREMENT,
-  `fechaHoraVencimiento` DATE NOT NULL,
+  `fechaHoraVencimiento` DATETIME NOT NULL,
   `idDescuentoRedSube` INT NOT NULL,
   PRIMARY KEY (`idLapso`),
   INDEX `fk_LapsoDescuentoRedSUBE_DescuentoRedSUBE1_idx` (`idDescuentoRedSube` ASC),
@@ -127,7 +127,7 @@ DROP TABLE IF EXISTS `SUBEdb`.`Fichada` ;
 
 CREATE TABLE IF NOT EXISTS `SUBEdb`.`Fichada` (
   `idFichada` INT NOT NULL AUTO_INCREMENT,
-  `fechaHora` DATE NOT NULL,
+  `fechaHora` DATETIME NOT NULL,
   `idLapsoDescuentoRedSUBE` INT NULL,
   `idLectora` INT NOT NULL,
   PRIMARY KEY (`idFichada`),
@@ -185,7 +185,7 @@ DROP TABLE IF EXISTS `SUBEdb`.`FichadaTren` ;
 CREATE TABLE IF NOT EXISTS `SUBEdb`.`FichadaTren` (
   `idFichada` INT NOT NULL,
   `idEstacion` INT NOT NULL,
-  `idTipoFichada` INT NOT NULL,
+  `tipoFichada` INT NOT NULL,
   PRIMARY KEY (`idFichada`),
   INDEX `idEstacion_idx` (`idEstacion` ASC),
   CONSTRAINT `idFichada`
@@ -628,6 +628,24 @@ CREATE TABLE IF NOT EXISTS `SUBEdb`.`LectoraTren` (
   CONSTRAINT `fk_LectoraTren_EstacionTren1`
     FOREIGN KEY (`idEstacion`)
     REFERENCES `SUBEdb`.`EstacionTren` (`idEstacion`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `SUBEdb`.`LectoraExterna`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SUBEdb`.`LectoraExterna` ;
+
+CREATE TABLE IF NOT EXISTS `SUBEdb`.`LectoraExterna` (
+  `idLectora` INT NOT NULL,
+  `ubicacion` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idLectora`),
+  INDEX `fk_LectoraExterna_Lectora1_idx` (`idLectora` ASC),
+  CONSTRAINT `fk_LectoraExterna_Lectora1`
+    FOREIGN KEY (`idLectora`)
+    REFERENCES `SUBEdb`.`Lectora` (`idLectora`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
