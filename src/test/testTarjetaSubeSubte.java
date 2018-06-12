@@ -33,7 +33,13 @@ public class testTarjetaSubeSubte {
 		// TODO Auto-generated method stub
 		//Se crea una tarjeta nueva con saldo 0
 		BigDecimal saldo = new BigDecimal(0);
-		TarjetaSube tarjeta = new TarjetaSube("123456", saldo);
+		TarjetaSube tarjeta = null;
+		try {
+			tarjeta = new TarjetaSube("123456", saldo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//Se le realiza una recarga y chequeamos que se haya cargado correctamente
 		GregorianCalendar fechaRecarga = new GregorianCalendar(2018, 5, 28, 10, 0, 0);

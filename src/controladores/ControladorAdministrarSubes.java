@@ -99,17 +99,20 @@ public class ControladorAdministrarSubes extends HttpServlet {
 	void procesarPeticionAltaTarjeta(String nroTarjeta, BigDecimal saldo, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TarjetaSube.Resultado resultado = null;
 		TarjetaSubeABM tarjetaSubeABM = new TarjetaSubeABM();
-		
-		try{
-			 tarjetaSubeABM.agregar(nroTarjeta, saldo); 
-			 resultado = new TarjetaSube.Resultado(true, "Tarjeta dada de alta con exito!", null);
-		} catch (Exception e) { 
-			resultado = new TarjetaSube.Resultado(false, "Problema ingresar tarjeta al sistema", null);
-			e.printStackTrace();
+		if (nroTarjeta.length() != 16) {
+			resultado = new TarjetaSube.Resultado(false, "El codigo debe ser de 16 digitos", null);
+		} else {
+			try{
+				 tarjetaSubeABM.agregar(nroTarjeta, saldo); 
+				 resultado = new TarjetaSube.Resultado(true, "Tarjeta dada de alta con exito!", null);
+			} catch (Exception e) { 
+				resultado = new TarjetaSube.Resultado(false, "Problema ingresar tarjeta al sistema. Error : " + e.getMessage(), null);
+				e.printStackTrace();
+			}
+			request.setAttribute("resultado", resultado);
+			System.out.println("Resultado : " + resultado);
+			request.getRequestDispatcher("views/respuestaABMSube.jsp").forward(request, response);
 		}
-		request.setAttribute("resultado", resultado);
-		System.out.println("Resultado : " + resultado);
-		request.getRequestDispatcher("views/respuestaABMSube.jsp").forward(request, response);
 	}
 	
 	void procesarPeticionModifTarjeta(TarjetaSube tarjeta, BigDecimal saldo, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -125,7 +128,7 @@ public class ControladorAdministrarSubes extends HttpServlet {
 					resultado = new TarjetaSube.Resultado(false, "Esa tarjeta esta dada de baja!", null);
 				}
 			} catch (Exception e) {
-				resultado = new TarjetaSube.Resultado(false, "Problema al guardar la tarjeta modificada", null);
+				resultado = new TarjetaSube.Resultado(false, "Problema al guardar la tarjeta modificada. Error : " + e.getMessage(), null);
 				e.printStackTrace();
 			}
 		}
@@ -153,7 +156,7 @@ public class ControladorAdministrarSubes extends HttpServlet {
 					resultado = new TarjetaSube.Resultado(false, "Esa tarjeta ya esta dada de baja!", null);
 				}
 			} catch (Exception e) {
-				resultado = new TarjetaSube.Resultado(false, "Problema al dar de baja la tarjeta", null);
+				resultado = new TarjetaSube.Resultado(false, "Problema al dar de baja la tarjeta. Error : " + e.getMessage(), null);
 			}
 		}
 		request.setAttribute("resultado", resultado);

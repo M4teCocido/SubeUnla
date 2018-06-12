@@ -36,14 +36,14 @@ public class TarjetaSube {
 	
 	public TarjetaSube() {}
 	
-	public TarjetaSube(String codigo, int saldo) {
+	public TarjetaSube(String codigo, int saldo) throws Exception {
 		this(codigo, new BigDecimal(saldo));
 	}
 	
-	public TarjetaSube(String codigo, BigDecimal saldo) {
+	public TarjetaSube(String codigo, BigDecimal saldo) throws Exception {
 		super();
 		this.codigo = codigo;
-		this.saldo = saldo;
+		this.setSaldo(saldo);
 		this.transacciones = new LinkedHashSet<TransaccionSUBE>();
 		this.descuentoRedSube = new DescuentoRedSube(this);
 		this.activa = true;
@@ -93,7 +93,13 @@ public class TarjetaSube {
 		return saldo;
 	}
 
-	public void setSaldo(BigDecimal saldo) {
+	public void setSaldo(BigDecimal saldo) throws Exception {
+		float saldoFloat = saldo.floatValue();
+		if (saldoFloat < saldoMinimo) {
+			throw new Exception("Saldo de tarjeta no puede ser menor a " + saldoMinimo);
+		} else if (saldoFloat > saldoMaximo) {
+			throw new Exception("Saldo de tarjeta no puede ser mayor a " + saldoMaximo);
+		}
 		this.saldo = saldo;
 	}
 	

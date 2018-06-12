@@ -41,6 +41,17 @@ $(document).ready(function(){
 	$('#guardarTarjeta').click(function(){
 		var nroTarjeta = $('#numerotarjeta').val();
 		var saldo = $('#saldo').val();
+		
+		if (isNaN(saldo)){
+			mostrarModalMensaje("Error!", "El saldo ingresado es invalido!");
+			return;
+		}
+		
+		if (nroTarjeta.length != 16){
+			mostrarModalMensaje("Error!", "El codigo de Tarjeta debe tener 16 caracteres!");
+			return;
+		}
+		
 		var data = {
 				nroTarjeta : nroTarjeta,
 				saldo : saldo,

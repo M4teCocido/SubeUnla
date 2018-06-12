@@ -23,7 +23,13 @@ public class TestSoloColectivo {
 		
 		LectoraExterna lectoraExterna = new LectoraExterna (123123123, "Kiosco : El pelado Hernandez");
 		
-		TarjetaSube tarjeta = new TarjetaSube("9999",new BigDecimal (-10));
+		TarjetaSube tarjeta = null;
+		try {
+			tarjeta = new TarjetaSube("9999",new BigDecimal (-10));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		FichadaRecarga fichadaCarga = new FichadaRecarga (new GregorianCalendar(2018, 3, 6, 13,10,00), new BigDecimal (100), lectoraExterna); 
 		
 		tarjeta.setPropietario(persona);

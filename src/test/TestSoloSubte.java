@@ -22,7 +22,13 @@ public class TestSoloSubte {
 		Persona persona = new Persona();
 		persona.asignarDescuentoTarifaSocial(new DescuentoTarifaSocial (persona));
 		
-		TarjetaSube tarjeta = new TarjetaSube("9999",new BigDecimal (200));
+		TarjetaSube tarjeta = null;
+		try {
+			tarjeta = new TarjetaSube("9999",new BigDecimal (200));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		tarjeta.setPropietario(persona);
 		
