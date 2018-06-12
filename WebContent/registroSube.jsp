@@ -46,7 +46,7 @@
 			<select id="tipoDoc">
 				<option value="" disabled selected>Seleccione una opcion</option>
       			<option value="1">DNI - Documento Nacional de Identidad</option>
-		        <option value="2">DE - Documento Extranjero</option>
+		        <option value="2">LE - Libreta de Enrolamiento</option>
     		</select>
     		<label for="tipoDoc">Tipo de Documento</label>
 		</div>

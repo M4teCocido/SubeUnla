@@ -1,4 +1,5 @@
-//var URL_REGISTRO_TARJETA = "/SubeUnla/RegistroTarjeta";
+var URL_INGRESAR_FICHADA = "/SubeUnla/IngresarFichada";
+var URL_ADMINISTRAR_SUBE = "/SubeUnla/AdministrarSubes";
 
 $(document).ready(function(){
 		
@@ -42,10 +43,12 @@ $(document).ready(function(){
 	}
 	
 	function setMonthSelect(){
+		var nombreMes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
+				"Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 		for(var i = 1; i < 13; i++){
 			$('#month').append($('<option>', {
 			    value: i,
-			    text: i
+			    text: nombreMes[i - 1]
 			}));
 		}
 		$('#month').formSelect();
@@ -102,43 +105,102 @@ $(document).ready(function(){
 	$('#nroTarjeta').focusout(function(){
 		var data = {
 				nroTarjeta : this.value,
-				nroValidacion : 1
+				nroValidacion : 15
 			}
 		$.ajax({
 			method: "POST",
-			url: "/SubeUnla/RegistroTarjeta",
+			url: URL_INGRESAR_FICHADA,
 			data: data,
 			async: false
-		}).fail(function(data) {
+		}).done(function(data){
 			if(data != null && data != "" && data != ''){
-				$('#nroTarjeta').val('');
 				mostrarModal(data);
 			}
+		}).fail(function(xhr, textStatus, errorThrown) {
+			$('#headerModal').html('Ups! Algo salio mal!');
+			$('#pModal').html(xhr.responseText);
+		    $('#footerModal').modal('open');
 	    });
 	})
 	
 	$('#enviarRegistro').click(function(){
+		var mes = $('#month').val();
+		var dia = $('#day').val();
+		var tipoDoc = $('#tipoDoc').val();
+		var genero = $('#genero').val();
+		var nombre = $('#nombre').val();
+		var apellido = $('#apellido').val();
+		var password = $('#password').val();
+		var password2 = $('#passwordRepeat').val();
+		var tarifaSocial;
+		
+		if (nombre.length == 0){
+			notificarError("Debe ingresar su nombre");
+			return;
+		}
+		
+		if (apellido.length == 0){
+			notificarError("Debe ingresar su apellido");
+			return;
+		}
+		
+		if (mes == null || dia == 0){
+			notificarError("El mes ingresado es invalido!");
+			return;
+		}
+		if (dia == null || dia == 0){
+			notificarError("El dia ingresado es invalido!");
+			return;
+		}
+		
+		if (genero == null || genero == 0){
+			notificarError("El genero ingresado es invalido!");
+			return;
+		}
+		
+		if (tipoDoc == null || tipoDoc == 0){
+			notificarError("El Tipo de Documento ingresado es invalido!");
+			return;
+		}
+		
+		if (password.length == 0){
+			notificarError("Debe ingresar su Contraseña");
+			return;
+		} else {
+			if (password != password2){
+				notificarError("La contraseñas no coinciden");
+				return;				
+			}
+		}
+		
+		if (document.getElementById('tarifaSocial').checked){
+			tarifaSocial = 1;
+		} else {
+			tarifaSocial = 0;
+		}
+		
 		var data = {
 				nroTarjeta : $('#nroTarjeta').val(),
 				nroValidacion : 2,
-				nombre : $('#nombre').val(),
-				apellido : $('#apellido').val(),
-				genero : $('#genero').val(),
-				tipoDoc : $('#tipoDoc').val(),
+				nombre : nombre,
+				apellido : apellido,
+				genero : genero,
+				tipoDoc : tipoDoc,
 				nroDocumento : $('#nroDocumento').val(),
-				year : $('#year').val(),
-				month : $('#month').val(),
-				day : $('#day').val(),
+				anio : $('#year').val(),
+				mes : mes,
+				dia : dia,
 				email : $('#email').val(),
 				celular : $('#celular').val(),
 				telefono : $('#telefono').val(),
 				descEstudiantil : $('#descEstudiantil').val(),
-				passwords : $('#password').val(),
-				tarifaSocial : $('#tarifaSocial').val()
+				password : password,
+				tarifaSocial : tarifaSocial
 			}
+		console.log("Datos de registro enviados : " + JSON.stringify(data));
 		$.ajax({
 			method: "POST",
-			url: "/SubeUnla/RegistroTarjeta",
+			url: URL_ADMINISTRAR_SUBE,
 			data: data,
 			async: false
 		}).done(function(data){
