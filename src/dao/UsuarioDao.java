@@ -82,7 +82,7 @@ public class UsuarioDao {
 		Usuario usuario = null;
 		try {
 			iniciaOperacion();
-			usuario = (Usuario) session.createQuery("from Usuario u inner join Persona p on u.idPersona = p.idPersona inner join Documento d on d.idPersona = p.idPersona where d.numero='" + dni + "'").uniqueResult();
+			usuario = (Usuario) session.createQuery("from Usuario u inner join u.Persona as p inner join p.documento as d where d.numero='" + dni + "'").uniqueResult();
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
 			throw he;

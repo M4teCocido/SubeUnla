@@ -11,11 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.TarjetaSubeDao;
 import dao.descuentos.DescuentoRedSubeDao;
+import modelo.Documento;
 import modelo.Persona;
 import modelo.TarjetaSube;
 import modelo.Usuario;
 import modelo.eGenero;
+import modelo.eTipoDocumento;
+import modelo.Descuentos.DescuentoBoletoEstudiantil;
 import modelo.Descuentos.DescuentoRedSube;
+import modelo.Descuentos.DescuentoTarifaSocial;
+import modelo.Descuentos.eTipoBoletoEstudiantil;
 import negocio.PersonaABM;
 import negocio.TarjetaSubeABM;
 import negocio.TransaccionABM;
@@ -23,6 +28,15 @@ import negocio.UsuarioABM;
 
 public class ControladorAdministrarSubes extends HttpServlet {
 
+	private final int F = 1;
+	private final int M = 2;
+	
+	private final int DNI = 1;
+	private final int LE = 2;
+	
+	private final int ESCOLAR = 1;
+	private final int UNIVERSITARIO = 2;
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		procesarPeticion(request, response);
 	}
@@ -33,57 +47,107 @@ public class ControladorAdministrarSubes extends HttpServlet {
 	
 	void procesarPeticionRegistracion(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
 		TarjetaSube.Resultado resultado = null;
+		
 		UsuarioABM usuarioABM = new UsuarioABM();
 		PersonaABM personaABM = new PersonaABM();
 		TarjetaSubeABM tarjetaSubeABM = new TarjetaSubeABM();
+		
 		TarjetaSube tarjeta = null;
 		Usuario usuario = null;
-		eGenero genero =null;
-		String codigo = request.getParameter("codigo");
-		try {
-			tarjeta = tarjetaSubeABM.traerTarjetaPorCodigo(codigo);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			resultado = new TarjetaSube.Resultado(false, "Problema traer tarjeta para asociar", null);
-			}
 		
-		   if(tarjeta != null) {
-			usuario = usuarioABM.comprobarExistenciaUsuario(request.getParameter("dni"));
+		String codigo = request.getParameter("nroTarjeta");
+		
+		try {
+		
+			tarjeta = tarjetaSubeABM.traerTarjetaPorCodigo(codigo);
 			
-			if(usuario == null) { //Si la tarjeta es null, de entrada va al final y envia  resultado
-				if(request.getParameter("genero")=="m") {// cambiar por numero que corresponda a genero
-					 genero = eGenero.M  ;
-				}else { genero = eGenero.F;}
-				
-				GregorianCalendar fechaNacimiento = parsearFecha( request);
-				
-				Persona persona;
-				try {
-					persona = new Persona (request.getParameter("nombre"),
-											request.getParameter("apellido"),genero,  fechaNacimiento,  request.getParameter("email"), 
-												request.getParameter("celular"), request.getParameter("celular"));
+			if (tarjeta == null) //Si la tarjeta no existe, devolvemos error.
+				resultado = new TarjetaSube.Resultado(false, "No existe la tarjeta con el codigo ingresado", null);
+			else { //Si existe, procedemos a chequear usuario y persona.
+				//Validar si la tarjeta ya esta asociada
+				if (tarjeta.getPropietario() == null) { //No esta asociada
+					String nroDoc = request.getParameter("nroDocumento");
+					
+					usuario = usuarioABM.comprobarExistenciaUsuario(nroDoc);
+					
+					if(usuario == null) { //Si el usuario es Null, lo creamos.
 						
-					personaABM.agregarPersona(persona);
-					usuarioABM.agregarUsuario(request.getParameter("dni"), request.getParameter("password"), persona);
-					persona.asociarTarjeta(tarjeta);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					resultado = new TarjetaSube.Resultado(false, "Problem para generar usuario y asignar tarjeta", null);
-				} 
-				
-				
-			} else
-				try {
-					usuario.getPersona().asociarTarjeta(tarjeta);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					resultado = new TarjetaSube.Resultado(false, "Problema asignar tarjeta a persona existente", null);
+	
+						
+						String nombre = request.getParameter("nombre");
+						String apellido = request.getParameter("apellido");
+						String email = request.getParameter("email");
+						String telefono = request.getParameter("telefono");
+						String celular = request.getParameter("celular");
+						String password = request.getParameter("password");
+						
+						int tipoBoletoEst = Integer.parseInt(request.getParameter("descEstudiantil"));
+						boolean tieneTarifaSocial = (Integer.parseInt(request.getParameter("tarifaSocial")) == 1); 
+						eTipoDocumento tipoDoc = (Integer.parseInt(request.getParameter("tipoDoc")) == DNI 
+								? eTipoDocumento.DNI
+								: eTipoDocumento.LIBRETA_ENROLAMIENTO);
+						GregorianCalendar fechaNacimiento = parsearFecha(request);
+						eGenero genero = (Integer.parseInt(request.getParameter("genero")) == F 
+								? eGenero.F
+								: eGenero.M);
+	
+						
+						
+						
+						Persona persona;
+						
+						//Creamos la nueva Persona
+						persona = new Persona (nombre, apellido, genero, 
+								fechaNacimiento,  email, celular, telefono);
+						//Asignamos Descuentos si corresponde
+						//Boleto Estudiantil
+						if (tipoBoletoEst == ESCOLAR) {
+							persona.asignarDescuentoBoletoEstudiantil(
+									new DescuentoBoletoEstudiantil(eTipoBoletoEstudiantil.ESCOLAR, persona));
+						} else if (tipoBoletoEst == UNIVERSITARIO) {
+							persona.asignarDescuentoBoletoEstudiantil(
+									new DescuentoBoletoEstudiantil(eTipoBoletoEstudiantil.UNIVERSITARIO, persona));
+						}
+						//Tarifa Sociales
+						if (tieneTarifaSocial) {
+							persona.asignarDescuentoTarifaSocial(new DescuentoTarifaSocial(persona));
+						}
+						
+						//Creamos y asociamos documento
+						persona.setDocumento(new Documento(nroDoc, tipoDoc, persona));
+						//Asociamos Tarjeta a Persona
+						persona.asociarTarjeta(tarjeta);
+						//Persistimos persona
+						personaABM.agregarPersona(persona);
+						//Persistimos la Tarjeta
+						tarjetaSubeABM.modificar(tarjeta);
+						//Creamos el usuario nuevo con la nueva persona y lo persistimos
+						usuarioABM.agregarUsuario(nroDoc, password, persona);
+						resultado = new TarjetaSube.Resultado(true, "Tarjeta asociada con exito. Se creo un nuevo usuario para usted. Las credenciales corresponden a su numero de Documento", null);
+					} else { //Usuario existe, simplement le asociamos una tarjeta a su Persona
+						try {
+							usuario.getPersona().asociarTarjeta(tarjeta);
+							personaABM.modificarPersona(usuario.getPersona());
+							tarjetaSubeABM.modificar(tarjeta);
+							resultado = new TarjetaSube.Resultado(true, "Tarjeta asociada a usuario '" + usuario.getNombreUsuario() + "' con exito.", null);
+							
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							resultado = new TarjetaSube.Resultado(false, "Problema asignar tarjeta a persona existente. Error : " + e.getMessage(), null);
+						}
+					}
+				} else { //Ya esta asociada a una persona.
+					resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada ya esta asociada a una persona!", null);
 				}
-		   }
-			
-			request.setAttribute("resultado", resultado);
-	        System.out.println("Resultado : " + resultado);
-	        request.getRequestDispatcher("views/respuestaRegistracion.jsp").forward(request, response);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultado = new TarjetaSube.Resultado(false, "Alguno de los datos ingresados es incorrecto. Error : " + e.getMessage(), null);
+		}
+		request.setAttribute("resultado", resultado);
+        System.out.println("Resultado : " + resultado);
+        request.getRequestDispatcher("views/respuestaABMSube.jsp").forward(request, response);
 	}
 	
 	private void procesarAltaModificacionTarjeta(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
@@ -247,11 +311,12 @@ public class ControladorAdministrarSubes extends HttpServlet {
     	int anio = Integer.parseInt(request.getParameter("anio"));
     	int mes  = Integer.parseInt(request.getParameter("mes"));
     	int dia  = Integer.parseInt(request.getParameter("dia"));
-    	int hora = Integer.parseInt(request.getParameter("hora"));
-    	int min  = Integer.parseInt(request.getParameter("min"));
+    	
+    	//int hora = Integer.parseInt(request.getParameter("hora"));
+    	//int min  = Integer.parseInt(request.getParameter("min"));
     	
     	
-    	GregorianCalendar fecha = new GregorianCalendar  (anio, mes - 1, dia, hora , min, 0);
+    	GregorianCalendar fecha = new GregorianCalendar  (anio, mes - 1, dia);
     	
     	return  fecha;
 	}
