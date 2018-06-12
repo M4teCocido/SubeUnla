@@ -40,6 +40,6 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id = "WebApp_ID" version = "
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ControladorLogin</servlet-name>
-		<url-pattern>/cLogin</url-pattern>
+		<url-pattern>/ControlLogin</url-pattern>
 	</servlet-mapping>
 </web-app >
