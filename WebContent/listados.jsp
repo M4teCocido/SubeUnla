@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <% String title = "Listados"; %>  
 <%@ include file = "/views/header.jsp" %>
+<script type="text/javascript" src="js/jsListados.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -42,7 +43,7 @@
 	        </div>
         </div>
         <div class ="row">
-	        <div class="input-field col s12 m6 l4">
+	        <div class="input-field col s12 m6 l4 ">
 			    <select name="medioTransporte" id="medioTransporte">
 					<option class="black-text text-lighten-3" value="0" selected>Todos</option>
 					<option class="black-text text-lighten-3" value="1">Colectivo</option>
@@ -52,7 +53,7 @@
 		    	<label for="medioTransporte">Medio de Transporte</label>
 	  		</div>
 
-	  		<div class="input-field col s12 m6 l4">
+	  		<div class="input-field col s12 m6 l4" id="divLinea">
 			    <select name="linea" id="linea">
 					<option class="black-text text-lighten-3" value="0" selected>Todas</option>
 			    </select>
@@ -69,8 +70,6 @@
 		<table id="tabla" class="stripped bordered highlight">	        
 		</table>
 	</div>
-
-<script type="text/javascript" src="js/jsListados.js"></script>
 
 <%@ include file = "/views/footer.jsp" %>
 

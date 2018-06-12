@@ -130,6 +130,10 @@ public class FuncionesGregorian {
 		return (fecha.equals(fecha1));
 	}
 	
+	public static boolean estaEntreFechas(GregorianCalendar fecha, GregorianCalendar desde, GregorianCalendar hasta) {
+		return (!fecha.before(desde) && !fecha.after(hasta));
+	}
+	
 	public static int traerCantDiasDeUnMes(int anio, int mes){
 		
 		int diasMes;

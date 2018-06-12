@@ -58,4 +58,29 @@ public class LineaColectivo {
 	public String toString() {
 		return "LineaColectivo [Nombre=" + this.nombre + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idLinea;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LineaColectivo other = (LineaColectivo) obj;
+		if (idLinea != other.idLinea)
+			return false;
+		return true;
+	}
+	
+	
+	
 }

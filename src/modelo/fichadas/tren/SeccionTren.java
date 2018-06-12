@@ -66,8 +66,7 @@ public class SeccionTren {
 
 	@Override
 	public String toString() {
-		return "SeccionTren [idSeccion=" + idSeccion + ", nombre=" + nombre + ", importe=" + importe + ", linea="
-				+ linea + ", viajesTren=" + viajesTren + "]";
+		return "SeccionTren [idSeccion=" + idSeccion + ", nombre=" + nombre + ", importe=" + importe + "]";
 	}
 
 	
