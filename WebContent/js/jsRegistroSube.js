@@ -109,15 +109,11 @@ $(document).ready(function(){
 			url: "/SubeUnla/RegistroTarjeta",
 			data: data,
 			async: false
-		}).done(function(data){
+		}).fail(function(data) {
 			if(data != null && data != "" && data != ''){
 				$('#nroTarjeta').val('');
 				mostrarModal(data);
 			}
-		}).fail(function(xhr, textStatus, errorThrown) {
-			$('#headerModal').html('Ups! Algo salio mal!');
-			$('#pModal').html(xhr.responseText);
-		    $('#footerModal').modal('open');
 	    });
 	})
 	

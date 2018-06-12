@@ -19,8 +19,8 @@
         </div>
         <div class="row margin">
           	<div class="input-field col s10 m8 l8 offset-l2">
-            	<input placeholder="Usuario" id="usuario" type="text">
-            	<label for="usuario">Usuario</label>
+            	<input placeholder="Numero" id="nroDocumento" type="text">
+            	<label for="nroDocumento">Numero de Documento</label>
           	</div>
         </div>
         <div class="row margin">

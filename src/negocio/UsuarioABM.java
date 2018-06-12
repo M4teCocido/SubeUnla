@@ -42,12 +42,16 @@ UsuarioDao dao = new UsuarioDao();
 		dao.eliminarUsuario(u);
 	}
 	
+	public void comprobarPassword(String dni, String pass) throws Exception {
+		Usuario usuario = dao.traerUsuarioPorDni(dni);
+		if(!usuario.getPassword().equals(pass) || usuario == null) throw new Exception("Error al comprobar el usuario.");
+	}
+	
 	public List<Usuario> traerUsuarios() {
 		return dao.traerUsuarios();
 	}
 	
 	public Usuario comprobarExistenciaUsuario(String dni){
-	 return dao.traerUsuarioPorDni(dni);
-		 
+		return dao.traerUsuarioPorDni(dni);
 	}
 }
