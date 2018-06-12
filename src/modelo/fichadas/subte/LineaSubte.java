@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-public class LineaSubte {
+import util.INombrable;
+
+public class LineaSubte implements INombrable {
 	
 	private int idLinea;
 	private String nombre;

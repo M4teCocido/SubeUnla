@@ -1,9 +1,12 @@
 package modelo.fichadas.colectivo;
 
 import java.util.Set;
+
+import util.INombrable;
+
 import java.util.HashSet;
 
-public class LineaColectivo {
+public class LineaColectivo implements INombrable {
 	
 	private int idLinea;
 	private String nombre;
