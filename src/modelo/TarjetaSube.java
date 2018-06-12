@@ -16,8 +16,10 @@ import modelo.fichadas.*;
 import modelo.fichadas.colectivo.FichadaColectivo;
 import modelo.fichadas.subte.FichadaSubte;
 import modelo.fichadas.tren.FichadaTren;
+import modelo.fichadas.tren.ViajeEfectivoTren;
 import modelo.fichadas.tren.eTipoFichadaTren;
 import modelo.fichadas.tren.ViajeTren;
+import util.FuncionesGregorian;
 import util.IndexableSet;
 
 public class TarjetaSube {
@@ -108,6 +110,41 @@ public class TarjetaSube {
 		return this;
 	}
 
+	public List<ViajeEfectivoTren> obtenerViajesTren(GregorianCalendar desde, GregorianCalendar hasta){
+		List<ViajeEfectivoTren> viajes = new ArrayList<ViajeEfectivoTren>();
+		TransaccionSUBE txAnterior = null;
+		FichadaTren f;
+		
+		for (TransaccionSUBE t : this.transacciones) {
+			if (FuncionesGregorian.estaEntreFechas(t.getFichada().getFechaHora(), desde, hasta)) {
+				if (t.getFichada() instanceof FichadaTren) { //Vemos que sea de Tren
+					f = ((FichadaTren) t.getFichada());
+					if (f.esEntrada()) { //Actual es de entrada
+						if (txAnterior != null) { //Implica que es de entrada, jamas ponemos una de salida como anterior.
+								viajes.add(new ViajeEfectivoTren(this,
+										txAnterior, 
+										null));
+						}
+						txAnterior = t;
+					} else { //Actual es de salida
+						if (txAnterior != null) { //Implica que es de entrada, jamas ponemos una de salida como anterior. 
+							viajes.add(new ViajeEfectivoTren(this,
+									txAnterior, 
+									t));
+							txAnterior = null;
+						} else {
+							viajes.add(new ViajeEfectivoTren(this,
+									null, 
+									t));
+						}
+					}
+				}
+			}
+		}
+		
+		return viajes;
+	}
+	
 	public Resultado procesarFichada(FichadaColectivo fichadaColectivo) {
 		BigDecimal monto = procesarDescuento(fichadaColectivo.obtenerPrecio(), fichadaColectivo).setScale(2, RoundingMode.HALF_UP);
 		

@@ -11,6 +11,8 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id = "WebApp_ID" version = "
 		<welcome-file>default.jsp</welcome-file>
 		<welcome-file>cliente.html</welcome-file>
 	</welcome-file-list>
+	
+	
 	<servlet>
 		<servlet-name>ControladorIngresarFichada</servlet-name>
 		<servlet-class>controladores.ControladorIngresarFichada</servlet-class>
@@ -23,6 +25,7 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id = "WebApp_ID" version = "
 		<servlet-name>ControladorAdministrarSubes</servlet-name>
 		<servlet-class>controladores.ControladorAdministrarSubes</servlet-class>
 	</servlet>
+
 	<servlet-mapping>
 		<servlet-name>ControladorListados</servlet-name>
 		<url-pattern>/Listados</url-pattern>

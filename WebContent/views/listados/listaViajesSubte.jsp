@@ -10,6 +10,7 @@ pageEncoding="ISO-8859-1"%>
 	<tr>
 		<th>Fecha y Hora</th>
 		<th>Nro. Tarjeta</th>
+		<th>Linea</th>
 		<th>Estacion Origen</th>
 		<th>Monto</th>
 	</tr>
@@ -33,14 +34,15 @@ pageEncoding="ISO-8859-1"%>
 			color = "black";
 			prefix = "";
 		}
-		
-		String estacion = ((FichadaSubte) transaccion.getFichada()).getEstacionSubte().getNombre();
-		
+		FichadaSubte f = (FichadaSubte) transaccion.getFichada();
+		String estacion = f.getEstacionSubte().getNombre();
+		String linea = f.getEstacionSubte().getLineaSubte().getNombre();
 		
 	%>
 	<tr> 
 		<td> <%= FuncionesGregorian.traerFechaCorta(transaccion.getFichada().getFechaHora()) %> </td>
 		<td> <%= transaccion.getTarjeta().getCodigo() %> </td>
+		<td> <%= linea %> </td> 
 		<td> <%= estacion %> </td> 
 		<td> <font color="<%=color%>"> <%=prefix%><%= monto %> </font></td> 
 	</tr> 
