@@ -140,21 +140,21 @@ public class ControladorEstadisticas extends HttpServlet {
 	private List<GregorianCalendar> parsearFecha (HttpServletRequest request) {
 		//MetodoPAraPara parsear periodo desde  request
 		
-    	int anioInicial = Integer.parseInt(request.getParameter("anioInicial"));
-    	int mesInicial  = Integer.parseInt(request.getParameter("mesInicial"));
-    	int diaInicial  = Integer.parseInt(request.getParameter("diaInicial"));
-    	int horaInicial = Integer.parseInt(request.getParameter("horaInicial"));
-    	int minInicial  = Integer.parseInt(request.getParameter("minInicial"));
+    	int anioDesde = Integer.parseInt(request.getParameter("anioDesde"));
+    	int mesDesde  = Integer.parseInt(request.getParameter("mesDesde"));
+    	int diaDesde  = Integer.parseInt(request.getParameter("diaDesde"));
+    	int horaDesde = Integer.parseInt(request.getParameter("horaDesde"));
+    	int minDesde  = Integer.parseInt(request.getParameter("minDesde"));
     	
-    	int anioFinal = Integer.parseInt(request.getParameter("anioFinal"));
-    	int mesFinal  = Integer.parseInt(request.getParameter("mesFinal"));
-    	int diaFinal  = Integer.parseInt(request.getParameter("diaFinal"));
-    	int horaFinal = Integer.parseInt(request.getParameter("horaFinal"));
-    	int minFinal  = Integer.parseInt(request.getParameter("minFinal"));
+    	int anioHasta = Integer.parseInt(request.getParameter("anioHasta"));
+    	int mesHasta  = Integer.parseInt(request.getParameter("mesHasta"));
+    	int diaHasta  = Integer.parseInt(request.getParameter("diaHasta"));
+    	int horaHasta = Integer.parseInt(request.getParameter("horaHasta"));
+    	int minHasta  = Integer.parseInt(request.getParameter("minHasta"));
     	
     	List<GregorianCalendar> periodo = new ArrayList<GregorianCalendar>();
-    	periodo.add(new GregorianCalendar  (anioInicial, mesInicial - 1, diaInicial, horaInicial , minInicial, 0));
-    	periodo.add(new GregorianCalendar  (anioFinal, mesFinal - 1, diaFinal, horaFinal , minFinal, 0));
+    	periodo.add(new GregorianCalendar  (anioDesde, mesDesde - 1, diaDesde, horaDesde , minDesde, 0));
+    	periodo.add(new GregorianCalendar  (anioHasta, mesHasta - 1, diaHasta, horaHasta , minHasta, 0));
     	
     	return  periodo;
 	}
