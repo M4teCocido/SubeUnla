@@ -108,40 +108,54 @@ public class TarjetaSube {
 	public TarjetaSube SetActivaC(boolean activa) {
 		this.activa = activa;
 		return this;
-	}
+	}	
 
 	public List<ViajeEfectivoTren> obtenerViajesTren(GregorianCalendar desde, GregorianCalendar hasta){
-		List<ViajeEfectivoTren> viajes = new ArrayList<ViajeEfectivoTren>();
-		TransaccionSUBE txAnterior = null;
-		FichadaTren f;
-		
+		List<TransaccionSUBE> viajesFiltrados = new ArrayList<TransaccionSUBE>();
 		for (TransaccionSUBE t : this.transacciones) {
 			if (FuncionesGregorian.estaEntreFechas(t.getFichada().getFechaHora(), desde, hasta)) {
-				if (t.getFichada() instanceof FichadaTren) { //Vemos que sea de Tren
-					f = ((FichadaTren) t.getFichada());
-					if (f.esEntrada()) { //Actual es de entrada
-						if (txAnterior != null) { //Implica que es de entrada, jamas ponemos una de salida como anterior.
-								viajes.add(new ViajeEfectivoTren(this,
-										txAnterior, 
-										null));
-						}
-						txAnterior = t;
-					} else { //Actual es de salida
-						if (txAnterior != null) { //Implica que es de entrada, jamas ponemos una de salida como anterior. 
-							viajes.add(new ViajeEfectivoTren(this,
+				viajesFiltrados.add(t);
+			}
+		}
+		List<ViajeEfectivoTren> viajes = obtenerViajesTrenDesdeTransacciones(this, viajesFiltrados);
+		
+		return viajes;
+	}
+	
+	public static List<ViajeEfectivoTren> obtenerViajesTrenDesdeTransacciones(TarjetaSube tarjeta, Iterable<TransaccionSUBE> transacciones){
+		TransaccionSUBE txAnterior = null;
+		FichadaTren f;
+		List<ViajeEfectivoTren> viajes = new ArrayList<ViajeEfectivoTren>();
+		for (TransaccionSUBE t : transacciones) {
+			if (t.getFichada() instanceof FichadaTren) { //Vemos que sea de Tren
+				f = ((FichadaTren) t.getFichada());
+				if (f.esEntrada()) { //Actual es de entrada
+					if (txAnterior != null) { //Implica que es de entrada, jamas ponemos una de salida como anterior.
+							viajes.add(new ViajeEfectivoTren(tarjeta,
 									txAnterior, 
-									t));
-							txAnterior = null;
-						} else {
-							viajes.add(new ViajeEfectivoTren(this,
-									null, 
-									t));
-						}
+									null));
 					}
+					txAnterior = t;
+				} else { //Actual es de salida
+					if (txAnterior != null) { //Implica que es de entrada, jamas ponemos una de salida como anterior. 
+						viajes.add(new ViajeEfectivoTren(tarjeta,
+								txAnterior, 
+								t));
+						txAnterior = null;
+					} else {
+						viajes.add(new ViajeEfectivoTren(tarjeta,
+								null, 
+								t));
+					}
+				}
+			} else {
+				if (txAnterior != null) { //Es de entrada
+					viajes.add(new ViajeEfectivoTren(tarjeta,
+							txAnterior, 
+							null));
 				}
 			}
 		}
-		
 		return viajes;
 	}
 	

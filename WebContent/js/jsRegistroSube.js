@@ -116,23 +116,6 @@ $(document).ready(function(){
 			}
 	    });
 	})
-
-        var data = {
-                nroTarjeta : this.value,
-                nroValidacion : 1
-            }
-        $.ajax({
-            method: "POST",
-            url: "/SubeUnla/RegistroTarjeta",
-            data: data,
-            async: false
-        }).fail(function(data) {
-            if(data != null && data != "" && data != ''){
-                $('#nroTarjeta').val('');
-                mostrarModal(data);
-            }
-        });
-    })
 	
 	$('#enviarRegistro').click(function(){
 		var data = {
