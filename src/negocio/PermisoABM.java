@@ -10,9 +10,15 @@ public class PermisoABM {
 	PermisoDao dao = new PermisoDao();
 	
 	public Permiso traerPermisoPorId(int idPermiso)throws Exception {
-		Permiso l = dao.traerPermisoPorId(idPermiso);
-		if(l == null) throw new Exception("No existe un permiso con id: " + idPermiso); 
-		return l;
+		Permiso p = dao.traerPermisoPorId(idPermiso);
+		if(p == null) throw new Exception("No existe un permiso con id: " + idPermiso); 
+		return p;
+	}
+	
+	public Permiso traerPermisoPorCodigo(String codigo) throws Exception {
+		Permiso p = dao.traerPermisoPorCodigo(codigo);
+		if(p == null) throw new Exception("No existe un permiso con codigo: " + codigo); 
+		return p;
 	}
 	
 	public int agregarPermiso(String nombre, String descripcion, String codigo) throws Exception {

@@ -95,6 +95,17 @@ public class PermisoDao {
 		return permiso;
 	}
 	
+	public Permiso traerPermisoPorCodigo(String codigo) {
+		Permiso permiso = null;
+		try {
+			iniciaOperacion();
+			permiso = (Permiso) session.createQuery("from permiso p where p.codigo = " + codigo).uniqueResult();
+		} finally {
+			session.close();
+		}
+		return permiso;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Permiso> traerPermisos() throws HibernateException {
 		List<Permiso> lista = null;
