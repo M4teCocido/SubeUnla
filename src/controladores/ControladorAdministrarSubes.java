@@ -9,10 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.TarjetaSubeDao;
+import dao.descuentos.DescuentoRedSubeDao;
 import modelo.Persona;
 import modelo.TarjetaSube;
 import modelo.Usuario;
 import modelo.eGenero;
+import modelo.Descuentos.DescuentoRedSube;
 import negocio.PersonaABM;
 import negocio.TarjetaSubeABM;
 import negocio.TransaccionABM;
@@ -28,28 +31,6 @@ public class ControladorAdministrarSubes extends HttpServlet {
 		procesarPeticion(request, response);
 	}
 	
-	
-	
-	
-	
-	
-	
-	void procesarPeticionAltaTarjeta(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
-		TarjetaSube.Resultado resultado = null;
-		UsuarioABM usuarioABM = new UsuarioABM();
-		TarjetaSubeABM tarjetaSubeABM = new TarjetaSubeABM();
-		Usuario usuario = new Usuario();
-		try{
-			 tarjetaSubeABM.agregar(request.getParameter("codigo"), new BigDecimal(request.getParameter("saldo"))); 
-		} catch (Exception e) { 
-			resultado = new TarjetaSube.Resultado(false, "Problema ingresar tarjeta al sistema", null);
-		}
-		request.setAttribute("resultado", resultado);
-        System.out.println("Resultado : " + resultado);
-        request.getRequestDispatcher("views/respuestaAltaTarjeta.jsp").forward(request, response);
-	
-	}
-	
 	void procesarPeticionRegistracion(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
 		TarjetaSube.Resultado resultado = null;
 		UsuarioABM usuarioABM = new UsuarioABM();
@@ -58,8 +39,9 @@ public class ControladorAdministrarSubes extends HttpServlet {
 		TarjetaSube tarjeta = null;
 		Usuario usuario = null;
 		eGenero genero =null;
+		String codigo = request.getParameter("codigo");
 		try {
-			tarjeta = tarjetaSubeABM.traerTarjetaPorCodigo(request.getParameter("codigo"));
+			tarjeta = tarjetaSubeABM.traerTarjetaPorCodigo(codigo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			resultado = new TarjetaSube.Resultado(false, "Problema traer tarjeta para asociar", null);
@@ -100,30 +82,56 @@ public class ControladorAdministrarSubes extends HttpServlet {
 		   }
 			
 			request.setAttribute("resultado", resultado);
-		        System.out.println("Resultado : " + resultado);
-		        request.getRequestDispatcher("views/respuestaRegistracion.jsp").forward(request, response);
+	        System.out.println("Resultado : " + resultado);
+	        request.getRequestDispatcher("views/respuestaRegistracion.jsp").forward(request, response);
 	}
 	
-	void procesarPeticionModificacion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		TarjetaSubeABM tarjetaSubeABM = new TarjetaSubeABM();
-		TarjetaSube tarjeta = null;
+	private void procesarAltaModificacionTarjeta(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+		BigDecimal saldo = new BigDecimal(request.getParameter("saldo"));
+		String nroTarjeta = request.getParameter("nroTarjeta");
+		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
+		if (tarjeta != null) //Modificamos
+			this.procesarPeticionModifTarjeta(tarjeta, saldo, request, response);
+		else //Damos de Alta
+			procesarPeticionAltaTarjeta(nroTarjeta, saldo, request, response);
+	}	
+	
+	void procesarPeticionAltaTarjeta(String nroTarjeta, BigDecimal saldo, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TarjetaSube.Resultado resultado = null;
-		try {
-			tarjeta = tarjetaSubeABM.traerTarjetaPorCodigo(request.getParameter("codigo"));
-		} catch (Exception e) {
-			resultado = new TarjetaSube.Resultado(false, "Problema al traer la tarjeta para modificar", null);
+		TarjetaSubeABM tarjetaSubeABM = new TarjetaSubeABM();
+		
+		try{
+			 tarjetaSubeABM.agregar(nroTarjeta, saldo); 
+			 resultado = new TarjetaSube.Resultado(true, "Tarjeta dada de alta con exito!", null);
+		} catch (Exception e) { 
+			resultado = new TarjetaSube.Resultado(false, "Problema ingresar tarjeta al sistema", null);
+			e.printStackTrace();
 		}
+		request.setAttribute("resultado", resultado);
+		System.out.println("Resultado : " + resultado);
+		request.getRequestDispatcher("views/respuestaABMSube.jsp").forward(request, response);
+	}
+	
+	void procesarPeticionModifTarjeta(TarjetaSube tarjeta, BigDecimal saldo, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		TarjetaSubeABM tarjetaSubeABM = new TarjetaSubeABM();
+		TarjetaSube.Resultado resultado = null;
 		if (tarjeta != null) {
 			try {
-				tarjeta.setSaldo(new BigDecimal (request.getParameter("saldo")));
-				tarjetaSubeABM.modificar(tarjeta);
+				if (tarjeta.isActiva()) {
+					tarjeta.setSaldo(saldo);
+					tarjetaSubeABM.modificar(tarjeta);
+					resultado = new TarjetaSube.Resultado(true, "Tarjeta modificada con exito!", null);
+				} else {
+					resultado = new TarjetaSube.Resultado(false, "Esa tarjeta esta dada de baja!", null);
+				}
 			} catch (Exception e) {
 				resultado = new TarjetaSube.Resultado(false, "Problema al guardar la tarjeta modificada", null);
+				e.printStackTrace();
 			}
 		}
 		request.setAttribute("resultado", resultado);
 		System.out.println("Resultado : " + resultado);
-		request.getRequestDispatcher("views/respuestaModificacion.jsp").forward(request, response);
+		request.getRequestDispatcher("views/respuestaABMSube.jsp").forward(request, response);
 	}
 
 	void procesarPeticionBaja(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -131,21 +139,60 @@ public class ControladorAdministrarSubes extends HttpServlet {
 		TarjetaSube tarjeta = null;
 		TarjetaSube.Resultado resultado = null;
 		try {
-			tarjeta = tarjetaSubeABM.traerTarjetaPorCodigo(request.getParameter("codigo"));
+			tarjeta = tarjetaSubeABM.traerTarjetaPorCodigo(request.getParameter("nroTarjeta"));
 		} catch (Exception e) {
 			resultado = new TarjetaSube.Resultado(false, "Problema al traer tarjeta para dar de baja", null);
 		}
 		if (tarjeta != null) {
 			try {
-				tarjeta.setActiva(false);
-				tarjetaSubeABM.modificar(tarjeta);
+				if (tarjeta.isActiva()) {
+					tarjeta.setActiva(false);
+					tarjetaSubeABM.modificar(tarjeta);
+					resultado = new TarjetaSube.Resultado(true, "Tarjeta dada de baja con exito!", null);
+				} else {
+					resultado = new TarjetaSube.Resultado(false, "Esa tarjeta ya esta dada de baja!", null);
+				}
 			} catch (Exception e) {
 				resultado = new TarjetaSube.Resultado(false, "Problema al dar de baja la tarjeta", null);
 			}
 		}
 		request.setAttribute("resultado", resultado);
 		System.out.println("Resultado : " + resultado);
-		request.getRequestDispatcher("views/respuestaBaja.jsp").forward(request, response);
+		request.getRequestDispatcher("views/respuestaABMSube.jsp").forward(request, response);
+	}
+	
+	private void procesarPeticionSaldoTarjeta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request); 
+		if(tarjeta == null) {
+			response.getWriter().println(0);
+		} else {
+			response.getWriter().println(tarjeta.getSaldo());
+		}
+	}
+	
+	private TarjetaSube obtenerTarjetaDesdeRequest(HttpServletRequest request) {
+		String codigo = request.getParameter("nroTarjeta");
+
+		System.out.println("Codigo : " + codigo);
+		return obtenerTarjetaPorCodigo(codigo);
+	}
+	
+	private TarjetaSube obtenerTarjetaPorCodigo(String codigo) {
+		TarjetaSube tarjeta = null;
+		if (codigo != "") {
+			TarjetaSubeDao dao = new TarjetaSubeDao();
+			tarjeta = dao.traerTarjeta(codigo);
+			if (tarjeta != null) {
+				DescuentoRedSubeDao daoDesc = new DescuentoRedSubeDao ();
+				DescuentoRedSube desc = tarjeta.getDescuentoRedSube();
+				desc = daoDesc.traerDescuento(desc.getIdDescuento());
+				System.out.println("Descuento : " + desc);
+				tarjeta.setDescuentoRedSube(desc);
+				desc.setTarjeta(tarjeta);
+				//tarjeta.getDescuentoRedSube().setLapsoDescuentoRedSube(daoLapso.traerLapsoPorDescuento(tarjeta.getDescuentoRedSube().getIdDescuento()));
+			}
+		}
+		return tarjeta;
 	}
 	
 	private void procesarPeticion(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
@@ -153,22 +200,30 @@ public class ControladorAdministrarSubes extends HttpServlet {
 		try {
 			String strNroValidacion= request.getParameter("nroValidacion");
 			if (strNroValidacion == null)
-				request.getRequestDispatcher("/index.jsp").forward(request, response);
+				request.getRequestDispatcher("/AdministracionSUBE.jsp").forward(request, response);
 			else {
 				int nroValidacion = Integer.parseInt(strNroValidacion);
 				System.out.println("Numero : " + nroValidacion);
 				switch(nroValidacion) {
+				case 1:
+					this.procesarAltaModificacionTarjeta(request, response);
+					break;
+				/*
 				case 1: //Procesar alta de  tarjeta sube en el sistema(todavia no  vinculada a  usaurio )
 					this.procesarPeticionAltaTarjeta(request, response);
-					break;
+					break;*/
 				case 2: //Procesar alta de  usuario en el sistema (Posiblmente  inecesario)
 					this.procesarPeticionRegistracion(request, response);
 					break;
-				case 3: //modificacion, levantar tarjeta, buscar, cambiar y guardar
+				/*case 3: //modificacion, levantar tarjeta, buscar, cambiar y guardar
 					procesarPeticionModificacion(request, response);
-					break;
-				case 4: //eliminar tarjeta logicamente, modificar atributo activa = false
+					break;*/
+				case 3: //eliminar tarjeta logicamente, modificar atributo activa = false
 					procesarPeticionBaja(request, response);
+					break;
+				case 10: //Traer saldo Tarjeta ingresada
+					procesarPeticionSaldoTarjeta(request, response);
+					break;
 				default:
 					break;
 				}

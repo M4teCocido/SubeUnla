@@ -15,6 +15,11 @@ function notificarError(msg){
     $('#footerModal').modal('open');
 }
 
+function actualizarText(text, msg){
+	text.val(msg);
+	text.characterCounter();
+}
+
 $(document).ready(function(){
 	
 	//INICIALIZACIONES
