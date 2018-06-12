@@ -1,2 +1,6 @@
 *.class
 *.cfg
+/controladores/
+/dao/
+/modelo/
+/negocio/
