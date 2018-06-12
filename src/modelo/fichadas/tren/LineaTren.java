@@ -105,9 +105,32 @@ public class LineaTren {
 
 	@Override
 	public String toString() {
-		return "LineaTren [idLinea=" + idLinea + ", nombre=" + nombre + ", secciones=" + secciones + ", estaciones="
-				+ estaciones + ", viajes=" + viajes + "]";
+		return "LineaTren [idLinea=" + idLinea + ", nombre=" + nombre + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idLinea;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LineaTren other = (LineaTren) obj;
+		if (idLinea != other.idLinea)
+			return false;
+		return true;
+	}
+	
+	
 	
 	
 } 

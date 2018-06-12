@@ -10,7 +10,6 @@ pageEncoding="ISO-8859-1"%>
 	<tr>
 		<th>Fecha y Hora</th>
 		<th>Nro. Tarjeta</th>
-		<th>Linea</th>
 		<th>Tramo</th>
 		<th>Monto</th>
 	</tr>
@@ -35,15 +34,13 @@ pageEncoding="ISO-8859-1"%>
 			prefix = "";
 		}
 		
-		FichadaColectivo f = (FichadaColectivo) transaccion.getFichada(); 
-		String tramo = f.getTramo().getNombre();
-		String linea = f.getInterno().getLineaColectivo().getNombre();
+		String tramo = ((FichadaColectivo) transaccion.getFichada()).getTramo().getNombre();
+		
 		
 	%>
 	<tr> 
 		<td> <%= FuncionesGregorian.traerFechaCorta(transaccion.getFichada().getFechaHora()) %> </td>
 		<td> <%= transaccion.getTarjeta().getCodigo() %> </td>
-		<td> <%= linea %> </td> 
 		<td> <%= tramo %> </td> 
 		<td> <font color="<%=color%>"> <%=prefix%><%= monto %> </font></td> 
 	</tr> 

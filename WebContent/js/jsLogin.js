@@ -4,7 +4,7 @@ $(document).ready(function(){
 	
 	$('#login').click(function(){
 		var data = {
-			usuario : $('#usuario').val(),
+			nroDocumento : $('#nroDocumento').val(),
 			pass : $('#password').val()
 		}
 		$.ajax({
@@ -13,7 +13,9 @@ $(document).ready(function(){
 			data: data,
 			async: false
 		}).fail(function(data) {
-			mostrarModal(data);
+			$('#headerModal').html('Ups! Algo salio mal!');
+			$('#pModal').html(xhr.responseText);
+		    $('#footerModal').modal('open');
 	    })
 	});
 	
