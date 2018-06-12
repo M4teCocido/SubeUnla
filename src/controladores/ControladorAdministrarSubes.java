@@ -166,7 +166,10 @@ public class ControladorAdministrarSubes extends HttpServlet {
 		if(tarjeta == null) {
 			response.getWriter().println(0);
 		} else {
-			response.getWriter().println(tarjeta.getSaldo());
+			if (tarjeta.isActiva())
+				response.getWriter().println(tarjeta.getSaldo());
+			else 
+				response.getWriter().println(-666); //No esta activa
 		}
 	}
 	

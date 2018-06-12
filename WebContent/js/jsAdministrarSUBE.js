@@ -20,8 +20,15 @@ $(document).ready(function(){
 			async: false
 		}).done(function(data){
 			if(data != null && data != "" && data != ''){
-				console.log("Saldo Recibido : " + data);
-				actualizarText($("#saldo"), data);
+				//console.log("Saldo Recibido : " + data);
+				if (data == -666){
+					actualizarText($("#saldo"), "");
+					actualizarText($("#numerotarjeta"), "");
+					mostrarModalMensaje ("Error!" , "La tarjeta ingresada esta dada de baja!");
+				} else {
+					actualizarText($("#saldo"), data);
+				}
+				
 				//mostrarModalMensaje("Tarjeta Valida", "Tarjeta reconocida. Saldo Actualizado.")
 			}
 		}).fail(function(xhr, textStatus, errorThrown) {
