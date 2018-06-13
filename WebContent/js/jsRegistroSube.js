@@ -97,7 +97,12 @@ $(document).ready(function(){
 	$('#passwordRepeat').focusout(function(){
 		var pass = $('#password').val();
 		var passRepeat = this.value;
-		if(pass != passRepeat) notificarError("Las contraseñas no coinciden");
+		
+		if(pass != passRepeat || isNaN(pass) || isNan(passRepeat) || pass.length != 4 || passRepeat.length != 4){
+			this.value = '';
+			$('#password').val('');
+			notificarError("Las contraseñas deben ser iguales y de 4 digitos numericos.");
+		} 
 	});
 	
 	//AJAX

@@ -28,8 +28,9 @@
 				<select id="medio">
 					<option value="" disabled selected>Seleccione una opcion</option>
  					<option value="1">Colectivo</option>
-	        		<option value="2">Tren</option>
-	        		<option value="3">Subte</option>
+	        		<option value="2">Subte</option>
+	        		<option value="3">Tren</option>
+	        		
    				</select>
    				<label for="medio">Medio de Transporte</label>
 			</div>
