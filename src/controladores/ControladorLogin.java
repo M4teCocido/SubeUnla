@@ -38,12 +38,12 @@ public class ControladorLogin extends HttpServlet {
 			request.setAttribute("usuario", usuario);
 			if(permisos.size() == 1 && permisos.contains(abmPermiso.traerPermisoPorCodigo("CONSULTARTARJETA")) ) {
 				request.getRequestDispatcher("/misube.jsp").forward(request, response );
-			}else {
+			} else {
 				request.setAttribute("permisos", permisos);
 				request.getRequestDispatcher("/paneldecontrol.jsp").forward(request, response );
 			}
-		}catch (Exception e ) {
-			response .sendError(500, "El usuario o contraseña ingresados son incorrectos" );
+		} catch (Exception e ) {
+			response .sendError(500, "El usuario o contraseï¿½a ingresados son incorrectos" );
 		}
 	}
 }

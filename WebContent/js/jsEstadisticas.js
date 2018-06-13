@@ -5,28 +5,28 @@ $(document).ready(function(){
 	
 	//FUNCIONES
 
+	function updateCanvas(data){
+		formatCanvas('pie', data.labels, 'Cant. de Viajes', data.viajes, $('#circularPorViajes'));
+		formatCanvas('pie', data.labels, 'Montos', data.montos, $('#circularPorMonto'));
+		formatCanvas('bar', data.labels, 'Cant. de Viajes', data, $('#barraPorViajes'));
+		formatCanvas('bar', data.labels, 'Montos', data.montos, $('#barraPorMonto'));
+	}
+	
 	function formatCanvas(type, labels, label, data, canvas){
-		var ctx = document.getElementById(canvas).getContext('2d');
+		var ctx = canvas;
 		var background = [];
 		for(var i = 0; i < labels.length; i++){
-			
+			var color = 'rgba(' + randomNumber(255) + ', ' + randomNumber(255)  + ', ' + randomNumber(255) + ', 1)';
+			background.push(color);
 		}
-		
 		var myChart = new Chart(ctx, {
 		    type: type,
 		    data: {
 		        labels: labels,
 		        datasets: [{
 		            label: label,
-		            data: [12, 19, 3, 5, 2, 3],
-		            backgroundColor: [
-		                'rgba(130, 99, 132, 1)',
-		                'rgba(54, 162, 235, 1)',
-		                'rgba(255, 206, 86, 1)',
-		                'rgba(75, 192, 192, 1)',
-		                'rgba(153, 102, 255, 1)',
-		                'rgba(255, 159, 64, 1)'
-		            ]
+		            data: data,
+		            backgroundColor: background
 		        }]
 		    },
 		    options: {
@@ -40,11 +40,10 @@ $(document).ready(function(){
 		    }
 		});
 	}
-		
-	
-	
-	
-	
+
+	function randomNumber(max){
+		return Math.floor((Math.random() * 255));
+	}
 	
 	function setFormulario(){
 		$('#desde').val('');
@@ -153,6 +152,8 @@ $(document).ready(function(){
 				async: false
 			}).done(function(data){
 				console.log(data)
+				updateCanvas(data);
+
 			}).fail( function(xhr, textStatus, errorThrown) {
 				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
 				$('#headerModal').html('Ups! Algo salio mal!');
@@ -183,6 +184,8 @@ $(document).ready(function(){
 				async: false
 			}).done(function(data){
 				console.log(data)
+				updateCanvas(data);
+
 			}).fail( function(xhr, textStatus, errorThrown) {
 				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
 				$('#headerModal').html('Ups! Algo salio mal!');
@@ -212,8 +215,11 @@ $(document).ready(function(){
 				data: data,
 				async: false
 			}).done(function(data){
+
 				var ctx = document.getElementById("myChart").getContext('2d');
 				console.log(data)
+				updateCanvas(data);
+
 			}).fail( function(xhr, textStatus, errorThrown) {
 				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
 				$('#headerModal').html('Ups! Algo salio mal!');
