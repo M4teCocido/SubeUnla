@@ -6,14 +6,17 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import dao.DocumentoDao;
+import dao.PermisoDao;
 import dao.PersonaDao;
 import dao.TarjetaSubeDao;
+import dao.UsuarioDao;
 import dao.descuentos.DescuentoBoletoEstudiantilDao;
 import dao.descuentos.DescuentoTarifaSocialDao;
 import dao.fichadas.subte.EstacionSubteDao;
 import dao.lectoras.LectoraExternaDao;
 import dao.lectoras.LectoraSubteDao;
 import modelo.Documento;
+import modelo.Permiso;
 import modelo.eTipoDocumento;
 import modelo.Descuentos.DescuentoBoletoEstudiantil;
 import modelo.Descuentos.DescuentoTarifaSocial;
@@ -26,6 +29,7 @@ import modelo.lectoras.LectoraSubte;
 import util.RNG;
 import modelo.Persona;
 import modelo.TarjetaSube;
+import modelo.Usuario;
 import modelo.eGenero;
 
 public class TestCreacionMaestrosPersonas {
@@ -36,16 +40,17 @@ public class TestCreacionMaestrosPersonas {
 	public static void main(String[] args) {
 		GregorianCalendar fecha = new GregorianCalendar (1993, 11, 16);
 		
-			
+		UsuarioDao daoUsuarios = new UsuarioDao();
 		PersonaDao daoPersona = new PersonaDao();
 		DocumentoDao daoDocumento = new DocumentoDao();
+		PermisoDao daoPermisos = new PermisoDao();
 		DescuentoBoletoEstudiantilDao daoBoletoEstudiantil = new DescuentoBoletoEstudiantilDao();
 		DescuentoTarifaSocialDao daoTarifaSocial = new DescuentoTarifaSocialDao();
 		TarjetaSubeDao daoTarjeta = new TarjetaSubeDao();
 		EstacionSubteDao daoEstacionSubte = new EstacionSubteDao();
 		LectoraSubteDao daoLectoraSubte = new LectoraSubteDao();
 		LectoraExternaDao daoLectoraExterna = new LectoraExternaDao (); 
-		
+		List<Permiso> permisos = new ArrayList<Permiso>();
 		List<LectoraExterna> lectorasExternas = new ArrayList<LectoraExterna>();
 		Persona persona;
 		Documento doc;
@@ -91,6 +96,20 @@ public class TestCreacionMaestrosPersonas {
 			//tarjeta2.procesarFichada(new FichadaSubte(new GregorianCalendar(), null, estacionSubte));
 			persona.setDocumento(doc);*/
 			//Persistimos
+			
+			permisos.add(new Permiso("SUBEABM", "SUBEABM", "SUBEABM"));
+			permisos.add(new Permiso("REPORTES", "REPORTES", "REPORTES"));
+			permisos.add(new Permiso("ESTADISTICAS", "ESTADISTICAS", "ESTADISTICAS"));
+			permisos.add(new Permiso("CONSULTARTARJETA", "CONSULTARTARJETA", "CONSULTARTARJETA"));
+			
+			for (Permiso p : permisos) {
+				daoPermisos.agregarPermiso(p);
+			}
+			
+			Usuario admin1 = new Usuario("ROY", "ROYBOY", null);
+			
+			daoUsuarios.agregarUsuario(new Usuario())
+			
 			for (Persona p : personas) {
 				daoPersona.agregarPersona(p);
 				for (TarjetaSube t : p.getTarjetasAsociadas()) {

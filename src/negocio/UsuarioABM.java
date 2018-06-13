@@ -52,11 +52,11 @@ UsuarioDao dao = new UsuarioDao();
 	public void comprobarPassword(String username, String pass) throws Exception {
 		Usuario usuario = dao.traerUsuarioPorUsername(username);
 		if(usuario == null || !usuario.getPassword().equals(pass)) {
-			throw new Exception("Error al comprobar el usuario.");
-		}
 			throw new Exception("Error al comprobar credenciales del usuario.");
-		} 
-	}
+		}
+	} 
+	
+>>>>>>> c0c17f5353eb00a17ec84b3796e8d006e771dad1
 	
 	public List<Usuario> traerUsuarios() {
 		return dao.traerUsuarios();
