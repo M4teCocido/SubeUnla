@@ -8,7 +8,8 @@ import java.util.List;
 import dao.UsuarioDao;
 
 public class UsuarioABM {
-UsuarioDao dao = new UsuarioDao();
+	
+	UsuarioDao dao = new UsuarioDao();
 	
 	public Usuario traerUsuarioPorId(int idUsuario)throws Exception {
 		Usuario u = dao.traerUsuarioPorId(idUsuario);
@@ -55,8 +56,6 @@ UsuarioDao dao = new UsuarioDao();
 			throw new Exception("Error al comprobar credenciales del usuario.");
 		}
 	} 
-	
->>>>>>> c0c17f5353eb00a17ec84b3796e8d006e771dad1
 	
 	public List<Usuario> traerUsuarios() {
 		return dao.traerUsuarios();

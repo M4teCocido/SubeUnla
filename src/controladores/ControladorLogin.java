@@ -25,7 +25,7 @@ public class ControladorLogin extends HttpServlet {
 	}
 	
 	private void procesarPeticion(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		response.setContentType( "text/html;charset=UTF-8" );
+		response.setContentType("text/html;charset=UTF-8" );
 		try {
 			String dni = request.getParameter("nroDocumento");
 			String pass = request.getParameter("pass");
@@ -37,9 +37,10 @@ public class ControladorLogin extends HttpServlet {
 			abm.comprobarPassword(dni, pass);
 			Usuario usuario = abm.traerUsuarioPorNombre(dni);
 			Set<Permiso> permisos = usuario.getPermisos();
+			
 			usuario.setPersona(abmPersona.traerPersona(usuario.getPersona().getIdPersona()));
 			request.setAttribute("usuario", usuario);
-			if( permisos.size() == 0 || (permisos.size() == 1 && permisos.contains(abmPermiso.traerPermisoPorCodigo("CONSULTARTARJETA")))) {
+			if(permisos.size() == 1 && permisos.contains(abmPermiso.traerPermisoPorCodigo("CONSULTARTARJETA"))) {
 				request.getRequestDispatcher("/miSUBE.jsp").forward(request, response );
 			} else {
 				request.setAttribute("permisos", permisos);
