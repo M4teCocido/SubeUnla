@@ -21,11 +21,11 @@
 					<a class="btn-floating tooltipped btn-medium waves-effect waves-light blue lighten-2" data-position="bottom" data-tooltip="Volver!" href="index.jsp"><i class="material-icons">arrow_back</i></a>
 				</div>
 				<div class="col l8">
-					<h3 class="header center orange-text">Estadisticas</h3>
+					<h3 class="header center orange-text">Panel de control</h3>
 				</div>
 			</div>
 			<div class="row center">
-				<h5 class="header col s12 light">Tablas, grafico circular y barras.</h5>
+				<h5 class="header col s12 light">Reportes, estadisticas y ABM.</h5>
 			</div>
 		</div>
 	

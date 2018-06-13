@@ -16,7 +16,7 @@
             	<img src="/SubeUnla/img/logo.jpg" alt="" class="responsive-img valign profile-image-login">
           	</div>
         </div>
-        <form action ="/SubeUnla/ControlLogin">
+        <form action ="/SubeUnla/ControlLogin" method="post">
 	        <div class="row margin">
 	          	<div class="input-field col s10 m8 l8 offset-l2">
 	            	<input placeholder="Numero" id="nroDocumento" name ="nroDocumento" type="text">
