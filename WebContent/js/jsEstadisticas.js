@@ -60,6 +60,8 @@ $(document).ready(function(){
 	}
 	
 	function actualizarSelect(select, data){
+		select.html('');
+		select.append('<option value="0" selected>Todas</option>');
 		select.append(data);
 		select.formSelect();
 	}
