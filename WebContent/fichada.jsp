@@ -5,7 +5,6 @@
 <body>
 <div class="container">
 	<div class="section no-pad-bot">
-		<br>
 		<div class="row">
 			<div class="col l2">
 				<br>
@@ -16,7 +15,6 @@
 				<h1 class="header center orange-text">Fichadas</h1>
 			</div>
 		</div>
-		
 		<div class="row center">
 			<h5 class="header col s12 light">Ingreso de fichadas(Carga o Boleto)</h5>
 		</div>

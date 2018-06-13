@@ -22,17 +22,13 @@ TarjetaSubeDao dao = new TarjetaSubeDao();
 	}
 	
 	public int agregar(String codigo, BigDecimal saldo) throws Exception {
-		for (TarjetaSube tarjeta : dao.traerTarjetas()) {
-			if (tarjeta.getCodigo().equalsIgnoreCase(codigo)) throw new Exception("La tarjeta de codigo " + codigo + " ya existe");
-		}
+		TarjetaSube tAux = dao.traerTarjeta(codigo);
+		if(tAux != null) throw new Exception("La tarjeta de codigo " + codigo + " ya existe");
 		TarjetaSube t = new TarjetaSube(codigo, saldo);
 		return dao.agregarTarjetaSube(t);
 	}
 	
 	public void modificar(TarjetaSube t) throws Exception {
-		/*for (TarjetaSube tarjeta : dao.traerTarjetas()) {
-			if (tarjeta.getCodigo().equalsIgnoreCase(t.getCodigo())) throw new Exception("La tarjeta de codigo " + t.getCodigo() + " ya existe");
-		}*/
 		dao.modificarTarjetaSube(t);
 	}
 	

@@ -5,10 +5,12 @@ $(document).ready(function(){
 	//FUNCIONES
 	
 	function actualizarSelect(select, data){
-		select.html(data);
+		select.html('');
+		select.append('<option class="black-text text-lighten-3" value="" disabled selected>Elija una linea</option>');
+		select.append(data);
 		select.formSelect();
 	}
-	
+	 
 	function setFormFichada(){
 		$('#divlinea').hide();
 		$('#divestacioninterno').hide();
