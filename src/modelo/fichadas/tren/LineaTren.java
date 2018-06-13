@@ -5,11 +5,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import modelo.fichadas.tren.ViajeTren;
+import util.INombrable;
 import util.IndexableSet;
 import modelo.fichadas.tren.SeccionTren;
 import modelo.fichadas.tren.EstacionTren;
 
-public class LineaTren {
+public class LineaTren implements INombrable {
 
 	private int idLinea;
 	private String nombre;

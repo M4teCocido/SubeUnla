@@ -124,6 +124,9 @@
 	</div>
 	
 </div>
-<script type="text/javascript" src="js/jsRegistroSube.js"></script>
 
 <%@ include file = "/views/footer.jsp" %>
+<script type="text/javascript" src="js/jsRegistroSube.js"></script>
+
+</body>
+</html>

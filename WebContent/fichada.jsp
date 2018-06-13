@@ -81,5 +81,8 @@
   		</div>
 	</div>
 </div>
-<script type="text/javascript" src="js/jsIngresarFichada.js"></script>
 <%@ include file = "/views/footer.jsp" %>
+<script type="text/javascript" src="js/jsIngresarFichada.js"></script>
+
+</body>
+</html>

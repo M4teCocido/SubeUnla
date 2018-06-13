@@ -2,7 +2,9 @@ package modelo.fichadas.colectivo;
 
 import java.math.BigDecimal;
 
-public class TramoColectivo {
+import util.INombrable;
+
+public class TramoColectivo implements INombrable {
 
 	private int idTramo;
 	private String nombre;

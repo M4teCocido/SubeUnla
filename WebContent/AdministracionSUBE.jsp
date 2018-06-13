@@ -39,5 +39,8 @@
   		</div>
 	</div>
 </div>
-<script type="text/javascript" src="js/jsAdministrarSUBE.js"></script>
 <%@ include file = "/views/footer.jsp" %>
+<script type="text/javascript" src="js/jsAdministrarSUBE.js"></script>
+
+</body>
+</html>

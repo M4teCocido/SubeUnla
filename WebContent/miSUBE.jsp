@@ -115,3 +115,6 @@
 	</div>
 
 <%@ include file = "/views/footer.jsp" %>
+
+</body>
+</html>

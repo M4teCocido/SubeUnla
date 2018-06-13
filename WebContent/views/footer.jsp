@@ -30,5 +30,3 @@
 		  <div class="container black-text">© 2018 Todos los derechos reservados</div>
 		</div>
 	</footer>
-</body>
-</html>
