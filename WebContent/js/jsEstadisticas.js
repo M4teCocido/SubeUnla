@@ -131,11 +131,15 @@ $(document).ready(function(){
 		var anioHasta = $('#hasta').val().substring(6, 11);
 		var horaHasta = $('#horaHasta').val().substring(0, 2);
 		var minHasta = $('#horaHasta').val().substring(3, 5);
-		
+		var linea = $('#linea').val();
+		if (linea == null || linea == ""){
+			linea = 0;
+		}
+		console.log("Valor Linea : " + $('#linea').val());
 		if(v == 1){
 			var data = {
 				nroValidacion : 1,
-				linea : $('#linea').val(),
+				linea : linea,
 				diaDesde : diaDesde,
 				mesDesde: mesDesde,
 				anioDesde : anioDesde,
@@ -167,7 +171,7 @@ $(document).ready(function(){
 		if(v == 2){
 			var data = {
 				nroValidacion : 2,
-				linea : $('#linea').val(),
+				linea : linea,
 				diaDesde : diaDesde,
 				mesDesde: mesDesde,
 				anioDesde : anioDesde,
@@ -199,6 +203,7 @@ $(document).ready(function(){
 		if(v == 3){
 			var data = {
 				nroValidacion : 3,
+				linea : linea,
 				diaDesde : diaDesde,
 				mesDesde: mesDesde,
 				anioDesde : anioDesde,
@@ -219,6 +224,7 @@ $(document).ready(function(){
 			}).done(function(data){
 				updateCanvas(data);
 				updateTables(data);
+
 			}).fail( function(xhr, textStatus, errorThrown) {
 				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
 				$('#headerModal').html('Ups! Algo salio mal!');
