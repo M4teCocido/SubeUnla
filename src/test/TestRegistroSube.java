@@ -17,12 +17,12 @@ public class TestRegistroSube {
 		PersonaABM abm2 = new PersonaABM();
 		UsuarioABM abm3 = new UsuarioABM();
 		try {
-			//abm.agregar("TARJETA13", monto);
+			abm.agregar("TARJETA30", monto);
 			/*TarjetaSube tarjeta = abm.traerTarjetaPorId(12);
 			tarjeta.setPropietario(abm2.traerPersona(6));
 			abm.modificar(tarjeta);*/
-			Usuario usuario = abm3.traerUsuarioPorId(2);
-			usuario.setPersona(abm2.traerPersona(8));
+			/*Usuario usuario = abm3.traerUsuarioPorId(2);
+			usuario.setPersona(abm2.traerPersona(8));*/
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
