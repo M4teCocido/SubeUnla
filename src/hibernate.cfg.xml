@@ -6,11 +6,7 @@
 		<property name="connection.driver_class" > com.mysql.jdbc.Driver </property >
 		<property name="connection.url" > jdbc:mysql://localhost/subedb</property >
 		<property name="connection.username" >root</property >
-<<<<<<< HEAD
-		<property name="connection.password" >Ucantouchme1</property >
-=======
 		<property name="connection.password" >root</property >
->>>>>>> bcd020b6308ebb8bca696cf88c4569cc17a9b799
 		<property name="connection.pool_size" >1</property >
 		<property name="dialect" >org.hibernate.dialect.MySQLDialect</property >
 		<property name="show_sql" >true</property > <!-- en true muestra hql en consola -->

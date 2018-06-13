@@ -46,7 +46,7 @@ public class ControladorEstadisticas extends HttpServlet {
 	}
 	
 	private String procesarPeticionEstadisticaColectivo(GregorianCalendar desde, GregorianCalendar hasta,HttpServletRequest request, HttpServletResponse response) throws Exception {
-		int idLinea = Integer.parseInt(request.getParameter("idLinea"));
+		int idLinea = Integer.parseInt(request.getParameter("linea"));
 		
 		if (idLinea == TODAS) {
 			return this.generarEstadisticaLineasColectivo(desde, hasta, request, response);
@@ -87,7 +87,6 @@ public class ControladorEstadisticas extends HttpServlet {
 	}
 	
 	private String generarEstadisticaLineasTren(GregorianCalendar desde, GregorianCalendar hasta, HttpServletRequest request, HttpServletResponse response) {
-		
 		Estadisticas.Estadistica<LineaTren> estadistica = e.generarEstadisticaLineasTren(desde, hasta);
 		return estadistica.toJSON();
 	}
