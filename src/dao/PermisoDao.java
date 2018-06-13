@@ -99,7 +99,7 @@ public class PermisoDao {
 		Permiso permiso = null;
 		try {
 			iniciaOperacion();
-			permiso = (Permiso) session.createQuery("from permiso p where p.codigo = " + codigo).uniqueResult();
+			permiso = (Permiso) session.createQuery("from Permiso p where p.codigo = '" + codigo + "'").uniqueResult();
 		} finally {
 			session.close();
 		}

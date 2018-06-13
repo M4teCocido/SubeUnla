@@ -49,13 +49,13 @@ UsuarioDao dao = new UsuarioDao();
 		dao.eliminarUsuario(u);
 	}
 	
-	public void comprobarPassword(String dni, String pass) throws Exception {
-		Usuario usuario = dao.traerUsuarioPorDni(dni);
+	public void comprobarPassword(String username, String pass) throws Exception {
+		Usuario usuario = dao.traerUsuarioPorUsername(username);
 		if(usuario == null || !usuario.getPassword().equals(pass)) {
 			throw new Exception("Error al comprobar el usuario.");
-		} else if (pass.length() != 4 || !pass.matches("^[0-9]*$")) {
-			throw new Exception("La contraseña está mal ingresada, deben ser solo 4 numeros");
 		}
+			throw new Exception("Error al comprobar credenciales del usuario.");
+		} 
 	}
 	
 	public List<Usuario> traerUsuarios() {

@@ -12,7 +12,7 @@
 		<!-- <one-to-one name="Persona" class="modelo.Persona" />  -->
 		<many-to-one name="Persona" class="modelo.Persona" column="idPersona" not-null="false" />
 		
-		<set name="permisos" table="permisopersona" outer-join="true">
+		<set name="permisos" table="permisopersona" lazy="false" outer-join="true">
 			<key column="Usuario_idUsuario" />
 			<many-to-many column="Permiso_idPermiso" class="modelo.Permiso" />
 		</set>

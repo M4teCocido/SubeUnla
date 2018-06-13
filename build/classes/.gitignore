@@ -1,3 +1,7 @@
-/negocio/
 /controladores/
+<<<<<<< HEAD
 /test/
+=======
+/dao/
+/mapeos/
+>>>>>>> 02a822baa38d6f7ede14a7f05b2ea7aafcd644bc
