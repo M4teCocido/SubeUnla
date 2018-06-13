@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import modelo.Permiso;
 import modelo.Usuario;
 import negocio.PermisoABM;
+import negocio.PersonaABM;
 import negocio.UsuarioABM;
 
 public class ControladorLogin extends HttpServlet {
@@ -31,19 +32,22 @@ public class ControladorLogin extends HttpServlet {
 			
 			UsuarioABM abm = new UsuarioABM();
 			PermisoABM abmPermiso = new PermisoABM();
+			PersonaABM abmPersona = new PersonaABM();
 			
 			abm.comprobarPassword(dni, pass);
 			Usuario usuario = abm.traerUsuarioPorNombre(dni);
 			Set<Permiso> permisos = usuario.getPermisos();
+			usuario.setPersona(abmPersona.traerPersona(usuario.getPersona().getIdPersona()));
 			request.setAttribute("usuario", usuario);
-			if(permisos.size() == 1 && permisos.contains(abmPermiso.traerPermisoPorCodigo("CONSULTARTARJETA")) ) {
-				request.getRequestDispatcher("/misube.jsp").forward(request, response );
+			if( permisos.size() == 0 || (permisos.size() == 1 && permisos.contains(abmPermiso.traerPermisoPorCodigo("CONSULTARTARJETA")))) {
+				request.getRequestDispatcher("/miSUBE.jsp").forward(request, response );
 			} else {
 				request.setAttribute("permisos", permisos);
 				request.getRequestDispatcher("/paneldecontrol.jsp").forward(request, response );
 			}
 		} catch (Exception e ) {
-			response .sendError(500, "El usuario o contraseña ingresados son incorrectos" );
+			e.printStackTrace();
+			response.sendError(500, "El usuario o contraseña ingresados son incorrectos. Error : " + e.getMessage());
 		}
 	}
 }

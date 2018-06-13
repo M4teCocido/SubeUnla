@@ -49,11 +49,13 @@ UsuarioDao dao = new UsuarioDao();
 		dao.eliminarUsuario(u);
 	}
 	
-	public void comprobarPassword(String dni, String pass) throws Exception {
-		Usuario usuario = dao.traerUsuarioPorDni(dni);
+	public void comprobarPassword(String username, String pass) throws Exception {
+		Usuario usuario = dao.traerUsuarioPorUsername(username);
 		if(usuario == null || !usuario.getPassword().equals(pass)) {
 			throw new Exception("Error al comprobar el usuario.");
 		}
+			throw new Exception("Error al comprobar credenciales del usuario.");
+		} 
 	}
 	
 	public List<Usuario> traerUsuarios() {
