@@ -5,7 +5,7 @@ $(document).ready(function(){
 	//FUNCIONES
 	
 	function actualizarSelect(select, data){
-		select.html(data);
+		select.append(data);
 		select.formSelect();
 	}
 	

@@ -60,7 +60,7 @@ $(document).ready(function(){
 	}
 	
 	function actualizarSelect(select, data){
-		select.html(data);
+		select.append(data);
 		select.formSelect();
 	}
 	
@@ -104,6 +104,7 @@ $(document).ready(function(){
 				async: false
 			}).done(function(data){
 				actualizarSelect($('#linea'), data);
+				$('#linea option:first-child').removeAttr('disabled');
 			}).fail( function(xhr, textStatus, errorThrown) {
 				$('#headerModal').html('Ups! Algo salio mal!');
 				$('#pModal').html(xhr.responseText);
@@ -114,7 +115,6 @@ $(document).ready(function(){
 			$('#divlinea').hide();
 		}
 	});
-	
 	
 	//AJAX CONSULTA DE ESTADISTICAS
 	
@@ -160,7 +160,7 @@ $(document).ready(function(){
 			}).done(function(data){
 				updateCanvas(data);
 				updateTables(data);
-			}).fail( function(xhr, textStatus, errorThrown) {
+			}).fail(function(xhr, textStatus, errorThrown) {
 				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
 				$('#headerModal').html('Ups! Algo salio mal!');
 				$('#pModal').html(xhr.responseText);
