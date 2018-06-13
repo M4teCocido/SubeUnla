@@ -33,7 +33,7 @@ public class ControladorLogin extends HttpServlet {
 			PermisoABM abmPermiso = new PermisoABM();
 			
 			abm.comprobarPassword(dni, pass);
-			Usuario usuario = abm.traerUsuarioPorDni(dni);
+			Usuario usuario = abm.traerUsuarioPorNombre(dni);
 			Set<Permiso> permisos = usuario.getPermisos();
 			request.setAttribute("usuario", usuario);
 			if(permisos.size() == 1 && permisos.contains(abmPermiso.traerPermisoPorCodigo("CONSULTARTARJETA")) ) {
@@ -43,7 +43,7 @@ public class ControladorLogin extends HttpServlet {
 				request.getRequestDispatcher("/paneldecontrol.jsp").forward(request, response );
 			}
 		} catch (Exception e ) {
-			response .sendError(500, "El usuario o contraseï¿½a ingresados son incorrectos" );
+			response .sendError(500, "El usuario o contraseña ingresados son incorrectos" );
 		}
 	}
 }

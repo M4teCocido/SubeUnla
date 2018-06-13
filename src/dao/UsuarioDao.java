@@ -78,6 +78,20 @@ public class UsuarioDao {
 		return usuario;
 	}
 	
+	public Usuario traerUsuarioPorNombre(String nombre) {
+		Usuario usuario = null;
+		try {
+			iniciaOperacion();
+			usuario = (Usuario) session.createQuery("from Usuario u where u.nombreUsuario = '" + nombre + "'").uniqueResult();
+		} catch (HibernateException he) {
+			manejaExcepcion(he);
+			throw he;
+		} finally {
+			session.close();
+		}
+		return usuario;
+	}
+	
 	public Usuario traerUsuarioPorDni(String dni) throws HibernateException {
 		Usuario usuario = null;
 		try {

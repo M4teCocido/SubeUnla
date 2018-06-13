@@ -8,7 +8,7 @@ $(document).ready(function(){
 	function updateCanvas(data){
 		formatCanvas('pie', data.labels, 'Cant. de Viajes', data.viajes, $('#circularPorViajes'));
 		formatCanvas('pie', data.labels, 'Montos', data.montos, $('#circularPorMonto'));
-		formatCanvas('bar', data.labels, 'Cant. de Viajes', data, $('#barraPorViajes'));
+		formatCanvas('bar', data.labels, 'Cant. de Viajes', data.viajes, $('#barraPorViajes'));
 		formatCanvas('bar', data.labels, 'Montos', data.montos, $('#barraPorMonto'));
 	}
 	
