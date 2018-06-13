@@ -53,8 +53,6 @@ UsuarioDao dao = new UsuarioDao();
 		Usuario usuario = dao.traerUsuarioPorDni(dni);
 		if(usuario == null || !usuario.getPassword().equals(pass)) {
 			throw new Exception("Error al comprobar el usuario.");
-		} else if (pass.length() != 4 || !pass.matches("^[0-9]*$")) {
-			throw new Exception("La contraseña está mal ingresada, deben ser solo 4 numeros");
 		}
 	}
 	
