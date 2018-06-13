@@ -5,6 +5,7 @@
 <%@ page import = "modelo.fichadas.colectivo.FichadaColectivo" %>
 <%@ page import = "modelo.fichadas.subte.FichadaSubte" %>
 <%@ page import = "modelo.fichadas.tren.FichadaTren" %>
+<%@ page import = "modelo.fichadas.FichadaRecarga" %>
 <%@ page import = "modelo.lectoras.LectoraExterna" %>
 <%@ page import = "util.FuncionesGregorian" %>
 <%@ page import = "negocio.TarjetaSubeABM" %>
@@ -86,7 +87,7 @@
            	 			}else if (transaccion.getFichada() instanceof FichadaTren){
            	 				FichadaTren fichada = (FichadaTren) transaccion.getFichada();
            	 				medio = fichada.getEstacion().getLinea().getNombre();
-           	 			}else{
+           	 			} else if (transaccion.getFichada() instanceof FichadaRecarga){
            	 				LectoraExterna lectora = (LectoraExterna) transaccion.getFichada().getLectora();
            	 				medio = lectora.getUbicacion();
            	 			} %><%= medio %>
@@ -103,7 +104,7 @@
            	 			}else if (transaccion.getFichada() instanceof FichadaTren){
            	 				FichadaTren fichada = (FichadaTren) transaccion.getFichada();
            	 				detalle = fichada.getEstacion().getNombre();
-           	 			}else{
+           	 			}else if (transaccion.getFichada() instanceof FichadaRecarga){
            	 				LectoraExterna lectora = (LectoraExterna) transaccion.getFichada().getLectora();
            	 				detalle = lectora.getUbicacion();
            	 			} %><%= detalle %></td>

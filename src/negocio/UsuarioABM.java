@@ -56,7 +56,7 @@ public class UsuarioABM {
 			throw new Exception("Error al comprobar credenciales del usuario.");
 		}
 	} 
-	
+
 	public List<Usuario> traerUsuarios() {
 		return dao.traerUsuarios();
 	}

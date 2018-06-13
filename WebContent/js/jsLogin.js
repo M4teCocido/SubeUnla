@@ -1,5 +1,5 @@
 var URL_PROCESAR_LOGIN = "/SubeUnla/ControlLogin";
-
+/*
 $(document).ready(function(){
 	
 	$('#login').click(function(){
@@ -19,4 +19,4 @@ $(document).ready(function(){
 	    })
 	});
 	
-});
+});*/
