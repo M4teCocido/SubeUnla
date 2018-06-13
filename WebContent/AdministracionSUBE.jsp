@@ -6,10 +6,11 @@
 <body>
 <div class="container">
 	<div class="section no-pad-bot">
-		<br>
 		<div class="row">
 			<div class="col l1">
-				<a class="btn-floating tooltipped btn-large waves-effect waves-light blue lighten-2" data-position="bottom" data-tooltip="Volver!" href="index.jsp"><i class="material-icons">arrow_back</i></a>
+				<br>
+				<br>
+				<a class="btn-floating tooltipped btn-medium waves-effect waves-light blue lighten-2" data-position="bottom" data-tooltip="Volver!" href="index.jsp"><i class="material-icons">arrow_back</i></a>
 			</div>
 			<div class="col l10">
 				<h1 class="header center orange-text">ABM SUBE</h1>

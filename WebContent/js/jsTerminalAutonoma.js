@@ -1,4 +1,4 @@
-var URL_INGRESAR_FICHADA = "/SubeUnla/TerminalAutonoma";
+var URL_TERMINAL = "/SubeUnla/AdministrarSubes";
 
 $(document).ready(function(){
 	
@@ -19,12 +19,12 @@ $(document).ready(function(){
 	
 	$('#consultarTarjeta').click(function(){
 		var data = {
-				nroTarjeta : this.value,
-				nroValidacion : 1
-			}
+			nroTarjeta : this.value,
+			nroValidacion : 10
+		}
 		$.ajax({
 			method: "POST",
-			url: "/SubeUnla/TerminalAutonomal",
+			url: URL_TERMINAL,
 			data: data,
 			async: false
 		}).done(function(data){

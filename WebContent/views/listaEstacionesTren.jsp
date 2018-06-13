@@ -2,7 +2,6 @@
 pageEncoding="ISO-8859-1"%>
 <%@ page import = "modelo.fichadas.tren.EstacionTren" %>
 <%@ page import = "java.util.List" %>
-<option class="black-text text-lighten-3" value="" disabled selected>Elija una estacion</option>
 <% List<EstacionTren> estaciones = (List)request.getAttribute("lstEstaciones") ;
 for (EstacionTren estacion:estaciones){ %>
 	<option class="black-text text-lighten-3" 
