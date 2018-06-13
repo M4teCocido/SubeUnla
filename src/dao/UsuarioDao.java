@@ -92,6 +92,33 @@ public class UsuarioDao {
 		return usuario;
 	}
 	
+	public Usuario traerUsuarioPorUsername(String username) {
+		Usuario usuario = null;
+		try {
+			iniciaOperacion();
+			Object result = (session.createQuery("from Usuario u where u.nombreUsuario = '" + username + "'").uniqueResult());
+			if (result != null && result.getClass().isArray()) {
+				Object [] arr = (Object[]) result;
+				int i = 0;
+				for (Object elt : arr) {
+					System.out.println(i + "elt : " + elt.toString());
+					i++;
+				}
+				usuario = ((Usuario) arr[0]);
+				
+			} else {
+				usuario = ((Usuario) result);
+			}
+			//usuario = ((Usuario) result);
+		} catch (HibernateException he) {
+			manejaExcepcion(he);
+			throw he;
+		} finally {
+			session.close();
+		}
+		return usuario;
+	}
+	
 	public Usuario traerUsuarioPorDni(String dni) throws HibernateException {
 		Usuario usuario = null;
 		try {
@@ -107,9 +134,9 @@ public class UsuarioDao {
 				usuario = ((Usuario) arr[0]);
 				
 			} else {
-				
+				usuario = ((Usuario) result);
 			}
-			//usuario = ((Usuario) result);
+			
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
 			throw he;
