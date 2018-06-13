@@ -53,7 +53,7 @@ UsuarioDao dao = new UsuarioDao();
 		Usuario usuario = dao.traerUsuarioPorUsername(username);
 		if(usuario == null || !usuario.getPassword().equals(pass)) {
 			throw new Exception("Error al comprobar credenciales del usuario.");
-		} 
+		}
 	}
 	
 	public List<Usuario> traerUsuarios() {
