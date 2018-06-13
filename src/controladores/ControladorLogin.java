@@ -25,7 +25,7 @@ public class ControladorLogin extends HttpServlet {
 	}
 	
 	private void procesarPeticion(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		response.setContentType( "text/html;charset=UTF-8" );
+		response.setContentType("text/html;charset=UTF-8" );
 		try {
 			String dni = request.getParameter("nroDocumento");
 			String pass = request.getParameter("password");
@@ -39,17 +39,20 @@ public class ControladorLogin extends HttpServlet {
 			abm.comprobarPassword(dni, pass);
 			Usuario usuario = abm.traerUsuarioPorNombre(dni);
 			Set<Permiso> permisos = usuario.getPermisos();
-			request.setAttribute("usuario", usuario);
+			
 			if( permisos.size() == 0 || (permisos.size() == 1 && permisos.contains(abmPermiso.traerPermisoPorCodigo("CONSULTARTARJETA")))) {
 				usuario.setPersona(abmPersona.traerPersona(usuario.getPersona().getIdPersona()));
+				request.setAttribute("usuario", usuario);
 				request.getRequestDispatcher("/miSUBE.jsp").forward(request, response );
 			} else {
+				request.setAttribute("usuario", usuario);
 				request.setAttribute("permisos", permisos);
 				request.getRequestDispatcher("/paneldecontrol.jsp").forward(request, response);
 			}
-		} catch (Exception e ) {
+		}catch(Exception e) {
 			e.printStackTrace();
-			response.sendError(500, "El usuario o contraseña ingresados son incorrectos. Error : " + e.getMessage());
+			response.sendError(500, "El usuario o contraseÃ±a ingresados son incorrectos. Error : " + e.getMessage());
 		}
+	
 	}
 }

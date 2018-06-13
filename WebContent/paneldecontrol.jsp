@@ -23,11 +23,9 @@
 			<h1 class="header center orange-text">¡Bienvenido <%= usuario.getNombreUsuario() %>!</h1>
 			<div class="row center">
 				<h5 class="header col s12 light">Panel de Administrador</h5>
+	
 			</div>
-			<br><br>
-		</div>
-	</div>
-	<div class="container">
+		<div class="container">
 	<div class="row">
 		
 		<% if(permisos.contains(permisoSubeABM)){ %>
@@ -54,7 +52,6 @@
 			</div>
 		<% } %>
 	</div>
-</div>
 <%@ include file = "/views/footer.jsp" %>
 </body>
 </html>
