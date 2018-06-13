@@ -162,6 +162,8 @@ $(document).ready(function(){
 				updateTables(data);
 			}).fail( function(xhr, textStatus, errorThrown) {
 				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
+				console.log("Errores : " + textStatus + " / " + errorThrown);
+				
 				$('#headerModal').html('Ups! Algo salio mal!');
 				$('#pModal').html(xhr.responseText);
 			    $('#footerModal').modal('open');

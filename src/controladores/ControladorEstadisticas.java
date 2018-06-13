@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONException;
+
 import modelo.TarjetaSube;
 import modelo.fichadas.FichadaRecarga;
 import modelo.fichadas.TransaccionSUBE;
@@ -55,7 +57,7 @@ public class ControladorEstadisticas extends HttpServlet {
 		}
 	}
 	
-	private String procesarPeticionEstadisticaSubte(GregorianCalendar desde, GregorianCalendar hasta, HttpServletRequest request, HttpServletResponse response) {
+	private String procesarPeticionEstadisticaSubte(GregorianCalendar desde, GregorianCalendar hasta, HttpServletRequest request, HttpServletResponse response) throws JSONException {
 		return this.generarEstadisticaLineasSubte(desde, hasta, request, response);
 	}
 
@@ -68,7 +70,7 @@ public class ControladorEstadisticas extends HttpServlet {
 		}
 	}
 	
-	private String generarEstadisticaLineasColectivo(GregorianCalendar desde, GregorianCalendar hasta, HttpServletRequest request, HttpServletResponse response) {
+	private String generarEstadisticaLineasColectivo(GregorianCalendar desde, GregorianCalendar hasta, HttpServletRequest request, HttpServletResponse response) throws JSONException {
 		Estadisticas.Estadistica<LineaColectivo> estadistica = e.generarEstadisticaLineasColectivo(desde, hasta);
 		return estadistica.toJSON();
 		
@@ -81,12 +83,12 @@ public class ControladorEstadisticas extends HttpServlet {
 		return estadistica.toJSON();
 	}
 	
-	private String generarEstadisticaLineasSubte(GregorianCalendar desde, GregorianCalendar hasta, HttpServletRequest request, HttpServletResponse response) {
+	private String generarEstadisticaLineasSubte(GregorianCalendar desde, GregorianCalendar hasta, HttpServletRequest request, HttpServletResponse response) throws JSONException {
 		Estadisticas.Estadistica<LineaSubte> estadistica = e.generarEstadisticaLineasSubte(desde, hasta);
 		return estadistica.toJSON();
 	}
 	
-	private String generarEstadisticaLineasTren(GregorianCalendar desde, GregorianCalendar hasta, HttpServletRequest request, HttpServletResponse response) {
+	private String generarEstadisticaLineasTren(GregorianCalendar desde, GregorianCalendar hasta, HttpServletRequest request, HttpServletResponse response) throws JSONException {
 		Estadisticas.Estadistica<LineaTren> estadistica = e.generarEstadisticaLineasTren(desde, hasta);
 		return estadistica.toJSON();
 	}

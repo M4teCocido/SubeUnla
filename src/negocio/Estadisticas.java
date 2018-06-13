@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import modelo.TarjetaSube;
 import modelo.fichadas.Fichada;
 import modelo.fichadas.TransaccionSUBE;
@@ -164,7 +168,7 @@ public class Estadisticas {
 			this.nodos = nodos;
 		}
 	
-		public String toJSON() {
+		public String toJSON() throws JSONException {
 			String jsonText  = "{ ";
 			List <String> nombres = new ArrayList<String>();
 			List <Integer> viajes = new ArrayList<Integer>();
@@ -175,15 +179,40 @@ public class Estadisticas {
 				montos.add(nodo.getMonto());
 			}
 			
+			JSONObject json = new JSONObject();
+			JSONArray jsonNombres = new JSONArray();
+			JSONArray jsonViajes = new JSONArray();
+			JSONArray jsonMontos = new JSONArray();
+			
+			for (String n : nombres) {
+				jsonNombres.put(n);
+			}
+			
+			for (int v : viajes) {
+				jsonViajes.put(v);
+			}
+
+			for (BigDecimal m : montos) {
+				jsonMontos.put(m.floatValue());
+			}
+			
+			json.append("labels", jsonNombres);
+			json.append("viajes", jsonViajes);
+			json.append("montos", jsonMontos);
+			
+			/*
+			json.append("labels", jsonNombres);
+			json.append("viajes", jsonViajes);
+			json.append("montos", jsonMontos);
 			
 			//NOMBRES
-			String strNombres = "labels : {";
+			String strNombres = "'labels' : {";
 			for (int i = 0; i < nombres.size(); i++) {
 				String n = nombres.get(i);
 				if (i > 0) {
 					strNombres += ", ";
 				}
-				strNombres += n.toString();
+				strNombres += "'" + n.toString() +"'";
 			}
 			strNombres += "}";
 			
@@ -199,7 +228,7 @@ public class Estadisticas {
 			strViajes += "}";
 			
 			//MONTOS
-			String strMontos = "montos : {";
+			String strMontos = "'montos' : {";
 			for (int i = 0; i < montos.size(); i++) {
 				BigDecimal n = montos.get(i);
 				if (i > 0) {
@@ -213,8 +242,9 @@ public class Estadisticas {
 			
 			jsonText += strNombres + ", " + strViajes + ", " + strMontos + "}";
 			
-			System.out.println(jsonText);
-			return jsonText;
+			System.out.println(jsonText);*/
+			System.out.println(json);
+			return json.toString();
 		}
 		
 	}
