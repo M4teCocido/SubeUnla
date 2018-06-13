@@ -29,9 +29,6 @@ TarjetaSubeDao dao = new TarjetaSubeDao();
 	}
 	
 	public void modificar(TarjetaSube t) throws Exception {
-		/*for (TarjetaSube tarjeta : dao.traerTarjetas()) {
-			if (tarjeta.getCodigo().equalsIgnoreCase(t.getCodigo())) throw new Exception("La tarjeta de codigo " + t.getCodigo() + " ya existe");
-		}*/
 		dao.modificarTarjetaSube(t);
 	}
 	

@@ -10,7 +10,7 @@ $(document).ready(function(){
 		select.append(data);
 		select.formSelect();
 	}
-	
+	 
 	function setFormFichada(){
 		$('#divlinea').hide();
 		$('#divestacioninterno').hide();
