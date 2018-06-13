@@ -15,7 +15,7 @@
 	              <p class="black-text text-lighten-4">Integrantes del grupo:</p>
 	            </div>
 				<div class="col l4 offset-l2 s12">
-	            	<h5 class="black-text text-lighten-4">Queremos fama:</h5>
+	            	<h5 class="black-text text-lighten-4">Integrantes:</h5>
 	            	<ul>
 						<li><a class="black-text text-lighten-3" href="#!">Cristian Juarez</a></li>
 						<li><a class="black-text text-lighten-3" href="#!">Gonzalo Montaña</a></li>

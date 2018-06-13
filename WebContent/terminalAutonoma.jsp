@@ -4,7 +4,6 @@
 
 <div class="section no-pad-bot" id="index-banner">
 	<div class="container">
-		<br>
 		<div class="row">
 			<div class="col l1">
 				<br><br>
