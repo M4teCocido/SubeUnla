@@ -67,7 +67,7 @@
 		<div class="section"><h4 class="header center">Tablas</h4></div>
 	
 		<div class="row">
-		<table id="infoTable">
+		<table>
 	        <thead>
 	          	<tr>
 	              	<th>Nodo</th>
@@ -75,7 +75,7 @@
 					<th>Monto</th>
 	          	</tr>
 	        </thead>
-        	<tbody>
+        	<tbody id="infoTable">
           		
         	</tbody>
       	</table>
