@@ -3,6 +3,7 @@
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.GregorianCalendar;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -125,17 +126,31 @@ public class ControladorAdministrarSubes extends HttpServlet {
 						usuarioABM.agregarUsuario(nroDoc, password, persona);
 						resultado = new TarjetaSube.Resultado(true, "Tarjeta asociada con exito. Se creo un nuevo usuario para usted. Las credenciales corresponden a su numero de Documento", null);
 					} else { //Usuario existe, simplement le asociamos una tarjeta a su Persona
+						boolean tarjetaActiva = false;
+						Set <TarjetaSube> tarjetasAsociadas=usuario.getPersona().getTarjetasAsociadas();
+						for(TarjetaSube i : tarjetasAsociadas) {
+							if(i.isActiva()==true) {
+								tarjetaActiva = true;
+							}
+						}
+						
+						
+						if (tarjetaActiva != true) {
+						
 						try {
 							usuario.getPersona().asociarTarjeta(tarjeta);
 							personaABM.modificarPersona(usuario.getPersona());
 							tarjetaSubeABM.modificar(tarjeta);
 							resultado = new TarjetaSube.Resultado(true, "Tarjeta asociada a usuario '" + usuario.getNombreUsuario() + "' con exito.", null);
 							
+						
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 							resultado = new TarjetaSube.Resultado(false, "Problema asignar tarjeta a persona existente. Error : " + e.getMessage(), null);
 						}
+						}else {//Ya tiene tarjeta activa
+							resultado = new TarjetaSube.Resultado(false, "La  persona ingresada ya esta asociada a una tarjeta activa !", null);}
 					}
 				} else { //Ya esta asociada a una persona.
 					resultado = new TarjetaSube.Resultado(false, "La tarjeta ingresada ya esta asociada a una persona!", null);
