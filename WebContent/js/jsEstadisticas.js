@@ -17,8 +17,9 @@ $(document).ready(function(){
 	}
 	
 	function updateTables(data){
+		$('#infoTable').html('');
 		for(var i = 0; i < data.labels.length; i++){
-			$('#infoTable tr:last').find('tbody').append('<tr><td>' + data.labels[i] + '</td><td>' + data.viajes[i] + '</td><td>' + data.montos[i] + '</td></tr>');
+			$('#infoTable').append('<tr><td>' + data.labels[i] + '</td><td>' + data.viajes[i] + '</td><td>' + data.montos[i] + '</td></tr>');
 		}
 	}
 	
