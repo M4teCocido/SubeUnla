@@ -56,7 +56,7 @@ public class Permiso {
 
 	public boolean equals(Permiso p) {
 		boolean equivalente = false;
-		if ((p.getCodigo().compareTo(codigo) == 0)) {
+		if ((p.getCodigo().equalsIgnoreCase(this.codigo))) {
 			equivalente = true;	
 		}
 		return equivalente;

@@ -102,19 +102,31 @@ public class TestCreacionMaestrosPersonas {
 			permisos.add(new Permiso("ESTADISTICAS", "ESTADISTICAS", "ESTADISTICAS"));
 			permisos.add(new Permiso("CONSULTARTARJETA", "CONSULTARTARJETA", "CONSULTARTARJETA"));
 			
+			List<Usuario> admins = new ArrayList<Usuario>();
+			
 			for (Permiso p : permisos) {
 				daoPermisos.agregarPermiso(p);
 			}
 			
-			Usuario admin1 = new Usuario("ROY", "ROYBOY", null);
+			admins.add(new Usuario("ROY", "matecocido", null));
+			admins.add(new Usuario("NACHO", "oliverto", null));
+			admins.add(new Usuario("GONZA", "hstark", null));
+			admins.add(new Usuario("POTA", "potamia", null));
+			admins.add(new Usuario("CRIS", "cmjh", null));
 			
-			daoUsuarios.agregarUsuario(new Usuario())
-			
+			for (Usuario admin : admins) {
+				admin.agregarPermiso(permisos.get(0));
+				admin.agregarPermiso(permisos.get(1));
+				admin.agregarPermiso(permisos.get(2));
+				daoUsuarios.agregarUsuario(admin);
+			}
+
 			for (Persona p : personas) {
 				daoPersona.agregarPersona(p);
 				for (TarjetaSube t : p.getTarjetasAsociadas()) {
 					daoTarjeta.agregarTarjetaSube(t);
 				}
+				daoUsuarios.agregarUsuario(new Usuario(p.getDocumento().getNumero().toString(), p.getDocumento().getNumero().toString(), p));
 			}
 
 			for (LectoraExterna l : lectorasExternas) {
@@ -149,11 +161,7 @@ public class TestCreacionMaestrosPersonas {
 		try {
 			Persona persona = new Persona(nombre, apellido, genero, fechaNac, mail, celular, telefono);
 			persona.setDocumento(new Documento(nroDoc, eTipoDocumento.DNI, persona));
-			persona.asociarTarjeta(new TarjetaSube("TARJETA" + (contadorTarjeta++), 25));
-			persona.asociarTarjeta(new TarjetaSube("TARJETA" + (contadorTarjeta++), 25));
-			persona.asociarTarjeta(new TarjetaSube("TARJETA" + (contadorTarjeta++), 25));
-			persona.asociarTarjeta(new TarjetaSube("TARJETA" + (contadorTarjeta++), 25));
-			persona.asociarTarjeta(new TarjetaSube("TARJETA" + (contadorTarjeta++), 10).SetActivaC(false));
+			persona.asociarTarjeta(new TarjetaSube("606126728585992" + (contadorTarjeta++), 25));
 			//Randomizamos agregados de Descuentos.
 			if (RNG.rollBoolean()) {
 				persona.asignarDescuentoBoletoEstudiantil(new DescuentoBoletoEstudiantil(eTipoBoletoEstudiantil.ESCOLAR, persona));

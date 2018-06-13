@@ -7,7 +7,7 @@
 			<generator class = "identity" />
 		</id>
 		<property column="fechaHora" name="fechaHora" type="calendar" />
-		<many-to-one name="lectora" class="modelo.lectoras.Lectora" fetch="select" column="idLectora" not-null="true" />
+		<many-to-one name="lectora" class="modelo.lectoras.Lectora" fetch="select" lazy="false" column="idLectora" not-null="true" />
 		
 	</class>
 	
