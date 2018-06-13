@@ -122,8 +122,7 @@ public class ControladorEstadisticas extends HttpServlet {
     	
     	return  periodo;
 	}
-	
-	
+
 	private List<ViajeEfectivoTren> obtenerViajesTren(GregorianCalendar desde, GregorianCalendar hasta){
 		TarjetaSubeABM tarjetaABM = new TarjetaSubeABM();
 		List<TarjetaSube> tarjetas = tarjetaABM.traerTarjetas();

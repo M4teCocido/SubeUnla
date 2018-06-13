@@ -7,10 +7,10 @@
 <body>
 	<div class="container">
 		<div class="section no-pad-bot">
-			<br>
 			<div class="row">
+				
 				<div class="col l1">
-					<a class="btn-floating tooltipped btn-large waves-effect waves-light blue lighten-2" data-position="bottom" data-tooltip="Volver!" href="index.jsp"><i class="material-icons">arrow_back</i></a>
+					<a class="btn-floating tooltipped btn-medium waves-effect waves-light blue lighten-2" data-position="bottom" data-tooltip="Inicio!" href="index.jsp"><i class="material-icons">arrow_back</i></a>
 				</div>
 				<div class="col l10">
 					<h1 class="header center orange-text">Listados</h1>
@@ -23,27 +23,25 @@
 			<br><br>
 		</div>
 		<div class ="row">
-			<div class="input-field col s12 m6 l4">
+			<div class="input-field col s12 m6 l3">
 	  			<input placeholder="Fecha Desde" name="fecha" id="fechaDesde" type="text" class="datepicker">
 	          	<label for="fecha">Fecha Desde</label>
 	        </div>
-	        <div class="input-field col s12 m6 l4">
+	        <div class="input-field col s12 m6 l3">
 	  			<input placeholder="Hora Desde" name="hora" id="horaDesde" type="text" class="timepicker">
 	          	<label for="hora">Hora Desde</label>
 	        </div>
-        </div>
-        <div class ="row">
-	        <div class="input-field col s12 m6 l4">
+	        <div class="input-field col s12 m6 l3">
 	  			<input placeholder="Fecha Hasta" name="fecha" id="fechaHasta" type="text" class="datepicker">
 	          	<label for="fecha">Fecha Hasta</label>
 	        </div>
-	        <div class="input-field col s12 m6 l4">
+	        <div class="input-field col s12 m6 l3">
 	  			<input placeholder="Hora Hasta" name="hora" id="horaHasta" type="text" class="timepicker">
 	          	<label for="hora">Hora Hasta</label>
 	        </div>
         </div>
         <div class ="row">
-	        <div class="input-field col s12 m6 l4 ">
+	        <div class="input-field col s12 m6 l6">
 			    <select name="medioTransporte" id="medioTransporte">
 					<option class="black-text text-lighten-3" value="0" selected>Todos</option>
 					<option class="black-text text-lighten-3" value="1">Colectivo</option>
@@ -53,7 +51,7 @@
 		    	<label for="medioTransporte">Medio de Transporte</label>
 	  		</div>
 
-	  		<div class="input-field col s12 m6 l4" id="divLinea">
+	  		<div class="input-field col s12 m6 l6" id="divLinea">
 			    <select name="linea" id="linea">
 					<option class="black-text text-lighten-3" value="0" selected>Todas</option>
 			    </select>
@@ -66,7 +64,6 @@
 	  			</button>
   			</div>
   		</div>
-		
 		<table id="tabla" class="stripped bordered highlight">	        
 		</table>
 	</div>

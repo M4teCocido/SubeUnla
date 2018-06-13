@@ -4,7 +4,7 @@ var URL_ESTADISTICAS = "/SubeUnla/Estadisticas";
 $(document).ready(function(){
 	
 	//FUNCIONES
-
+		
 	function updateCanvas(data){
 		var labels = data.labels;
 		var viajes = data.viajes;
@@ -25,6 +25,7 @@ $(document).ready(function(){
 	
 	function formatCanvas(type, labels, label, data, canvas){
 		var ctx = canvas;
+		ctx.html('');
 		var background = [];
 		for(var i = 0; i < labels.length; i++){
 			var color = 'rgba(' + randomNumber(255) + ', ' + randomNumber(255)  + ', ' + randomNumber(255) + ', 1)';
@@ -84,7 +85,6 @@ $(document).ready(function(){
 			var data = {
 				nroValidacion : 3
 			}
-			
 			$.ajax({
 				method: "POST",
 				url: URL_INGRESAR_FICHADA,
@@ -99,6 +99,9 @@ $(document).ready(function(){
 			})
 		}
 		if(v == 2){
+			$('#divlinea').hide();
+		}
+		if(v == 3){
 			$('#divlinea').show();
 			var data = {
 				nroValidacion : 5
@@ -117,9 +120,6 @@ $(document).ready(function(){
 				$('#pModal').html(xhr.responseText);
 				$('#footerModal').modal('open');
 			})
-		}
-		if(v == 3){
-			$('#divlinea').hide();
 		}
 	});
 	
@@ -143,6 +143,7 @@ $(document).ready(function(){
 			linea = 0;
 		}
 		console.log("Valor Linea : " + $('#linea').val());
+		//SOLICITA INFORMACION ESTADISTICA DEL MEDIO DE TRANSPORTE COLECTIVO
 		if(v == 1){
 			var data = {
 				nroValidacion : 1,
@@ -166,8 +167,6 @@ $(document).ready(function(){
 				dataType: "json"
 			}).done(function(data){
 				console.log(data);
-				//data = {"labels" : ["74", "89"], "viajes" : [10, 20], "montos" : [0, 5]};
-				//data = {"labels" : ["74"], "viajes" : [10], "montos" : [0]};
 				updateTables(data);
 				updateCanvas(data);
 				
@@ -175,13 +174,12 @@ $(document).ready(function(){
 			}).fail(function(xhr, textStatus, errorThrown) {
 				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
 				console.log("Errores : " + textStatus + " / " + errorThrown);
-				
 				$('#headerModal').html('Ups! Algo salio mal!');
 				$('#pModal').html(xhr.responseText);
 			    $('#footerModal').modal('open');
 		    })
 		}
-		
+		//SOLICITA INFORMACION ESTADISTICA DEL MEDIO DE TRANSPORTE SUBTE
 		if(v == 2){
 			var data = {
 				nroValidacion : 2,
@@ -204,7 +202,6 @@ $(document).ready(function(){
 				async: false,
 				dataType: "json"
 			}).done(function(data){
-				console.log(data);
 				updateCanvas(data);
 				updateTables(data);
 			}).fail( function(xhr, textStatus, errorThrown) {
@@ -214,7 +211,7 @@ $(document).ready(function(){
 			    $('#footerModal').modal('open');
 		    })
 		}
-		
+		//SOLICITA INFORMACION ESTADISTICA DEL MEDIO DE TRANSPORTE TREN
 		if(v == 3){
 			var data = {
 				nroValidacion : 3,
@@ -241,7 +238,6 @@ $(document).ready(function(){
 				console.log(data.viajes);
 				updateCanvas(data);
 				updateTables(data);
-
 			}).fail( function(xhr, textStatus, errorThrown) {
 				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
 				$('#headerModal').html('Ups! Algo salio mal!');

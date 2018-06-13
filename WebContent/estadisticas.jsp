@@ -88,10 +88,10 @@
 		<div class="section"><h4 class="header center">Circular</h4></div>
 		
 		<div class="row">
-			<div class="col l6">
+			<div class="col l6" id="divCircularViajes">
 				<canvas id="circularPorViajes" width="400" height="400"></canvas>
 			</div>
-			<div class="col l6">
+			<div class="col l6" id="divCircularMonto">
 				<canvas id="circularPorMonto" width="400" height="400"></canvas>
 			</div>
 		</div>
@@ -101,10 +101,10 @@
 		<div class="section"><h4 class="header center">Barra</h4></div>
 		
 		<div class="row">
-			<div class="col l6">
+			<div class="col l6" id="divBarraViajes">
 				<canvas id="barraPorViajes" width="400" height="400"></canvas>
 			</div>
-			<div class="col l6">
+			<div class="col l6" id="divBarraMonto">
 				<canvas id="barraPorMonto" width="400" height="400"></canvas>
 			</div>
 		</div>

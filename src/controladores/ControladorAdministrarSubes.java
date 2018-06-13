@@ -251,7 +251,31 @@ public class ControladorAdministrarSubes extends HttpServlet {
 			if (tarjeta.isActiva())
 				response.getWriter().println("$ " + tarjeta.getSaldo());
 			else 
-				response.getWriter().println(-666); //No esta activa
+				response.getWriter().println("$ " + -666); //No esta activa
+		}
+	}
+	
+	public void procesarPeticionDescuentosTarjeta(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request); 
+		if(tarjeta != null) {
+			PersonaABM abm = new PersonaABM();
+			Persona persona = abm.traerPersona(tarjeta.getPropietario().getIdPersona());
+			if(persona != null) {
+				DescuentoBoletoEstudiantil descuentoEstudiantil = persona.getDescuentoBoletoEstudiantil();
+				DescuentoTarifaSocial descuentoSocial = persona.getDescuentoTarifaSocial();
+				
+				if(descuentoEstudiantil != null) {
+					response.getWriter().println("Boletos Restantes: " + descuentoEstudiantil.getViajesRestantes());
+				}else {
+					response.getWriter().println("Usted no posee un Boleto Estudiantil activo!");
+				}
+				
+				if(descuentoSocial != null) {
+					response.getWriter().println("El descuento asignado por su tarifa social es de: " + descuentoSocial.getPorcentajeDescuento());
+				}else {
+					response.getWriter().println("Usted no posee un descuento por tarifa social.");
+				}
+			}
 		}
 	}
 	
@@ -308,6 +332,10 @@ public class ControladorAdministrarSubes extends HttpServlet {
 					break;
 				case 10: //Traer saldo Tarjeta ingresada
 					procesarPeticionSaldoTarjeta(request, response);
+					break;
+				case 11:
+					procesarPeticionSaldoTarjeta(request, response);
+					procesarPeticionDescuentosTarjeta(request, response);
 					break;
 				default:
 					break;
