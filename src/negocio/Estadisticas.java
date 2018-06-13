@@ -146,14 +146,12 @@ public class Estadisticas {
 		}
 		
 		public void agregarNodo(NodoEstadistica<T> nodo) {
-			boolean contiene = false;
 			for (NodoEstadistica<T> n : this.nodos) {
 				if (n.getObjeto().equals(nodo.getObjeto())) {
 					n.agregarNodo(nodo);
 					return;
 				}
 			}
-			
 			this.nodos.add(nodo);
 	
 		}

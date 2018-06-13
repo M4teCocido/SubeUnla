@@ -20,7 +20,7 @@
 		<property column="celular" name="celular" type="string" />
 		<property column="telefono" name="telefono" type="string" />
 		<one-to-one name="documento" class="modelo.Documento" cascade="all" />
-		
+		<one-to-one name="usuario" class="modelo.Usuario" />
 		<one-to-one name="descuentoBoletoEstudiantil" class="modelo.Descuentos.DescuentoBoletoEstudiantil" property-ref="persona" lazy="false" cascade="all" />
 		<one-to-one name="descuentoTarifaSocial" class="modelo.Descuentos.DescuentoTarifaSocial" lazy="false" property-ref="persona" cascade="all"></one-to-one>
 		

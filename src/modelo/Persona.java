@@ -25,6 +25,8 @@ public class Persona {
 	private DescuentoTarifaSocial descuentoTarifaSocial;
 	private DescuentoBoletoEstudiantil descuentoBoletoEstudiantil;
 	
+	private Usuario usuario;
+	
 	public Persona() {}
 	
 	public Persona(String nombre, String apellido, eGenero genero, GregorianCalendar fechaNacimiento, String email, String celular, String telefono) throws Exception {
@@ -145,6 +147,16 @@ public class Persona {
 		this.descuentoBoletoEstudiantil = descuentoBoletoEstudiantil;
 	}
 	
+	
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	@Override
 	public String toString() {
 		
