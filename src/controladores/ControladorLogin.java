@@ -39,9 +39,9 @@ public class ControladorLogin extends HttpServlet {
 			abm.comprobarPassword(dni, pass);
 			Usuario usuario = abm.traerUsuarioPorNombre(dni);
 			Set<Permiso> permisos = usuario.getPermisos();
+			request.setAttribute("usuario", usuario);
 			if( permisos.size() == 0 || (permisos.size() == 1 && permisos.contains(abmPermiso.traerPermisoPorCodigo("CONSULTARTARJETA")))) {
 				usuario.setPersona(abmPersona.traerPersona(usuario.getPersona().getIdPersona()));
-				request.setAttribute("usuario", usuario);
 				request.getRequestDispatcher("/miSUBE.jsp").forward(request, response );
 			} else {
 				request.setAttribute("permisos", permisos);
