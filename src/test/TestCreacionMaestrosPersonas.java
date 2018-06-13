@@ -131,6 +131,9 @@ public class TestCreacionMaestrosPersonas {
 			Persona persona = new Persona(nombre, apellido, genero, fechaNac, mail, celular, telefono);
 			persona.setDocumento(new Documento(nroDoc, eTipoDocumento.DNI, persona));
 			persona.asociarTarjeta(new TarjetaSube("TARJETA" + (contadorTarjeta++), 25));
+			persona.asociarTarjeta(new TarjetaSube("TARJETA" + (contadorTarjeta++), 25));
+			persona.asociarTarjeta(new TarjetaSube("TARJETA" + (contadorTarjeta++), 25));
+			persona.asociarTarjeta(new TarjetaSube("TARJETA" + (contadorTarjeta++), 25));
 			persona.asociarTarjeta(new TarjetaSube("TARJETA" + (contadorTarjeta++), 10).SetActivaC(false));
 			//Randomizamos agregados de Descuentos.
 			if (RNG.rollBoolean()) {

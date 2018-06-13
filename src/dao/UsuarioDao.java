@@ -82,7 +82,20 @@ public class UsuarioDao {
 		Usuario usuario = null;
 		try {
 			iniciaOperacion();
-			usuario = (Usuario) session.createQuery("from Usuario inner join Persona Usuario.idPersona = Persona.idPersona inner join DocumentoPersona Persona.idPersona = DocumentoPersona.idPersona where DocumentoPersona.numero='" + dni + "'").uniqueResult();
+			Object result = (session.createQuery("from Usuario u inner join u.Persona p inner join p.documento d where d.numero='" + dni + "'").uniqueResult());
+			if (result != null && result.getClass().isArray()) {
+				Object [] arr = (Object[]) result;
+				int i = 0;
+				for (Object elt : arr) {
+					System.out.println(i + "elt : " + elt.toString());
+					i++;
+				}
+				usuario = ((Usuario) arr[0]);
+				
+			} else {
+				
+			}
+			//usuario = ((Usuario) result);
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
 			throw he;

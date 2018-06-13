@@ -9,7 +9,8 @@
 		<property column="nombreUsuario" name="nombreUsuario" type="string" />
 		<property column="contraseña" name="password" type="string" />
 		
-		<one-to-one name="Persona" class="modelo.Persona"></one-to-one>
+		<!-- <one-to-one name="Persona" class="modelo.Persona" />  -->
+		<many-to-one name="Persona" class="modelo.Persona" column="idPersona" not-null="false" />
 		
 		<set name="permisos" table="permisopersona" outer-join="true">
 			<key column="Usuario_idUsuario" />
