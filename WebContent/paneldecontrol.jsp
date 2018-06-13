@@ -9,9 +9,8 @@
 </head>
 <body>
 	<% Usuario usuario = (Usuario) request.getAttribute("usuario"); %>
-	<% Set<Permiso> permisos = usuario.getPermisos(); %>
-	<% PermisoABM abm = new PermisoABM(); %>
-	<div class="container">
+	<% Set<Permiso> permisos = (Set<Permiso>) request.getAttribute("permisos"); %>
+	<% PermisoABM abm = new PermisoABM(); 
 	
 		<div class="section no-pad-bot">
 			<div class="row">
@@ -28,33 +27,46 @@
 				<h5 class="header col s12 light">Reportes, estadisticas y ABM.</h5>
 			</div>
 		</div>
+
+	Permiso permisoSubeABM = abm.traerPermisoPorCodigo("SUBEABM");
+	Permiso permisoReportes = abm.traerPermisoPorCodigo("REPORTES");
+	Permiso permisoEstadisticas = abm.traerPermisoPorCodigo("ESTADISTICAS");
+
+	%>
+	<div class="section no-pad-bot" id="index-banner">
+		<div class="container">
+			<br><br>
+			<h1 class="header center orange-text">¡Bienvenido <%= usuario.getNombreUsuario() %>!</h1>
+			<div class="row center">
+				<h5 class="header col s12 light">Panel de Administrador</h5>
 	
-		<div class="row">
-			
-			<% if(permisos.contains(abm.traerPermisoPorCodigo("SUBEABM"))){ %>
-				<div class="col s3 center-align">
-					<a class="waves-effect waves-light" href="subeabm.jsp"><i class="large material-icons">flash_on</i></a>
-					<h6>Sube ABM</h6>
-					<p>Ingresar, modificar o eliminar Tarjetas del sistema.</p>
-				</div>
-			<% } %>
-			
-			<% if(permisos.contains(abm.traerPermisoPorCodigo("REPORTES"))){ %>
-				<div class="col s3 center-align">
-				<a class="waves-effect waves-light" href="fichada.jsp"><i class="large material-icons">assessment</i></a>
+			</div>
+		<div class="container">
+	<div class="row">
+		
+		<% if(permisos.contains(permisoSubeABM)){ %>
+			<div class="col s3 center-align">
+				<a class="waves-effect waves-light" href="/SubeUnla/AdministrarSubes"><i class="large material-icons">flash_on</i></a>
+				<h6>Sube ABM</h6>
+				<p>Ingresar, modificar o eliminar Tarjetas del sistema.</p>
+			</div>
+		<% } %>
+		
+		<% if(permisos.contains(permisoReportes)){ %>
+			<div class="col s3 center-align">
+				<a class="waves-effect waves-light" href="/SubeUnla/Listados"><i class="large material-icons">assessment</i></a>
 				<h6>Reportes</h6>
 				<p>Bueno, son reportes. ¿Que mas puedo decir?</p>
 			</div>
-			<% } %>
-			
-			<% if(permisos.contains(abm.traerPermisoPorCodigo("ESTADISTICAS"))){ %>
-				<div class="col s3 center-align">
-					<a class="waves-effect waves-light" href="estadisticas.jsp"><i class="large material-icons">equalizer</i></a>
-					<h6>Estadisticas</h6>
-					<p>Las estadisticas indican que las estadisticas no sirven.</p>
-				</div>
-			<% } %>
-		</div>
+		<% } %>
+		
+		<% if(permisos.contains(permisoEstadisticas)){ %>
+			<div class="col s3 center-align">
+				<a class="waves-effect waves-light" href="/SubeUnla/Estadisticas"><i class="large material-icons">equalizer</i></a>
+				<h6>Estadisticas</h6>
+				<p>Las estadisticas indican que las estadisticas no sirven.</p>
+			</div>
+		<% } %>
 	</div>
 <%@ include file = "/views/footer.jsp" %>
 </body>
