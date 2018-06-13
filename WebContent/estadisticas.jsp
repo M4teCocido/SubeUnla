@@ -75,11 +75,11 @@
 
 		<!-- INICIO DE BARRAS -->
 
-		<div class="section"><h4 class="header center">Barra</h4></div>
+		<div class="section"><h4 class="header center">Circular</h4></div>
 		
 		<div class="row">
 			<div class="col l6">
-				<canvas id="circularPorLinea" width="400" height="400"></canvas>
+				<canvas id="circularPorViajes" width="400" height="400"></canvas>
 			</div>
 			<div class="col l6">
 				<canvas id="circularPorMonto" width="400" height="400"></canvas>
@@ -88,11 +88,11 @@
 		
 		<!-- INICIO DE CIRCULARES -->
 		
-		<div class="section"><h4 class="header center">Circular</h4></div>
+		<div class="section"><h4 class="header center">Barra</h4></div>
 		
 		<div class="row">
 			<div class="col l6">
-				<canvas id="barraPorLinea" width="400" height="400"></canvas>
+				<canvas id="barraPorViajes" width="400" height="400"></canvas>
 			</div>
 			<div class="col l6">
 				<canvas id="barraPorMonto" width="400" height="400"></canvas>
