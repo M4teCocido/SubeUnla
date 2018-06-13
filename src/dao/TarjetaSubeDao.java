@@ -82,8 +82,7 @@ public class TarjetaSubeDao {
 		TarjetaSube tarjeta = null;
 		try {
 			iniciaOperacion();
-			tarjeta = (TarjetaSube) session.createQuery("from TarjetaSube t where t.codigo = '" + codigo + "'").uniqueResult();
-			//tarjeta = (TarjetaSube) session.get(TarjetaSube.class, codigo);
+			tarjeta = (TarjetaSube) session.createQuery("from TarjetaSube t where t.codigo='" + codigo + "'").uniqueResult();
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
 			throw he;

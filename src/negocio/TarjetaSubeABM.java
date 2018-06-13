@@ -15,9 +15,9 @@ TarjetaSubeDao dao = new TarjetaSubeDao();
 		return t;
 	}
 	
-	public TarjetaSube traerTarjetaPorCodigo(String codigo) {
+	public TarjetaSube traerTarjetaPorCodigo(String codigo) throws Exception {
 		TarjetaSube t = dao.traerTarjeta(codigo);
-		//if(t == null) throw new Exception("No existe una tarjeta con codigo: " + codigo) ;
+		if(t == null) throw new Exception("No existe una tarjeta con codigo: " + codigo) ;
 		return t;
 	}
 	

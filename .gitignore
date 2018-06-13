@@ -5,3 +5,6 @@
 *.class
 *.class
 *.class
+build/classes/hibernate.cfg.xml
+src/dao/UsuarioDao.java
+src/hibernate.cfg.xml

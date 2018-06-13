@@ -21,6 +21,7 @@ UsuarioDao dao = new UsuarioDao();
 		if (usuario == null) throw new Exception("El usuario de dni " + dni + " no existe");
 		return usuario;
 	}
+	
 	public int agregarUsuario(String nombreUsuario, String password, Persona persona) throws Exception {
 		for (Usuario usuario : dao.traerUsuarios()) {
 			if (usuario.getNombreUsuario().equalsIgnoreCase(nombreUsuario) || usuario.getPersona().equals(persona)) throw new Exception("Ya existe un usuario con el nombre: " + nombreUsuario);
@@ -44,7 +45,11 @@ UsuarioDao dao = new UsuarioDao();
 	
 	public void comprobarPassword(String dni, String pass) throws Exception {
 		Usuario usuario = dao.traerUsuarioPorDni(dni);
-		if(!usuario.getPassword().equals(pass) || usuario == null) throw new Exception("Error al comprobar el usuario.");
+		if(usuario == null || !usuario.getPassword().equals(pass)) {
+			throw new Exception("Error al comprobar el usuario.");
+		} else if (pass.length() != 4 || !pass.matches("^[0-9]*$")) {
+			throw new Exception("La contraseña está mal ingresada, deben ser solo 4 numeros");
+		}
 	}
 	
 	public List<Usuario> traerUsuarios() {
