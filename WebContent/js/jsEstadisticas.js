@@ -6,10 +6,14 @@ $(document).ready(function(){
 	//FUNCIONES
 
 	function updateCanvas(data){
-		formatCanvas('pie', data.labels, 'Cant. de Viajes', data.viajes, $('#circularPorViajes'));
-		formatCanvas('pie', data.labels, 'Montos', data.montos, $('#circularPorMonto'));
-		formatCanvas('bar', data.labels, 'Cant. de Viajes', data.viajes, $('#barraPorViajes'));
-		formatCanvas('bar', data.labels, 'Montos', data.montos, $('#barraPorMonto'));
+		var labels = data.labels;
+		var viajes = data.viajes;
+		var montos = data.montos;
+		
+		formatCanvas('pie', labels, 'Cant. de Viajes', viajes, $('#circularPorViajes'));
+		formatCanvas('pie', labels, 'Montos', montos, $('#circularPorMonto'));
+		formatCanvas('bar', labels, 'Cant. de Viajes', viajes, $('#barraPorViajes'));
+		formatCanvas('bar', labels, 'Montos', montos, $('#barraPorMonto'));
 	}
 	
 	function updateTables(data){
@@ -161,8 +165,13 @@ $(document).ready(function(){
 				async: false,
 				dataType: "json"
 			}).done(function(data){
-				updateCanvas(data);
+				console.log(data);
+				//data = {"labels" : ["74", "89"], "viajes" : [10, 20], "montos" : [0, 5]};
+				//data = {"labels" : ["74"], "viajes" : [10], "montos" : [0]};
 				updateTables(data);
+				updateCanvas(data);
+				
+				
 			}).fail(function(xhr, textStatus, errorThrown) {
 				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
 				console.log("Errores : " + textStatus + " / " + errorThrown);
@@ -195,6 +204,7 @@ $(document).ready(function(){
 				async: false,
 				dataType: "json"
 			}).done(function(data){
+				console.log(data);
 				updateCanvas(data);
 				updateTables(data);
 			}).fail( function(xhr, textStatus, errorThrown) {
@@ -227,6 +237,8 @@ $(document).ready(function(){
 				async: false,
 				dataType: "json"
 			}).done(function(data){
+				console.log(data);
+				console.log(data.viajes);
 				updateCanvas(data);
 				updateTables(data);
 

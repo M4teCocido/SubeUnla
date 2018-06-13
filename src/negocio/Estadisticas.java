@@ -173,6 +173,7 @@ public class Estadisticas {
 			List <String> nombres = new ArrayList<String>();
 			List <Integer> viajes = new ArrayList<Integer>();
 			List <BigDecimal> montos = new ArrayList<BigDecimal>();
+			System.out.println("Size :  " + this.nodos.size());
 			for (NodoEstadistica<T> nodo : this.nodos) {
 				nombres.add(nodo.getObjeto().getNombre());
 				viajes.add(nodo.getViajes());
@@ -196,9 +197,15 @@ public class Estadisticas {
 				jsonMontos.put(m.floatValue());
 			}
 			
-			json.append("labels", jsonNombres);
-			json.append("viajes", jsonViajes);
-			json.append("montos", jsonMontos);
+			System.out.println("Total Viajes : " + jsonViajes.length());
+			System.out.println("Total Nombres : " + jsonNombres.length());
+			System.out.println("Total Montos : " + jsonMontos.length());
+			
+			
+			//json.append("labels", jsonNombres);
+			json.put("labels", jsonNombres);
+			json.put("viajes", jsonViajes);
+			json.put("montos", jsonMontos);
 			
 			/*
 			json.append("labels", jsonNombres);

@@ -81,7 +81,8 @@
       	</table>
 		</div>
 
-		<!-- INICIO DE BARRAS -->
+		<!-- INICIO DE CIRCULARES -->
+		
 
 		<div class="section"><h4 class="header center">Circular</h4></div>
 		
@@ -94,7 +95,7 @@
 			</div>
 		</div>
 		
-		<!-- INICIO DE CIRCULARES -->
+		<!-- INICIO DE BARRAS -->
 		
 		<div class="section"><h4 class="header center">Barra</h4></div>
 		
