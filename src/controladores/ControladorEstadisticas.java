@@ -46,7 +46,7 @@ public class ControladorEstadisticas extends HttpServlet {
 	}
 	
 	private String procesarPeticionEstadisticaColectivo(GregorianCalendar desde, GregorianCalendar hasta,HttpServletRequest request, HttpServletResponse response) throws Exception {
-		int idLinea = Integer.parseInt(request.getParameter("idLinea"));
+		int idLinea = Integer.parseInt(request.getParameter("linea"));
 		
 		if (idLinea == TODAS) {
 			return this.generarEstadisticaLineasColectivo(desde, hasta, request, response);
@@ -60,7 +60,7 @@ public class ControladorEstadisticas extends HttpServlet {
 	}
 
 	private String procesarPeticionEstadisticaTren(GregorianCalendar desde, GregorianCalendar hasta, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		int idLinea = Integer.parseInt(request.getParameter("idLinea"));
+		int idLinea = Integer.parseInt(request.getParameter("linea"));
 		if (idLinea == TODAS) {
 			return this.generarEstadisticaLineasTren(desde, hasta, request, response);
 		} else {
@@ -99,44 +99,7 @@ public class ControladorEstadisticas extends HttpServlet {
 		return estadistica.toJSON();
 	}
 
-	private void procesarPeticion(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		//response.setContentType("text/html;	charset=UTF-8");
-		response.setContentType("application/json");
-		response.setCharacterEncoding("utf-8");
-		PrintWriter out = response.getWriter();	
-		try {
-			String strNroValidacion= request.getParameter("nroValidacion");
-			if (strNroValidacion == null)
-				request.getRequestDispatcher("/listados.jsp").forward(request, response);
-			else {
-				int nroValidacion = Integer.parseInt(strNroValidacion);
-				System.out.println("Numero : " + nroValidacion);
-				
-				List<GregorianCalendar> fechas = parsearFecha(request);
-				
-				switch(nroValidacion) {
-				
-				case 1: //Devolver estadisticas
-					out.print(this.procesarPeticionEstadisticaColectivo(fechas.get(0), fechas.get(1), request, response));
-					break;
-				case 2: //Devolver estadisticas
-					this.procesarPeticionEstadisticaSubte(fechas.get(0), fechas.get(1), request, response);
-					break;
-				case 3: //Devolver estadisticas
-					this.procesarPeticionEstadisticaTren (fechas.get(0), fechas.get(1), request, response);
-					break;
-				default:
-					break;
-				}
-			}
-		} catch(Exception e) {
-			System.out.println("Excepction agarrada : " + e.getMessage());
-			e.printStackTrace();
-			if (!response.isCommitted())
-				response.sendError(500, e.getMessage());
-		}
-	}
-	
+
 	private List<GregorianCalendar> parsearFecha (HttpServletRequest request) {
 		//MetodoPAraPara parsear periodo desde  request
 		
@@ -172,6 +135,48 @@ public class ControladorEstadisticas extends HttpServlet {
 		}   
 		return viajes;
 	}
+	
+	private void procesarPeticion(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		//response.setContentType("text/html;	charset=UTF-8");
+		response.setContentType("application/json");
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();	
+		try {
+			String strNroValidacion= request.getParameter("nroValidacion");
+			if (strNroValidacion == null)
+				request.getRequestDispatcher("/estadisticas.jsp").forward(request, response);
+			else {
+				int nroValidacion = Integer.parseInt(strNroValidacion);
+				System.out.println("Numero : " + nroValidacion);
+				String resultado = "";
+				List<GregorianCalendar> fechas = parsearFecha(request);
+				
+				switch(nroValidacion) {
+				
+				case 1: //Devolver estadisticas
+					resultado = this.procesarPeticionEstadisticaColectivo(fechas.get(0), fechas.get(1), request, response);
+					break;
+				case 2: //Devolver estadisticas
+					resultado = this.procesarPeticionEstadisticaSubte(fechas.get(0), fechas.get(1), request, response);
+					break;
+				case 3: //Devolver estadisticas
+					resultado = this.procesarPeticionEstadisticaTren (fechas.get(0), fechas.get(1), request, response);
+					break;
+				default:
+					break;
+				}
+				out.print(resultado);
+			}
+			
+			
+		} catch(Exception e) {
+			System.out.println("Excepction agarrada : " + e.getMessage());
+			e.printStackTrace();
+			if (!response.isCommitted())
+				response.sendError(500, e.getMessage());
+		}
+	}
+	
 	
 	
 	

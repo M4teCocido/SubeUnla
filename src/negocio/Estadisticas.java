@@ -26,7 +26,7 @@ public class Estadisticas {
 	public Estadistica<LineaColectivo> generarEstadisticaLineasColectivo(GregorianCalendar desde, GregorianCalendar hasta){
 		
 		Estadistica <LineaColectivo> estadistica = new Estadistica <LineaColectivo>(); 
-		
+		System.out.println("");
 		List<TransaccionSUBE> txs = abmTx.traerTransacciones();
 		LineaColectivo linea;
 		FichadaColectivo f;
@@ -179,9 +179,10 @@ public class Estadisticas {
 			
 			
 			//NOMBRES
-			String strNombres = "{";
-			for (String n : nombres) {
-				if (strNombres != "{") {
+			String strNombres = "labels : {";
+			for (int i = 0; i < nombres.size(); i++) {
+				String n = nombres.get(i);
+				if (i > 0) {
 					strNombres += ", ";
 				}
 				strNombres += n.toString();
@@ -189,9 +190,10 @@ public class Estadisticas {
 			strNombres += "}";
 			
 			//VIAJES
-			String strViajes = "{";
-			for (Integer n : viajes) {
-				if (strViajes != "{") {
+			String strViajes = "viajes : {";
+			for (int i = 0; i < viajes.size(); i++) {
+				Integer n = viajes.get(i);
+				if (i > 0) {
 					strViajes += ", ";
 				}
 				strViajes += n.toString();
@@ -199,9 +201,10 @@ public class Estadisticas {
 			strViajes += "}";
 			
 			//MONTOS
-			String strMontos = "{";
-			for (BigDecimal n : montos) {
-				if (strMontos != "{") {
+			String strMontos = "montos : {";
+			for (int i = 0; i < montos.size(); i++) {
+				BigDecimal n = montos.get(i);
+				if (i > 0) {
 					strMontos += ", ";
 				}
 				strMontos += n.toString();
