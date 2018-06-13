@@ -113,7 +113,7 @@ public class Estadisticas {
 	}
 	
 	public Estadistica<TramoColectivo> generarEstadisticaTramosColectivo(LineaColectivo linea, GregorianCalendar desde, GregorianCalendar hasta){
-	
+		
 		Estadistica <TramoColectivo> estadistica = new Estadistica <TramoColectivo>(); 
 		
 		List<TransaccionSUBE> txs = abmTx.traerTransacciones();

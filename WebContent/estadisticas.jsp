@@ -65,12 +65,20 @@
 		<!-- INICIO DE TABLAS -->
 
 		<div class="section"><h4 class="header center">Tablas</h4></div>
-
+	
 		<div class="row">
-			<div class="col l6" id="tablaViajes">
-			</div>
-			<div class="col l6" id="tablaMontos">
-			</div>
+		<table id="infoTable">
+	        <thead>
+	          	<tr>
+	              	<th>Nodo</th>
+	              	<th>Cant. de Viajes</th>
+					<th>Monto</th>
+	          	</tr>
+	        </thead>
+        	<tbody>
+          		
+        	</tbody>
+      	</table>
 		</div>
 
 		<!-- INICIO DE BARRAS -->

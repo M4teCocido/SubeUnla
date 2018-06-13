@@ -87,7 +87,6 @@ public class ControladorEstadisticas extends HttpServlet {
 	}
 	
 	private String generarEstadisticaLineasTren(GregorianCalendar desde, GregorianCalendar hasta, HttpServletRequest request, HttpServletResponse response) {
-		
 		Estadisticas.Estadistica<LineaTren> estadistica = e.generarEstadisticaLineasTren(desde, hasta);
 		return estadistica.toJSON();
 	}
@@ -165,6 +164,7 @@ public class ControladorEstadisticas extends HttpServlet {
 				default:
 					break;
 				}
+				response.setStatus(200);
 				out.print(resultado);
 			}
 			

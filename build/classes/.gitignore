@@ -1,9 +1,6 @@
-*.class
-*.cfg
-/controladores/
 /dao/
 /modelo/
 /negocio/
 /test/
 /util/
-/mapeos/
+/controladores/

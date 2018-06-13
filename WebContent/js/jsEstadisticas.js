@@ -12,6 +12,12 @@ $(document).ready(function(){
 		formatCanvas('bar', data.labels, 'Montos', data.montos, $('#barraPorMonto'));
 	}
 	
+	function updateTables(data){
+		for(var i = 0; i < data.labels.length; i++){
+			$('#infoTable tr:last').find('tbody').append('<tr><td>' + data.labels[i] + '</td><td>' + data.viajes[i] + '</td><td>' + data.montos[i] + '</td></tr>');
+		}
+	}
+	
 	function formatCanvas(type, labels, label, data, canvas){
 		var ctx = canvas;
 		var background = [];
@@ -101,7 +107,7 @@ $(document).ready(function(){
 			}).fail( function(xhr, textStatus, errorThrown) {
 				$('#headerModal').html('Ups! Algo salio mal!');
 				$('#pModal').html(xhr.responseText);
-				   $('#footerModal').modal('open');
+				$('#footerModal').modal('open');
 			})
 		}
 		if(v == 3){
@@ -149,11 +155,11 @@ $(document).ready(function(){
 				method: "POST",
 				url: URL_ESTADISTICAS,
 				data: data,
-				async: false
+				async: false,
+				dataType: "json"
 			}).done(function(data){
-				console.log(data)
 				updateCanvas(data);
-
+				updateTables(data);
 			}).fail( function(xhr, textStatus, errorThrown) {
 				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
 				$('#headerModal').html('Ups! Algo salio mal!');
@@ -181,11 +187,11 @@ $(document).ready(function(){
 				method: "POST",
 				url: URL_ESTADISTICAS,
 				data: data,
-				async: false
+				async: false,
+				dataType: "json"
 			}).done(function(data){
-				console.log(data)
 				updateCanvas(data);
-
+				updateTables(data);
 			}).fail( function(xhr, textStatus, errorThrown) {
 				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
 				$('#headerModal').html('Ups! Algo salio mal!');
@@ -213,12 +219,11 @@ $(document).ready(function(){
 				method: "POST",
 				url: URL_ESTADISTICAS,
 				data: data,
-				async: false
+				async: false,
+				dataType: "json"
 			}).done(function(data){
-
-				var ctx = document.getElementById("myChart").getContext('2d');
-				console.log(data)
 				updateCanvas(data);
+				updateTables(data);
 
 			}).fail( function(xhr, textStatus, errorThrown) {
 				//alert("Error al devolver AJAX. Mensaje : " + xhr.responseText);
