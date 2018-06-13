@@ -7,7 +7,6 @@ $(document).ready(function(){
 			nroDocumento : $('#nroDocumento').val(),
 			pass : $('#password').val()
 		}
-		console.log(data);
 		$.ajax({
 			method: "POST",
 			url: "/SubeUnla/ControlLogin",
