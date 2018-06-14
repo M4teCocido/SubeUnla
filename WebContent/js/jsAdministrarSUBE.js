@@ -10,9 +10,9 @@ $(document).ready(function(){
 
 	$('#numerotarjeta').change(function(){
 		var data = {
-				nroTarjeta : this.value,
-				nroValidacion : 10
-			}
+			nroTarjeta : this.value,
+			nroValidacion : 10
+		}
 		$.ajax({
 			method: "POST",
 			url: URL_ADMINISTRAR_SUBE,

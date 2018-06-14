@@ -7,7 +7,7 @@ import java.util.List;
 import modelo.TarjetaSube;
 
 public class TarjetaSubeABM {
-TarjetaSubeDao dao = new TarjetaSubeDao();
+	TarjetaSubeDao dao = new TarjetaSubeDao();
 	
 	public TarjetaSube traerTarjetaPorId(int idTarjeta)throws Exception {
 		TarjetaSube t = dao.traerTarjeta(idTarjeta);
