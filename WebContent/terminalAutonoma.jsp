@@ -31,23 +31,6 @@
 	</div>
 </div>
 <script type="text/javascript" src="js/jsTerminalAutonoma.js"></script>
-<div class="modal" id="infoModal">
-	<div class="modal-content">
-   		<h4 align="center" id="headerModal">AGUARDE UN INSTANTE</h4>
-   		<p align="center">El Gobierno Nacional subsidia las tarifas para viajar en</p>
-   		<p align="center">trenes y colectivos con SUBE</p>
-   		<p align="center">	Beneficiarios de la Tarifa Social Federal:</p>
-   		<p align="center">-Jubilados y pensionados. -Ex combatientes de malvinas.</p>
-   		<p align="center">-Personal del trabajo domestivo.</p>
-   		<p align="center">-Asignacion Universal por Hijo o Embarazo.</p>
-   		<p align="center">-Planes Progresar Argentina Trabaja y Ellas Hacen.</p>
-   		<p align="center">-Pensiones no contributivas. -Monotributistas Social.</p>
-	</div>
-	<div class="modal-footer">
-   		<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
-	</div>
-</div>
 <%@ include file="/views/footer.jsp" %>
-
 </body>
 </html>

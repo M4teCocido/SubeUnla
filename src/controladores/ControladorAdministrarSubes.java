@@ -1,6 +1,7 @@
 	package controladores;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.GregorianCalendar;
 import java.util.Set;
@@ -250,33 +251,47 @@ public class ControladorAdministrarSubes extends HttpServlet {
 		} else {
 			if (tarjeta.isActiva())
 				response.getWriter().println("$ " + tarjeta.getSaldo());
-			else 
+			else
 				response.getWriter().println("$ " + -666); //No esta activa
 		}
 	}
 	
-	public void procesarPeticionDescuentosTarjeta(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request); 
-		if(tarjeta != null) {
-			PersonaABM abm = new PersonaABM();
+	private void procesarPeticionTerminalAutonoma(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter salida = response.getWriter();
+		TarjetaSube tarjeta = this.obtenerTarjetaDesdeRequest(request);
+		PersonaABM abm = new PersonaABM();
+		try {
 			Persona persona = abm.traerPersona(tarjeta.getPropietario().getIdPersona());
-			if(persona != null) {
-				DescuentoBoletoEstudiantil descuentoEstudiantil = persona.getDescuentoBoletoEstudiantil();
-				DescuentoTarifaSocial descuentoSocial = persona.getDescuentoTarifaSocial();
-				
-				if(descuentoEstudiantil != null) {
-					response.getWriter().println("Boletos Restantes: " + descuentoEstudiantil.getViajesRestantes());
+			if(tarjeta != null) {
+				if (tarjeta.isActiva()) {
+					salida.println("Saldo: $ " + tarjeta.getSaldo());
+					if(persona != null) {
+						DescuentoBoletoEstudiantil descuentoEstudiantil = persona.getDescuentoBoletoEstudiantil();
+						DescuentoTarifaSocial descuentoSocial = persona.getDescuentoTarifaSocial();
+						
+						if(descuentoEstudiantil != null) {
+							salida.println("<p>Boleto Estudiantil (Viajes Restantes): " + descuentoEstudiantil.getViajesRestantes() + "</p>");
+						}else {
+							salida.println("<p>Usted no posee un Boleto Estudiantil activo!</p>");
+						}
+						
+						if(descuentoSocial != null) {
+							salida.println("<p>El descuento asignado por su tarifa social es de: " + descuentoSocial.getPorcentajeDescuento().multiply(new BigDecimal(100)).intValue() + "%</p>") ;
+						}else {
+							salida.println("<p>Usted no posee un descuento por tarifa social.</p>");
+						}
+					}
 				}else {
-					response.getWriter().println("Usted no posee un Boleto Estudiantil activo!");
-				}
-				
-				if(descuentoSocial != null) {
-					response.getWriter().println("El descuento asignado por su tarifa social es de: " + descuentoSocial.getPorcentajeDescuento());
-				}else {
-					response.getWriter().println("Usted no posee un descuento por tarifa social.");
+					response.getWriter().println("Saldo: $ " + -666 + ". La Tarjeta ingresada no esta activa."); //No esta activa
 				}
 			}
+		}catch(Exception e) {
+			System.out.println("Excepction agarrada : " + e.getMessage());
+			e.printStackTrace();
+			if (!response.isCommitted())
+				response.sendError(500, e.getMessage());
 		}
+		
 	}
 	
 	private TarjetaSube obtenerTarjetaDesdeRequest(HttpServletRequest request) {
@@ -334,8 +349,7 @@ public class ControladorAdministrarSubes extends HttpServlet {
 					procesarPeticionSaldoTarjeta(request, response);
 					break;
 				case 11:
-					procesarPeticionSaldoTarjeta(request, response);
-					procesarPeticionDescuentosTarjeta(request, response);
+					procesarPeticionTerminalAutonoma(request, response);
 					break;
 				default:
 					break;
@@ -357,8 +371,6 @@ public class ControladorAdministrarSubes extends HttpServlet {
     	
     	//int hora = Integer.parseInt(request.getParameter("hora"));
     	//int min  = Integer.parseInt(request.getParameter("min"));
-    	
-    	
     	GregorianCalendar fecha = new GregorianCalendar  (anio, mes - 1, dia);
     	
     	return  fecha;

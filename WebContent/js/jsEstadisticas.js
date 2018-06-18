@@ -1,6 +1,9 @@
 var URL_INGRESAR_FICHADA = "/SubeUnla/IngresarFichada";
 var URL_ESTADISTICAS = "/SubeUnla/Estadisticas";
 
+
+var activeCharts = [null, null, null, null];
+
 $(document).ready(function(){
 	
 	//FUNCIONES
@@ -10,10 +13,10 @@ $(document).ready(function(){
 		var viajes = data.viajes;
 		var montos = data.montos;
 		
-		formatCanvas('pie', labels, 'Cant. de Viajes', viajes, $('#circularPorViajes'));
-		formatCanvas('pie', labels, 'Montos', montos, $('#circularPorMonto'));
-		formatCanvas('bar', labels, 'Cant. de Viajes', viajes, $('#barraPorViajes'));
-		formatCanvas('bar', labels, 'Montos', montos, $('#barraPorMonto'));
+		formatCanvas('pie', labels, 'Cant. de Viajes', viajes, $('#circularPorViajes'), 0);
+		formatCanvas('pie', labels, 'Montos', montos, $('#circularPorMonto') , 1);
+		formatCanvas('bar', labels, 'Cant. de Viajes', viajes, $('#barraPorViajes'), 2);
+		formatCanvas('bar', labels, 'Montos', montos, $('#barraPorMonto'), 3);
 	}
 	
 	function updateTables(data){
@@ -23,15 +26,28 @@ $(document).ready(function(){
 		}
 	}
 	
-	function formatCanvas(type, labels, label, data, canvas){
+	function formatCanvas(type, labels, label, data, canvas, chartIndex){
 		var ctx = canvas;
-		ctx.html('');
+		//ctx.html('');
+		console.log("Canvas : ");
+		console.log(canvas);
+		
+		var rawCanvas = canvas[0];
+		const context = rawCanvas.getContext('2d');
+		context.clearRect(0, 0, rawCanvas.width, rawCanvas.height);
+		console.log("ctx boundaries : [" + rawCanvas.width + "," + rawCanvas.height + "]");
+
 		var background = [];
 		for(var i = 0; i < labels.length; i++){
 			var color = 'rgba(' + randomNumber(255) + ', ' + randomNumber(255)  + ', ' + randomNumber(255) + ', 1)';
 			background.push(color);
 		}
-		var myChart = new Chart(ctx, {
+		
+		if (activeCharts[chartIndex] != null){
+			activeCharts[chartIndex].destroy();
+		}
+		
+		activeCharts[chartIndex] = new Chart(ctx, {
 		    type: type,
 		    data: {
 		        labels: labels,
@@ -102,6 +118,8 @@ $(document).ready(function(){
 			$('#divlinea').hide();
 		}
 		if(v == 3){
+			$('#divlinea').hide();
+			/*
 			$('#divlinea').show();
 			var data = {
 				nroValidacion : 5
@@ -119,7 +137,7 @@ $(document).ready(function(){
 				$('#headerModal').html('Ups! Algo salio mal!');
 				$('#pModal').html(xhr.responseText);
 				$('#footerModal').modal('open');
-			})
+			})*/
 		}
 	});
 	

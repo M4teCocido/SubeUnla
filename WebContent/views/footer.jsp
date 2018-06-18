@@ -2,7 +2,7 @@
 		<div class="modal-content">
     		<h4 align="center" id="headerModal"></h4>
     		<p align="center" id="pModal"></p>
-			</div>
+		</div>
 		<div class="modal-footer">
     		<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
   		</div>

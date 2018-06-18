@@ -4,12 +4,11 @@ $(document).ready(function(){
 	
 	//INICIALIZACION
 	
-	$('#infoModal').modal();
-	
 	//FUNCIONES
 	
 	function mostrarModal(data){
-		$('#footerModal').html(data);
+		$('#headerModal').html('<h3>Informacion General:</h3>');
+		$('.modal-content').append(data)
 	    $('#footerModal').modal('open');
 	}
 	
@@ -19,8 +18,8 @@ $(document).ready(function(){
 	
 	$('#consultarTarjeta').click(function(){
 		var data = {
-			nroTarjeta : this.value,
-			nroValidacion : 10
+			nroTarjeta : $('#nroTarjeta').val(),
+			nroValidacion : 11
 		}
 		$.ajax({
 			method: "POST",
@@ -28,10 +27,11 @@ $(document).ready(function(){
 			data: data,
 			async: false
 		}).done(function(data){
+			console.log(data);
 			if(data != null && data != "" && data != ''){
 				$('#nroTarjeta').val('');
+				$('').append();
 				mostrarModal(data);
-				$('#infoModal').modal('open');
 			}
 		}).fail(function(xhr, textStatus, errorThrown) {
 			$('#headerModal').html('Ups! Algo salio mal!');
